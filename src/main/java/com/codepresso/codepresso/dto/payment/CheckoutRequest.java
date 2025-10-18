@@ -50,6 +50,7 @@ public class CheckoutRequest {
         private Integer price;
 
         private List<Long> optionIds; //선택된 옵션들
+
     }
 
     /**

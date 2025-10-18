@@ -5,6 +5,7 @@ import com.codepresso.codepresso.dto.payment.CheckoutResponse;
 import com.codepresso.codepresso.dto.payment.TossPaymentSuccessRequest;
 import com.codepresso.codepresso.security.LoginUser;
 import com.codepresso.codepresso.service.payment.PaymentService;
+import com.codepresso.codepresso.service.payment.PaymentServiceImproveInsertOrder;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class PaymentController {
 
     private final PaymentService paymentService;
+    private final PaymentServiceImproveInsertOrder paymentService2;
 
     /**
      * 장바구니 결제페이지 데이터 조회 API
@@ -63,7 +65,8 @@ public class PaymentController {
         try {
             request.setMemberId(loginUser.getMemberId());
 
-            CheckoutResponse response = paymentService.processTossPaymentSuccess(request);
+            // CheckoutResponse response = paymentService.processTossPaymentSuccess(request);
+            CheckoutResponse response = paymentService2.processTossPaymentSuccess(request);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             throw new IllegalArgumentException("토스페이먼츠 결제 성공 처리 중 오류가 발생했습니다: " + e.getMessage());

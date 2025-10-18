@@ -1,5 +1,6 @@
 package com.codepresso.codepresso.repository.order;
 
+import com.codepresso.codepresso.dto.order.OrderSummaryProjection;
 import com.codepresso.codepresso.entity.order.Orders;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +24,20 @@ public interface OrdersRepository extends JpaRepository<Orders, Long> {
             "ORDER BY o.orderDate DESC",
         countQuery = "select count(distinct o) from Orders o where o.member.id = :memberId")
     Page<Orders> findByMemberIdWithPaging(@Param("memberId") Long memberId, Pageable pageable);
+
+    // Improve
+    @Query("SELECT " +
+            "o.id, o.orderDate, o.productionStatus, o.isTakeout, o.pickupTime, o.totalAmount " +
+            ", b.branchName, p.productName as representativeProductName, p.id as representativeProductId " +
+            "FROM Orders o " +
+            "LEFT JOIN o.branch b " +
+            "LEFT JOIN o.member m " +
+            "LEFT JOIN o.ordersDetails od " +
+            "LEFT JOIN od.product p " +
+            "WHERE m.id = :memberId and od.isRepresentative = true " +
+            "ORDER BY o.orderDate DESC")
+    Page<OrderSummaryProjection> findByMemberIdWithPaging2(@Param("memberId") Long memberId, Pageable pageable);
+
 
     /**
      * 회원별 + 기간별 주문 목록 조회 (최신순 + 페이징)

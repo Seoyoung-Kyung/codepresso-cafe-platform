@@ -41,6 +41,7 @@ public class CheckoutResponse {
         private Integer quantity;
         private Integer price;
         private List<String> optionNames;
+        private boolean isRepresentative;
 
         // 결제 준비용 추가 필드
         private String productPhoto;   // 추가: 상품 이미지

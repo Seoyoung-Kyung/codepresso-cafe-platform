@@ -39,5 +39,6 @@ public class OrderListResponse {
         private String representativeName; // 대표 상품명
         private String productImage; // 상품 이미지 URL (하드코딩)
         private Boolean canReview; // 리뷰 작성 가능 여부 (픽업완료 상태만)
+        private Boolean isRepresentative;
     }
 }
