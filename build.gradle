@@ -1,0 +1,80 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.5.5'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.codepresso'
+version = '0.0.1-SNAPSHOT'
+description = 'codepresso'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // =========================
+    // Security (인증/인가)
+    // =========================
+    implementation 'org.springframework.boot:spring-boot-starter-security' // 스프링 시큐리티 기본(필터 체인, 인증/인가)
+
+    // =========================
+    // Web / Validation
+    // =========================
+    implementation 'org.springframework.boot:spring-boot-starter-web'       // Spring MVC + 내장 톰캣 + JSON 직렬화
+    implementation 'org.springframework.boot:spring-boot-starter-validation'// Bean Validation(@NotNull 등)
+    implementation 'org.springframework.boot:spring-boot-starter-mail'      // JavaMailSender 이메일 발송
+
+    // =========================
+    // DB / Persistence
+    // =========================
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'  // JPA(Hibernate) 스타터
+    runtimeOnly 'com.mysql:mysql-connector-j'// MySQL JDBC 드라이버
+
+    // =========================
+    // View (JSP 사용 시)
+    // =========================
+    implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'            // JSP 컴파일러(Jasper)
+    implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:3.0.0' // JSTL API
+    implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.1'       // JSTL 구현체
+
+    // =========================
+    // Dev 편의 / 런타임 도구
+    // =========================
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'          // 자동 재시작/라이브 리로드(개발만)
+    runtimeOnly 'org.springframework.boot:spring-boot-docker-compose'        // Boot 3.1+ Docker Compose 연동
+
+    // =========================
+    // 보일러플레이트 제거(Lombok)
+    // =========================
+    compileOnly 'org.projectlombok:lombok'           // 컴파일 시에만 필요(배포물에 포함 안 됨)
+    annotationProcessor 'org.projectlombok:lombok'   // 롬복 애노테이션 처리기
+
+    // =========================
+    // API Documentation (Swagger)
+    // =========================
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.9' // Swagger UI + OpenAPI 3
+
+    // =========================
+    // Test
+    // =========================
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'com.h2database:h2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'             // 테스트 런처(IDE/빌드툴 실행용)
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

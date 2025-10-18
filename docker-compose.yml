@@ -1,0 +1,20 @@
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: codepresso-mysql
+    ports:
+      - "33306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: codepresso
+      MYSQL_USER: codepresso
+      MYSQL_PASSWORD: codepresso123
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --lower-case-table-names=1
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:

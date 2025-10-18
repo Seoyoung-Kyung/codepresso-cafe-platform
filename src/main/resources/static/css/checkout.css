@@ -1,0 +1,536 @@
+ /* Checkout Page Specific Styles */
+
+/* Disabled Coupon Styles */
+.coupon-option.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.header {
+     position: fixed;
+     top: 0;
+     left: 0;
+     right: 0;
+     z-index: 20;
+ }
+
+.coupon-option.disabled input[type="checkbox"] {
+    cursor: not-allowed;
+}
+
+.coupon-option.disabled .coupon-content {
+    pointer-events: none;
+}
+.checkout-page {
+    padding-top: 100px;
+    padding-bottom: 40px;
+}
+
+.page-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 32px;
+    gap: 16px;
+}
+
+.back-btn {
+    background: var(--white);
+    border: 1px solid rgba(0,0,0,0.08);
+    color: var(--text-2);
+    cursor: pointer;
+    padding: 12px;
+    border-radius: 12px;
+    transition: all 0.2s;
+    box-shadow: var(--shadow);
+}
+
+.back-btn:hover {
+    background-color: var(--pink-4);
+    border-color: var(--pink-2);
+    color: var(--pink-1);
+}
+
+.page-title {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--text-1);
+    margin: 0;
+}
+
+.checkout-content {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 32px;
+}
+
+.left-section, .right-section {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.order-section, .store-section, .pickup-section, .payment-section, .discount-section, .payment-summary {
+    background: var(--white);
+    border-radius: 18px;
+    padding: 24px;
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.payment-summary {
+    position: sticky;
+    top: 80px; /* 스크롤 시 상단에서 100px 떨어진 위치에 고정 */
+    height: fit-content; /* 고정 시에도 영역이 맞게 조정됨 */
+    z-index: 10;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.section-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-1);
+    margin-bottom: 16px;
+}
+
+.collapse-btn {
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    padding: 4px;
+    transition: transform 0.2s;
+}
+
+.collapse-btn.collapsed {
+    transform: rotate(180deg);
+}
+
+.order-items {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.order-items.collapsed {
+    display: none;
+}
+
+.order-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    background: linear-gradient(135deg, var(--pink-4), rgba(255,255,255,0.8));
+    border-radius: 14px;
+    border: 1px solid rgba(255,122,162,0.1);
+}
+
+.item-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.item-details {
+    flex: 1;
+}
+
+.item-name {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 4px;
+}
+
+.item-price {
+    font-size: 14px;
+    color: var(--pink-1);
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.item-quantity {
+    font-size: 14px;
+    color: #666;
+}
+
+.item-total {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--pink-1);
+}
+
+.store-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.info-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+}
+
+.request-input {
+    padding: 12px;
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 60px;
+}
+
+.request-input:focus {
+    outline: none;
+    border-color: #dc3545;
+}
+
+.order-type-options, .package-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.time-options {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.order-type-option, .package-option, .time-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-width: 100px;
+    justify-content: center;
+}
+
+.order-type-option:has(input:checked),
+.package-option:has(input:checked),
+.time-option:has(input:checked) {
+    border-color: var(--pink-1);
+    background: linear-gradient(135deg, var(--pink-4), var(--white));
+}
+
+.order-type-option input,
+.package-option input,
+.time-option input {
+    display: none;
+}
+
+.time-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.payment-methods {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.payment-method {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.payment-method.selected {
+    border-color: var(--pink-1);
+    background: linear-gradient(135deg, var(--pink-4), var(--white));
+}
+
+.payment-method input {
+    display: none;
+}
+
+.method-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #333;
+}
+
+/* 할인 섹션 스타일 */
+.discount-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.coupon-option {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: var(--white);
+}
+
+.coupon-option:hover {
+    border-color: var(--pink-2);
+    background: linear-gradient(135deg, var(--pink-4), var(--white));
+}
+
+.coupon-option:has(input:checked) {
+    border-color: var(--pink-1);
+    background: linear-gradient(135deg, var(--pink-4), var(--white));
+}
+
+.coupon-option input {
+    display: none;
+}
+
+.coupon-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.coupon-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.coupon-icon {
+    color: var(--pink-1);
+}
+
+.coupon-details {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.coupon-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+}
+
+.coupon-discount {
+    font-size: 13px;
+    color: #28a745;
+    font-weight: 600;
+}
+
+.coupon-checkbox {
+    position: relative;
+}
+
+.checkbox-custom {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    position: relative;
+    transition: all 0.2s;
+}
+
+.coupon-option:has(input:checked) .checkbox-custom {
+    background-color: var(--pink-1);
+    border-color: var(--pink-1);
+}
+
+.coupon-option:has(input:checked) .checkbox-custom::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.summary-content {
+    margin-bottom: 24px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 14px;
+}
+
+.summary-row.total {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+.summary-divider {
+    height: 1px;
+    background-color: #e9ecef;
+    margin: 16px 0;
+}
+
+.total-amount {
+    color: var(--pink-1);
+    font-weight: 800;
+}
+
+.discount-amount {
+    color: #28a745;
+    font-weight: 600;
+}
+
+.coupon-discount {
+    color: #28a745;
+}
+
+.payment-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.btn-cancel, .btn-payment {
+    padding: 14px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-cancel {
+    flex: 1;
+    background-color: #f8f9fa;
+    color: #666;
+}
+
+.btn-cancel:hover {
+    background-color: #e9ecef;
+}
+
+.btn-payment {
+    flex: 3;
+    background: linear-gradient(135deg, var(--pink-1), var(--pink-2));
+    color: var(--white);
+    box-shadow: 0 8px 16px rgba(255, 122, 162, 0.35);
+}
+
+.btn-payment:hover {
+    filter: brightness(1.02);
+    transform: translateY(-1px);
+}
+
+.btn-payment:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+}
+
+ .coupon-option.disabled{
+     opacity: 0.5;
+     cursor: not-allowed;
+ }
+
+ .coupon-option.disabled input[type="checkbox"]{
+     cursor: not-allowed;
+ }
+
+ .coupon-option.disabled .coupon-content {
+     pointer-events: none;
+ }
+
+/* 태블릿 반응형 */
+@media (max-width: 768px) {
+    .checkout-content {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 24px 16px;
+    }
+
+    .right-section {
+        position: sticky;
+        bottom: 0;
+        background-color: #fff;
+        border-top: 1px solid #e9ecef;
+        padding-top: 16px;
+        margin: 0 -16px -24px;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}
+
+/* 모바일 반응형 */
+@media (max-width: 768px) {
+    .main-content {
+        padding: 16px;
+        gap: 16px;
+    }
+
+    .order-section, .store-section, .pickup-section, .payment-section, .discount-section, .payment-summary {
+        padding: 16px;
+    }
+
+    .order-item {
+        padding: 12px;
+        gap: 12px;
+    }
+
+    .item-image {
+        width: 60px;
+        height: 60px;
+    }
+
+    .payment-actions {
+        flex-direction: column;
+    }
+}
+
+/* 옵션 배지 스타일 (cart.jsp와 동일) */
+.order-option-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    list-style: none;
+    margin: 4px 0 0 0;
+    padding: 0;
+}
+.order-option-list li {
+    background: rgba(255,122,162,0.12);
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 13px;
+    color: var(--text-1);
+}
+.order-option-list em {
+    margin-left: 6px;
+    color: var(--pink-1);
+    font-style: normal;
+    font-weight: 600;
+}
+
+

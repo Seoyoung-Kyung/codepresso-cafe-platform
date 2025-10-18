@@ -1,0 +1,589 @@
+.my-review-main {
+    padding: 40px 0 80px;
+    flex: 1;
+}
+
+.rcontainer {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* 섹션 헤더 */
+.section-header {
+    margin-bottom: 32px;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--text-1);
+    margin: 0;
+}
+
+.back-btn {
+    background: var(--white);
+    border: 1px solid rgba(0,0,0,0.1);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 18px;
+    color: var(--text-1);
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+
+.back-btn:hover {
+    background: var(--pink-1);
+    color: var(--white);
+    border-color: var(--pink-1);
+    transform: translateY(-1px);
+}
+
+/* 리뷰 통계 카드 */
+.review-stats-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 32px;
+    box-shadow: var(--shadow);
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+}
+
+.stats-item {
+    flex: 1;
+}
+
+.stats-number {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--pink-1);
+    margin-bottom: 8px;
+}
+
+.stats-label {
+    color: var(--text-2);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* 필터 및 정렬 섹션 */
+.filter-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.filter-options {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    background: var(--white);
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 999px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-2);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+    border-color: var(--pink-1);
+    color: var(--pink-1);
+}
+
+.filter-btn.active {
+    background: var(--pink-1);
+    border-color: var(--pink-1);
+    color: var(--white);
+}
+
+.sort-options {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.sort-select {
+    background: var(--white);
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 14px;
+    color: var(--text-1);
+    cursor: pointer;
+    min-width: 120px;
+}
+
+.sort-select:focus {
+    outline: none;
+    border-color: var(--pink-1);
+}
+
+/* 내 리뷰 카드 */
+.my-review-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.my-review-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+}
+
+.review-product-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+
+.product-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--pink-4);
+    flex-shrink: 0;
+}
+
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.no-image {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: var(--text-2);
+    text-align: center;
+}
+
+.product-details {
+    flex: 1;
+}
+
+.product-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-1);
+    margin: 4px 0;
+}
+
+.review-date {
+    font-size: 14px;
+    color: var(--text-2);
+}
+
+.review-content-section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.review-rating {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.stars {
+    display: flex;
+    gap: 2px;
+}
+
+.star {
+    font-size: 16px;
+    color: #ddd;
+}
+
+.star.filled {
+    color: #FFD700;
+}
+
+.rating-text {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-1);
+}
+
+.review-text {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text-1);
+    margin: 0;
+}
+
+.review-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.action-btn {
+    background: none;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.edit-btn {
+    color: var(--text-2);
+}
+
+.edit-btn:hover {
+    background: var(--pink-4);
+    border-color: var(--pink-2);
+    color: var(--pink-1);
+}
+
+.delete-btn {
+    color: #dc3545;
+}
+
+.delete-btn:hover {
+    background: rgba(220, 53, 69, 0.1);
+    border-color: #dc3545;
+}
+
+.helpful-info {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 14px;
+    color: var(--text-2);
+}
+
+/* 빈 상태 */
+.no-reviews {
+    text-align: center;
+    padding: 80px 20px;
+    color: var(--text-2);
+}
+
+.no-reviews-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+.no-reviews h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-1);
+    margin: 0 0 8px 0;
+}
+
+.no-reviews p {
+    font-size: 16px;
+    margin: 0;
+}
+
+/* 페이지네이션 */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.page-btn {
+    background: var(--white);
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-2);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.page-btn:hover:not(:disabled) {
+    background: var(--pink-1);
+    border-color: var(--pink-1);
+    color: var(--white);
+}
+
+.page-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.page-numbers {
+    display: flex;
+    gap: 4px;
+}
+
+.page-number {
+    background: var(--white);
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 8px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-2);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.page-number:hover {
+    background: var(--pink-4);
+    border-color: var(--pink-2);
+    color: var(--pink-1);
+}
+
+.page-number.active {
+    background: var(--pink-1);
+    border-color: var(--pink-1);
+    color: var(--white);
+}
+
+.stars {
+    display: flex;
+    gap: 2px;
+}
+
+.star {
+    font-size: 18px;
+    color: #ddd;
+}
+
+.star.filled {
+    color: #ffd700;
+}
+
+.rating-score {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-1);
+}
+
+.review-count {
+    color: var(--text-2);
+    font-size: 14px;
+}
+
+/* 리뷰 필터 */
+.review-filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    background: var(--white);
+    padding: 20px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.filter-tabs {
+    display: flex;
+    gap: 8px;
+}
+
+.filter-tab {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 20px;
+    background: #ffffff;
+    color: #6b7280;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.filter-tab:hover {
+    background: #fff5f8;
+    border-color: #ff6b9d;
+    color: #ff6b9d;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(255, 107, 157, 0.15);
+}
+
+.filter-tab.active {
+    background: linear-gradient(135deg, #ff6b9d, #ff8fab);
+    color: #ffffff;
+    border-color: #ff6b9d;
+    box-shadow: 0 4px 12px rgba(255, 107, 157, 0.3);
+    transform: translateY(-1px);
+}
+
+.filter-tab.active::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+.filter-stars {
+    font-size: 12px;
+    color: #ffd700;
+    letter-spacing: 1px;
+}
+
+.filter-tab.active .filter-stars {
+    color: #fff;
+    text-shadow: 0 0 4px rgba(255, 215, 0, 0.5);
+}
+
+.filter-count {
+    font-size: 12px;
+    opacity: 0.8;
+    font-weight: 600;
+}
+
+.filter-tab.active .filter-count {
+    opacity: 1;
+}
+
+/* 필터 결과 메시지 스타일 */
+.filter-result-message {
+    text-align: center;
+    padding: 40px 20px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin: 20px 0;
+}
+
+.no-results-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    opacity: 0.6;
+}
+
+.filter-result-message h3 {
+    font-size: 18px;
+    color: #374151;
+    margin: 0 0 8px;
+    font-weight: 600;
+}
+
+.filter-result-message p {
+    color: #6b7280;
+    margin: 0;
+    font-size: 14px;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .rcontainer {
+        padding: 0 16px;
+    }
+
+    .section-title {
+        font-size: 24px;
+    }
+
+    .review-stats-card {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+
+    .stats-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+    }
+
+    .stats-number {
+        font-size: 24px;
+        margin: 0;
+    }
+
+    .filter-section {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+    }
+
+    .filter-options {
+        justify-content: center;
+    }
+
+    .sort-options {
+        justify-content: center;
+    }
+
+    .review-product-info {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: center;
+    }
+
+    .product-details {
+        width: 100%;
+    }
+
+    .review-actions {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .helpful-info {
+        margin-left: 0;
+        margin-top: 8px;
+    }
+}

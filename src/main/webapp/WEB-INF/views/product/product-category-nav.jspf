@@ -1,0 +1,85 @@
+<%@ page pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<style>
+    .product-category-nav {
+        position: fixed;
+        top: 64px;
+        left: 0;
+        right: 0;
+        width: 100%;
+        z-index: 19;
+        background: white;
+        padding: 15px 0;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .product-category-nav-content {
+        width: 100%;
+        padding: 0 20px;
+        display: flex;
+        justify-content: center; /* 가로 중앙 정렬 */
+        gap: 70px;
+        max-width: 1200px; /* 최대 너비 설정 */
+        margin: 0 auto; /* 가로 중앙 정렬을 위한 auto 마진 */
+    }
+
+    .product-category-nav-item {
+        text-decoration: none;
+        color: #333;
+        font-weight: 500;
+        padding: 8px 0;
+        position: relative;
+        transition: color 0.3s;
+    }
+
+    .product-category-nav-item:hover {
+        color: #ff6b9d;
+    }
+
+    .product-category-nav-item.active {
+        color: #ff6b9d;
+        font-weight: 700;
+    }
+
+    .product-category-nav-item.active::after {
+        content: '';
+        position: absolute;
+        bottom: -15px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: #ff6b9d;
+    }
+
+    .product-category-nav-item:hover::after {
+        content: '';
+        position: absolute;
+        bottom: -15px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: #ff6b9d;
+    }
+
+    @media(max-width: 900px) {
+        .product-category-nav-content {
+            padding: 0 15px;
+            gap: 20px;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+    }
+</style>
+<c:set var="isProductListPage" value="${pageContext.request.requestURI.contains('/products') and not pageContext.request.requestURI.contains('/products/')}" />
+<nav class="product-category-nav">
+    <div class="product-category-nav-content">
+        <a href="#category-COFFEE" class="product-category-nav-item ${isProductListPage ? 'active' : ''}" data-category="COFFEE">커피</a>
+        <a href="#category-LATTE" class="product-category-nav-item" data-category="LATTE">라떼</a>
+        <a href="#category-JUICE" class="product-category-nav-item" data-category="JUICE">주스 & 드링크</a>
+        <a href="#category-SMOOTHIE" class="product-category-nav-item" data-category="SMOOTHIE">바나치노 & 스무디</a>
+        <a href="#category-TEA" class="product-category-nav-item" data-category="TEA">티 & 에이드</a>
+        <a href="#category-DESSERT" class="product-category-nav-item" data-category="DESSERT">디저트</a>
+        <a href="#category-SET" class="product-category-nav-item" data-category="SET">세트메뉴</a>
+        <a href="#category-MD_GOODS" class="product-category-nav-item" data-category="MD_GOODS">MD</a>
+    </div>
+</nav>

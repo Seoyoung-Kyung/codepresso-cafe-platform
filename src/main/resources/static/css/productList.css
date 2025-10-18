@@ -1,0 +1,652 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #ffffff;
+    color: #333;
+    line-height: 1.6;
+}
+
+.product-list-page .header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 20;
+}
+
+.product-page-main {
+    padding-top: 140px;
+}
+
+.search-btn, .cart-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #333;
+    position: relative;
+}
+
+.product-list-main .container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 40px 30px 80px;
+}
+
+.page-header {
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.page-title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #333;
+}
+
+.filter-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filter-btn {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.cart-count {
+    background: #333;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 5px;
+}
+
+.section-header {
+    margin-bottom: 30px;
+}
+
+.section-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.section-subtitle {
+    font-size: 16px;
+    color: #999;
+    font-weight: normal;
+}
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    margin-bottom: 60px;
+}
+
+.menu-item {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    cursor: pointer;
+    transition: transform 0.18s ease, box-shadow 0.22s ease;
+    padding: 20px;
+    border-radius: 22px;
+    background: #ffffff;
+    box-shadow: 0 22px 48px rgba(15, 23, 42, 0.12);
+    border: 1px solid rgba(255, 122, 162, 0.12);
+}
+
+.menu-item:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 28px 64px rgba(15, 23, 42, 0.18);
+}
+
+.menu-image-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 18px;
+    overflow: hidden;
+    background: #ffffff;
+}
+
+.menu-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    /*background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 280"><defs><linearGradient id="glass" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%23A0522D;stop-opacity:1" /><stop offset="50%" style="stop-color:%23654321;stop-opacity:1" /><stop offset="100%" style="stop-color:%234A2C2A;stop-opacity:1" /></linearGradient></defs><ellipse cx="100" cy="260" rx="70" ry="15" fill="%23ddd" opacity="0.3"/><path d="M 60 50 Q 100 45 140 50 L 135 230 Q 100 240 65 230 Z" fill="url(%23glass)" stroke="%23333" stroke-width="2"/><rect x="90" y="120" width="20" height="40" rx="10" fill="white" opacity="0.8"/><text x="100" y="140" font-family="Arial, sans-serif" font-size="8" fill="%23333" text-anchor="middle" font-weight="bold">banapresso</text><path d="M 70 70 Q 100 65 130 70 L 128 85 Q 100 80 72 85 Z" fill="%23F5DEB3" opacity="0.6"/></svg>');*/
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    padding: 16px;
+    aspect-ratio: 1 / 1;
+}
+
+
+.menu-tag {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: bold;
+    color: white;
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+}
+
+.tag-premium {
+    background: #8B4513;
+}
+
+.tag-new {
+    background: #ff9500;
+}
+
+.tag-decaf {
+    background: #00a86b;
+}
+
+.tag-signature {
+    background: linear-gradient(135deg, var(--pink-1), var(--pink-2));
+}
+
+.menu-info {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    margin-top: 10px;
+    flex: 1 1 auto;
+}
+
+.menu-name {
+    font-size: 20px;
+    font-weight: 800;
+    color: #333;
+    text-align: left;
+    flex: 1;
+    line-height: 1.4;
+}
+
+.menu-price {
+    font-size: 17px;
+    font-weight: 700;
+    color: #ff6b9d;
+}
+
+.add-to-cart {
+    align-self: flex-start;
+    background: linear-gradient(135deg, #ff7aa2, #ff9bb7);
+    border: none;
+    padding: 10px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: transform 0.18s ease, box-shadow 0.22s ease;
+    font-size: 13px;
+    color: #fff;
+    box-shadow: 0 12px 24px rgba(255, 122, 162, 0.35);
+}
+
+.add-to-cart:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 32px rgba(255, 122, 162, 0.45);
+}
+
+.cart-panel {
+    position: fixed;
+    right: -400px;
+    top: 0;
+    width: 400px;
+    height: 100vh;
+    background: white;
+    box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+    transition: right 0.3s ease;
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+.cart-panel.open {
+    right: 0;
+}
+
+.cart-header {
+    padding: 20px;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cart-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.close-cart {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.cart-items {
+    padding: 20px;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.cart-item-info h4 {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.cart-item-price {
+    color: #666;
+    font-size: 13px;
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.quantity-btn {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ddd;
+    background: white;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cart-total {
+    padding: 20px;
+    border-top: 1px solid #f0f0f0;
+    position: sticky;
+    bottom: 0;
+    background: white;
+}
+
+.total-amount {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.order-btn {
+    width: 100%;
+    padding: 15px;
+    background: #ff6b9d;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.order-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.cart-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+    z-index: 999;
+}
+
+.cart-overlay.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* =====================================================
+   이미지 호버 확대 효과 CSS
+   ===================================================== */
+
+/* 기본 메뉴 아이템 스타일 */
+.menu-item {
+    text-align: left;
+}
+
+/* 이미지 컨테이너 */
+.menu-image-container {
+    overflow: hidden; /* 이미지 확대 시 넘치는 부분 숨김 */
+}
+
+/*!* 메뉴 이미지 기본 스타일 *!*/
+/*.menu-image {*/
+/*    width: 100%;*/
+/*    height: 220px;*/
+/*    background: linear-gradient(135deg, #8B4513 0%, #A0522D 50%, #D2691E 100%);*/
+/*    border-radius: 10px;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    position: relative;*/
+/*    overflow: hidden;*/
+/*    transition: transform 0.3s ease; !* 부드러운 확대 효과 *!*/
+/*}*/
+
+/* 호버 시 이미지 확대 */
+.menu-item:hover .menu-image {
+    transform: none;
+}
+
+/* 실제 상품 이미지가 있는 경우 */
+.product-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    aspect-ratio: 1 / 1;
+}
+
+.menu-image .product-photo {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: none;
+}
+
+.menu-item:hover .menu-image .product-photo {
+    transform: none;
+}
+
+/* 메뉴 태그는 확대되지 않도록 고정 */
+.menu-tag {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+    z-index: 10;
+    transition: none; /* 태그는 확대 효과 없음 */
+}
+
+/* =====================================================
+   다양한 호버 효과 옵션들
+   ===================================================== */
+
+/* 옵션 1: 살짝 확대 (기본) */
+.hover-effect-small .menu-item:hover .menu-image {
+    transform: scale(1.03);
+}
+
+/* 옵션 2: 적당히 확대 */
+.hover-effect-medium .menu-item:hover .menu-image {
+    transform: scale(1.08);
+}
+
+/* 옵션 3: 크게 확대 */
+.hover-effect-large .menu-item:hover .menu-image {
+    transform: scale(1.15);
+}
+
+/* 옵션 4: 부드러운 확대 + 밝아지기 */
+.hover-effect-bright .menu-item:hover .menu-image {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+}
+
+/* 옵션 5: 확대 + 그림자 */
+.hover-effect-shadow .menu-item:hover .menu-image {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* 옵션 6: 회전하면서 확대 */
+.hover-effect-rotate .menu-item:hover .menu-image {
+    transform: scale(1.05) rotate(2deg);
+}
+
+/* =====================================================
+   메뉴 아이템 전체 호버 효과
+   ===================================================== */
+
+/* 메뉴 아이템 전체가 위로 떠오르는 효과 */
+/* 상단 카드 호버 효과는 카드 섹션에서 지정한 값을 그대로 사용 */
+
+/* 메뉴 정보 부분도 부드럽게 변화 */
+.menu-info {
+    transition: transform 0.22s ease;
+}
+
+.menu-item:hover .menu-info {
+    transform: translateY(-4px);
+}
+
+/* 메뉴명 호버 효과 */
+.menu-name {
+    transition: color 0.2s ease;
+}
+
+.menu-item:hover .menu-name {
+    color: #ff7aa2;
+}
+
+/* 장바구니 버튼 호버 효과 */
+.add-to-cart {
+    transition: transform 0.18s ease, box-shadow 0.22s ease;
+}
+
+.menu-item:hover .add-to-cart {
+    transform: translateY(-2px);
+}
+
+/* =====================================================
+   반응형 호버 효과
+   ===================================================== */
+
+/* 데스크톱에서만 호버 효과 적용 */
+@media (hover: hover) and (pointer: fine) {
+    .menu-item:hover .menu-image {
+        transform: none;
+    }
+}
+
+/* 모바일에서는 호버 효과 비활성화 */
+@media (hover: none) and (pointer: coarse) {
+    .menu-item:hover .menu-image {
+        transform: none;
+    }
+}
+
+/* =====================================================
+   성능 최적화
+   ===================================================== */
+
+/* GPU 가속 사용으로 부드러운 애니메이션 */
+.menu-image {
+    will-change: transform;
+    transform: translateZ(0); /* GPU 레이어로 이동 */
+}
+
+/* 호버 상태가 끝나면 will-change 제거 */
+.menu-item:not(:hover) .menu-image {
+    will-change: auto;
+}
+
+/*!* =====================================================*/
+/*   핑크/옐로우 이미지 전용 호버 효과*/
+/*   ===================================================== *!*/
+
+/*!* 핑크 이미지 호버 효과 *!*/
+/*.menu-image.pink {*/
+/*    background: linear-gradient(135deg, #ff6b9d 0%, #ff8fab 50%, #ffb3c1 100%);*/
+/*}*/
+
+/*.menu-item:hover .menu-image.pink {*/
+/*    background: linear-gradient(135deg, #ff5a8c 0%, #ff7a9a 50%, #ffa3b0 100%);*/
+/*    transform: scale(1.06);*/
+/*}*/
+
+/*!* 옐로우 이미지 호버 효과 *!*/
+/*.menu-image.yellow {*/
+/*    background: linear-gradient(135deg, #f4e04d 0%, #f9e79f 50%, #8B4513 100%);*/
+/*}*/
+
+/*.menu-item:hover .menu-image.yellow {*/
+/*    background: linear-gradient(135deg, #f2d93c 0%, #f7e58e 50%, #7a3a0f 100%);*/
+/*    transform: scale(1.06);*/
+/*}*/
+
+/* =====================================================
+   특별한 이벤트 효과 (선택사항)
+   ===================================================== */
+
+/* 펄스 효과 (깜박이는 효과) */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+.menu-item.special:hover .menu-image {
+    animation: pulse 1s infinite;
+}
+
+/* 흔들리는 효과 */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-2px); }
+    75% { transform: translateX(2px); }
+}
+
+.menu-item.shake:hover .menu-image {
+    animation: shake 0.5s ease-in-out infinite;
+    transform: scale(1.05);
+}
+
+/* 글로우 효과 */
+.menu-item.glow:hover .menu-image {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 107, 157, 0.6);
+}
+
+/* =====================================================
+   사용 예시 클래스들
+   ===================================================== */
+
+/* 클래스별 다른 효과 적용 */
+.effect-subtle .menu-item:hover .menu-image { transform: scale(1.02); }
+.effect-normal .menu-item:hover .menu-image { transform: scale(1.05); }
+.effect-strong .menu-item:hover .menu-image { transform: scale(1.1); }
+.effect-zoom .menu-item:hover .menu-image { transform: scale(1.15); }
+
+/* 전환 속도 조절 */
+.slow-transition .menu-image { transition: transform 0.6s ease; }
+.fast-transition .menu-image { transition: transform 0.2s ease; }
+.bounce-transition .menu-image {
+    transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* 반응형 디자인 */
+@media (max-width: 1200px) {
+    .menu-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 992px) {
+    .menu-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .product-page-main {
+        padding-top: 120px;
+    }
+
+    .product-list-main .container {
+        padding: 24px 15px 60px;
+    }
+
+    .page-title {
+        font-size: 24px;
+    }
+
+    .menu-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+    }
+
+    .menu-item {
+        padding: 18px;
+    }
+
+    .menu-name {
+        font-size: 18px;
+    }
+
+    .cart-panel {
+        width: 100%;
+        right: -100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .menu-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .menu-name {
+        font-size: 16px;
+    }
+
+    .menu-item {
+        padding: 16px;
+    }
+}

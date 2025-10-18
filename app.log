@@ -1,0 +1,6 @@
+
+ERROR: JAVA_HOME is set to an invalid directory: /Library/Java/JavaVirtualMachines/jdk-1.8.jdk/Contents/Home/jre/lib/jli/libjli.dylib
+
+Please set the JAVA_HOME variable in your environment to match the
+location of your Java installation.
+

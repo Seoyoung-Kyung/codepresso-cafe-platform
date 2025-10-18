@@ -1,0 +1,26 @@
+<%@ page pageEncoding="UTF-8" %>
+<main class="hero">
+    <div class="container">
+        <div class="hero-card">
+            <div>
+                <div class="badge">CodePress · 카페 플랫폼</div>
+                <h1>주문하려면 로그인해주세요!</h1>
+                <p>CodePress에서 당신의 하루를 담은 커피 한 잔 한 잔을 만나보세요.</p>
+                <div class="cta">
+                    <a class="btn btn-primary" href="/auth/login">로그인</a>
+                    <a class="btn btn-ghost" href="/auth/signup">회원가입</a>
+                </div>
+            </div>
+            <div class="mockup">
+                <div class="sprinkle"></div>
+                <div class="cup" aria-label="CodePresso Mascot">
+                    <picture>
+                        <source srcset="/banners/mascot-small.webp" type="image/webp">
+                        <img class="cup-img" src="/banners/mascot.png" alt="CodePresso Mascot" loading="lazy" />
+                    </picture>
+<%--                    <div class="cup-label">CodePresso</div>--%>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

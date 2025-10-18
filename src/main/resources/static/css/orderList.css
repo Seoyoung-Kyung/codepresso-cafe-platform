@@ -1,0 +1,367 @@
+/* 페이지 레이아웃 */
+.order-list-main {
+    padding: 40px 0 80px;
+    flex: 1;
+}
+
+.rcontainer {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.section-header {
+    margin-bottom: 32px;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--text-1);
+    margin: 0;
+}
+
+/* 필터 섹션 */
+.filter-section {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 16px;
+    margin: 16px 0;
+    box-shadow: var(--shadow);
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.filter-section form {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    width: 100%;
+}
+
+.filter-section label {
+    font-weight: 600;
+    color: var(--text-1);
+    font-size: 14px;
+}
+
+.filter-select,
+.filter-section select {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    background: var(--white);
+    color: var(--text-1);
+    cursor: pointer;
+    transition: all 0.2s;
+    min-width: 100px;
+}
+
+.filter-select:hover,
+.filter-section select:hover {
+    border-color: var(--pink-2);
+    box-shadow: 0 0 0 2px rgba(255, 122, 162, 0.1);
+}
+
+.filter-select:focus,
+.filter-section select:focus {
+    outline: none;
+    border-color: var(--pink-1);
+    box-shadow: 0 0 0 3px rgba(255, 122, 162, 0.2);
+}
+
+/* 필터 버튼 스타일 */
+.filter-section .btn {
+    padding: 8px 16px;
+    font-size: 14px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 600;
+}
+
+.filter-section .btn-ghost {
+    background: transparent;
+    color: var(--pink-1);
+    border: 1px solid var(--pink-1);
+}
+
+.filter-section .btn-ghost:hover {
+    background: var(--pink-1);
+    color: var(--white);
+}
+
+/* 반응형 필터 */
+@media (max-width: 768px) {
+    .filter-section {
+        padding: 12px;
+    }
+
+    .filter-section form {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+
+    .filter-section label {
+        margin-bottom: 4px;
+    }
+
+    .filter-select,
+    .filter-section select {
+        width: 100%;
+    }
+}
+
+/* 에러 메시지 */
+.error-message {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin: 16px 0;
+}
+
+/* 주문 통계 */
+.order-stats {
+    background: var(--pink-4);
+    padding: 12px 16px;
+    border-radius: 12px;
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+/* 주문 컨테이너 */
+.orders-container {
+    display: grid;
+    gap: 16px;
+}
+
+/* 주문 카드 */
+.order-card {
+    background: var(--white);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    padding: 18px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.order-card:hover {
+    transform: translateY(-2px);
+}
+
+/* 주문 헤더 */
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.order-info {
+    flex: 1;
+}
+
+.order-date {
+    font-size: 12px;
+    color: var(--text-2);
+    margin-bottom: 4px;
+}
+
+.order-number {
+    font-weight: 800;
+    font-size: 14px;
+    color: var(--text-1);
+}
+
+/* 주문 상태 */
+.order-status {
+    color: white;
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.status-received { background: #6c757d; }
+.status-making { background: #fd7e14; }
+.status-complete { background: #20c997; }
+.status-pickup { background: #198754; }
+
+/* 주문 내용 */
+.order-content {
+    margin-bottom: 12px;
+}
+
+.representative-item {
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--text-1);
+    display: block;
+    margin-bottom: 4px;
+}
+
+.order-details {
+    font-size: 14px;
+    color: var(--text-2);
+}
+
+.branch-name {
+    margin-right: 8px;
+}
+
+/* 주문 하단 */
+.order-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 12px;
+    border-top: 1px solid #eee;
+}
+
+.order-total {
+    font-weight: 800;
+    color: var(--pink-1);
+    font-size: 18px;
+}
+
+.pickup-time {
+    font-size: 12px;
+    color: var(--text-2);
+}
+
+/* 빈 상태 */
+.empty-state {
+    text-align: center;
+    padding: 40px 16px;
+    color: var(--text-2);
+}
+
+/* 하단 액션 */
+.cta {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 12px;
+}
+
+/* 페이징 컨테이너 */
+.pagination-container {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+}
+
+/* 페이지 정보 */
+.pagination-info {
+    text-align: center;
+    color: var(--text-2);
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.pagination-info span {
+    margin: 0 8px;
+}
+
+/* 페이지네이션 */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* 이전/다음 버튼 */
+.pagination-btn {
+    padding: 8px 14px;
+    border: 1px solid rgba(15, 23, 42, 0.12);
+    border-radius: 999px;
+    background: #fff;
+    color: var(--text-2);
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background .2s ease, color .2s ease;
+}
+
+.pagination-btn:hover:not(.disabled) {
+    background: rgba(255, 122, 162, 0.12);
+    color: var(--pink-1);
+}
+
+.pagination-btn.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    color: var(--text-3);
+}
+
+/* 페이지 번호 컨테이너 */
+.pagination-numbers {
+    display: flex;
+    gap: 8px;
+}
+
+/* 페이지 번호 */
+.pagination-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 14px;
+    border: 1px solid rgba(15, 23, 42, 0.12);
+    border-radius: 999px;
+    background: #fff;
+    color: var(--text-2);
+    text-decoration: none;
+    font-size: 14px;
+    transition: background .2s ease, color .2s ease;
+}
+
+.pagination-number:hover:not(.active) {
+    background: rgba(255, 122, 162, 0.12);
+    color: var(--pink-1);
+}
+
+.pagination-number.active {
+    background: linear-gradient(135deg, var(--pink-1), var(--pink-2));
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 10px 20px rgba(255, 122, 162, 0.3);
+    font-weight: 600;
+    cursor: default;
+}
+
+/* 반응형 (모바일) */
+@media (max-width: 768px) {
+    .pagination {
+        flex-wrap: wrap;
+    }
+
+    .pagination-numbers {
+        width: 100%;
+        justify-content: center;
+        order: -1;
+        margin-bottom: 12px;
+    }
+
+    .pagination-number {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+
+    .pagination-btn {
+        flex: 1;
+        text-align: center;
+        font-size: 13px;
+    }
+}

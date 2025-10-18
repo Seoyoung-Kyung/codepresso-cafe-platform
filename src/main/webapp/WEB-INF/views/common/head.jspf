@@ -1,0 +1,348 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <c:if test="${not empty _csrf}">
+        <meta name="_csrf" content="${_csrf.token}" />
+        <meta name="_csrf_header" content="${_csrf.headerName}" />
+    </c:if>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CodePress</title>
+    <style>
+        :root {
+            --pink-1: #ff7aa2;
+            --pink-2: #ff9bb7;
+            --pink-3: #ffc2d2;
+            --pink-4: #ffe5ec;
+            --text-1: #1f2937;
+            --text-2: #4b5563;
+            --white: #ffffff;
+            --shadow: 0 10px 30px rgba(0,0,0,0.08);
+            --radius: 14px;
+        }
+        * { box-sizing: border-box; }
+        html, body { height: 100%; }
+        html { height: 100%; }
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+            color: var(--text-1);
+            background: linear-gradient(160deg, var(--pink-4), #fff 60%);
+            background-repeat: no-repeat;
+            background-attachment: fixed; /* 스크롤 시 배경 고정 */
+            background-size: cover;       /* 뷰포트 채우기 */
+            /* 푸터를 하단 고정: 플렉스 레이아웃 */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .container { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+
+        /* Header */
+        .header {
+            position: sticky; top: 0; left: 0; right: 0; z-index: 1000;
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .header-inner {
+            display: flex; align-items: center; justify-content: space-between;
+            height: 64px;
+        }
+        .brand {
+            display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text-1);
+            font-weight: 800; letter-spacing: 0.4px;
+        }
+        .logo {
+            width: 36px; height: 36px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--pink-1), var(--pink-2));
+            box-shadow: var(--shadow);
+        }
+        .brand-mascot {
+            width: 32px; height: 32px; border-radius: 50%; overflow: hidden;
+            background: linear-gradient(135deg, var(--pink-1), var(--pink-2));
+            display: grid; place-items: center;
+            box-shadow: 0 6px 12px rgba(255,122,162,.28);
+        }
+        .brand-mascot img { width: 100%; height: auto; display: block; filter: drop-shadow(0 2px 3px rgba(0,0,0,.12)); transform: translateY(2px); }
+        .nav { display: flex; gap: 16px; align-items: center; }
+        .nav a { text-decoration: none; color: var(--text-2); font-weight: 600; }
+        .nav a:hover { color: var(--text-1); }
+        .search-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+            transition: opacity 0.2s ease;
+        }
+        .search-icon:hover { opacity: 0.7; }
+        .search-icon svg { display: block; }
+
+        /* Cart Badge */
+        .cart-link {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+        }
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -10px;
+            background: var(--pink-1);
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px;
+            border-radius: 999px;
+            min-width: 18px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(255, 122, 162, 0.4);
+            line-height:1.3;
+        }
+
+        /* Header Branch Select */
+        .header-branch-select { position: relative; }
+        .header-branch-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: rgba(255, 122, 162, 0.1);
+            border: 1px solid rgba(255, 122, 162, 0.3);
+            border-radius: 999px;
+            color: var(--pink-1);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .header-branch-btn:hover {
+            background: rgba(255, 122, 162, 0.15);
+            border-color: var(--pink-1);
+        }
+        .header-branch-btn svg {
+            flex-shrink: 0;
+        }
+        .header-branch-btn span {
+            max-width: 150px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* Branch Modal */
+        body.modal-open { overflow: hidden; }
+        .branch-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.45);
+            z-index: 1000;
+        }
+        .branch-modal {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 1001;
+        }
+        .branch-modal-inner {
+            background: #fff;
+            border-radius: 24px;
+            width: min(960px, 95vw);
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 24px 48px rgba(15,23,42,0.2);
+            overflow: hidden;
+        }
+        .branch-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 20px 28px 16px;
+        }
+        .branch-modal-title { display: grid; gap: 6px; }
+        .branch-modal-title h2 { margin: 0; font-size: 22px; }
+        .branch-modal-title p { margin: 0; font-size: 14px; color: var(--text-2); }
+        .branch-modal-close {
+            background: none;
+            border: 0;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-2);
+        }
+        .branch-modal-close:hover { color: var(--text-1); }
+        .branch-modal-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            padding: 0 28px 16px;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+        }
+        .branch-modal-search {
+            flex: 1;
+            display: flex;
+            gap: 8px;
+            min-width: 0;
+        }
+        .branch-modal-search input {
+            flex: 1;
+            border-radius: 12px;
+            border: 1px solid rgba(0,0,0,0.12);
+            padding: 10px 14px;
+            font-size: 15px;
+            transition: border-color .2s ease, box-shadow .2s ease;
+        }
+        .branch-modal-search input:focus {
+            outline: none;
+            border-color: var(--pink-1);
+            box-shadow: 0 0 0 3px rgba(255,122,162,0.18);
+        }
+        .branch-modal-body {
+            padding: 24px 28px;
+            overflow-y: auto;
+        }
+        .branch-modal-footer {
+            padding: 16px 28px 24px;
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+        .branch-modal-grid {
+            display: grid;
+            gap: 18px;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        }
+        .branch-modal-empty {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--text-2);
+        }
+        .branch-card {
+            background: var(--white);
+            border-radius: 18px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            display: grid;
+            grid-template-rows: 160px auto;
+            cursor: pointer;
+            transition: transform .12s ease, box-shadow .2s ease;
+        }
+        .branch-card:hover { transform: translateY(-3px); box-shadow: 0 14px 34px rgba(0,0,0,0.12); }
+        .branch-cover { background: linear-gradient(135deg, var(--pink-3), var(--pink-4)); position: relative; }
+        .branch-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .branch-body { padding: 16px; display: grid; gap: 8px; }
+        .branch-header { display:flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+        .branch-name { font-size: 18px; font-weight: 800; }
+        .branch-meta { color: var(--text-2); font-size: 14px; display:flex; align-items:center; gap:6px; }
+        .branch-address { overflow:hidden; text-overflow: ellipsis; display:-webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+        .branch-distance { color: var(--pink-1); font-size: 14px; font-weight: 800; white-space: nowrap; display: inline-flex; gap: 4px; align-items: baseline; }
+        .branch-distance-value { font-size: 16px; font-weight: 800; }
+        .branch-distance-unit { font-size: 12px; font-weight: 700; opacity: 0.85; }
+        .badge-open { display: inline-block; padding: 4px 10px; border-radius: 999px; background: var(--pink-4); color: var(--pink-1); font-weight: 800; font-size: 12px; }
+        .badge-open.is-closed { background: rgba(0,0,0,0.08); color: var(--text-2); }
+        .btn-block { width: 100%; }
+        .btn-sm { padding: 8px 16px; font-size: 14px; }
+        .btn-outline {
+            background: #fff;
+            border: 1px solid rgba(255,122,162,0.6);
+            color: var(--pink-1);
+            transition: box-shadow .2s ease, transform .08s ease, background .2s ease;
+        }
+        .btn-outline:hover {
+            box-shadow: 0 8px 16px rgba(15, 23, 42, 0.12);
+            border-color: var(--pink-1);
+            background: rgba(255,122,162,0.08);
+            color: var(--pink-1);
+        }
+        .is-hidden { display: none !important; }
+
+        /* Hero */
+        .hero { padding: 96px 0 80px; flex: 1 0 auto; }
+        .hero-card {
+            display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 20px;
+            align-items: center;
+            background: linear-gradient(120deg, var(--pink-3), var(--pink-4));
+            border-radius: 24px; padding: 36px; box-shadow: var(--shadow);
+        }
+        .hero h1 { margin: 0 0 12px; font-size: 40px; line-height: 1.2; }
+        .hero p { margin: 0 0 24px; color: var(--text-2); font-size: 18px; }
+        .cta { display: flex; gap: 12px; flex-wrap: wrap; }
+        .btn {
+            appearance: none; border: 0; cursor: pointer; border-radius: 999px;
+            padding: 12px 20px; font-size: 16px; font-weight: 700;
+            transition: transform .08s ease, box-shadow .2s ease, background .2s;
+            text-decoration: none; /* a.btn 의 밑줄 제거 */
+            display: inline-block; /* a.btn 의 버튼 형태 유지 */
+        }
+        .btn:active { transform: translateY(1px); }
+        .btn-primary {
+            color: var(--white);
+            background: linear-gradient(135deg, var(--pink-1), var(--pink-2));
+            box-shadow: 0 8px 16px rgba(255, 122, 162, 0.35);
+        }
+        .btn-primary:hover { filter: brightness(1.02); }
+        .btn-ghost { background: var(--white); color: var(--text-1); border: 1px solid rgba(0,0,0,0.06); }
+        .badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            color: var(--pink-1); background: var(--pink-4);
+            border-radius: 999px; padding: 8px 12px; font-weight: 700; font-size: 13px;
+            width: fit-content; margin-bottom: 12px;
+        }
+        .mockup { aspect-ratio: 1.2/1; border-radius: 16px; background: var(--white); box-shadow: var(--shadow); position: relative; overflow: hidden; }
+        .sprinkle { position: absolute; inset: 0; background: repeating-linear-gradient(45deg, transparent 0 24px, rgba(255,122,162,.06) 24px 48px); mix-blend-mode: multiply; }
+
+        /* Mascot container */
+        .cup { position: absolute; right: -10px; bottom: -10px; width: 320px; background: transparent; box-shadow: none; border-radius: 0; overflow: visible; display: block; }
+        .cup-img { width: 100%; height: auto; object-fit: contain; display: block; filter: drop-shadow(0 10px 18px rgba(0,0,0,.12)); }
+        .cup-label { position: absolute; left: 10px; bottom: 10px; background: linear-gradient(135deg, var(--pink-1), var(--pink-2)); color: var(--white); padding: 6px 12px; border-radius: 999px; font-weight: 800; font-size: 13px; letter-spacing: .3px; box-shadow: 0 6px 14px rgba(255,122,162,.35); }
+
+        /* Footer */
+        .footer { padding: 24px 0 56px; color: var(--text-2); font-size: 13px; text-align: center; margin-top: auto; }
+
+        @media (max-width: 900px) {
+            .hero-card { grid-template-columns: 1fr; padding: 28px; }
+            .hero h1 { font-size: 32px; }
+            .hero { padding: 80px 0 64px; }
+            .cup { width: 260px; right: -6px; bottom: -6px; }
+        }
+    </style>
+    <script src="/js/branch-selection.js" defer></script>
+    <script>
+        // 장바구니 개수 업데이트 함수
+        function updateCartBadge() {
+            const cartBadge = document.getElementById('cartBadge');
+            if (!cartBadge) return;
+
+            fetch('/users/cart/count', {
+                method: 'GET',
+                credentials: 'include'
+            })
+            .then(res => {
+                if (!res.ok) throw new Error('Failed to fetch cart count');
+                return res.json();
+            })
+            .then(count => {
+                if (count > 0) {
+                    cartBadge.textContent = count > 99 ? '99+' : count;
+                    cartBadge.style.display = 'block';
+                } else {
+                    cartBadge.style.display = 'none';
+                }
+            })
+            .catch(err => {
+                console.error('장바구니 개수 조회 실패:', err);
+                cartBadge.style.display = 'none';
+            });
+        }
+
+        // 페이지 로드 시 장바구니 개수 업데이트
+        document.addEventListener('DOMContentLoaded', updateCartBadge);
+
+        // 커스텀 이벤트 리스너: 장바구니 변경 시 자동 업데이트
+        window.addEventListener('cartUpdated', updateCartBadge);
+    </script>
+</head>

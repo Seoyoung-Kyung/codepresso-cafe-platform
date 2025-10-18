@@ -1,0 +1,81 @@
+# Spring Boot 애플리케이션 기본 설정
+spring:
+
+  docker:
+    compose:
+      enabled: true
+      file: ${COMPOSE_FILE:docker-compose.yml}
+      lifecycle-management: start-and-stop
+      profiles:
+        active: ${COMPOSE_PROFILES:}
+
+  # 애플리케이션 이름 설정
+  application:
+    name: codepresso
+
+  # JSP 뷰 설정
+  mvc:
+    view:
+      prefix: /WEB-INF/views/  # JSP 파일이 위치한 디렉토리 경로
+      suffix: .jsp             # JSP 파일 확장자
+    hiddenmethod:
+      filter:
+        enabled: true           # HTTP 메서드 오버라이드 활성화 (PUT, DELETE 등)
+
+  # 데이터베이스 연결 설정 (MySQL - docker-compose: mysql:8.4, 포트 33306)
+  datasource:
+    url: jdbc:mysql://localhost:33306/codepresso?useSSL=false&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&characterEncoding=UTF-8
+    username: codepresso
+    password: codepresso123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  # JPA/Hibernate 설정
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect   # MySQL 방언(자동 선택되지만 명시)
+    hibernate:
+      ddl-auto: update # 빈 DB는 생성, 기존 스키마는 보존하며 변경 반영
+    show-sql: true        # 실행되는 SQL 쿼리를 콘솔에 출력
+
+  # 이메일 발송 설정 (Naver SMTP)
+  mail:
+    host: smtp.naver.com
+    port: 587
+    username:  codepresso5@naver.com    #  ${EMAIL_USERNAME}  환경변수로 설정
+    password:  D4L4GB37HUJM             #  ${EMAIL_PASSWORD}  앱 비밀번호 사용
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          ssl:
+            trust: smtp.naver.com
+
+# MyBatis는 비활성화(의존성 제거). 필요 시 추후 재도입
+
+# 애플리케이션 커스텀 설정
+app:
+  email:
+    verification:
+      expiry-minutes: 5  # 인증번호 만료 시간 (분)
+  file:
+    upload:
+      path: src/main/resources/static/uploads/profile-images/  # 프로필 이미지 업로드 경로
+      max-size: 5MB  # 최대 파일 크기
+
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  port: 8080
+
+# 토스 페이먼츠 설정
+toss:
+  payments:
+    client-key: test_ck_Z61JOxRQVEEOn7KM2POwVW0X9bAq
+    secret-key: test_sk_oEjb0gm23PWRyYvE0kbo8pGwBJn5
+    base-url: https://api.tosspayments.com
+    success-url: http://localhost:8080/payments/success
+    fail-url: http://localhost:8080/payments/fail

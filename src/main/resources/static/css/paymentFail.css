@@ -1,0 +1,60 @@
+.fail-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 30px;
+    text-align: center;
+    border: 2px solid #dc3545;
+    border-radius: 12px;
+    background-color: #fff5f5;
+}
+.fail-icon {
+    font-size: 64px;
+    color: #dc3545;
+    margin-bottom: 20px;
+}
+.fail-title {
+    color: #dc3545;
+    margin-bottom: 20px;
+}
+.error-info {
+    background: white;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 8px;
+    border: 1px solid #f5c6cb;
+    background-color: #f8d7da;
+}
+.error-row {
+    margin: 10px 0;
+    text-align: left;
+}
+.error-label {
+    font-weight: bold;
+    color: #721c24;
+    display: inline-block;
+    min-width: 100px;
+}
+.error-value {
+    color: #721c24;
+}
+.button-group {
+    margin-top: 30px;
+}
+.btn {
+    padding: 12px 24px;
+    margin: 0 10px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+}
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+}

@@ -1,0 +1,72 @@
+<%@ page pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
+<style>
+    h1 {
+        margin-top: 12px;
+    }
+
+    .tab-menu {
+        display: flex;
+        gap: 8px;
+        border-bottom: 2px solid rgba(255,122,162,0.2);
+        margin: 24px 0 32px;
+        overflow-x: auto;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    .tab-menu::-webkit-scrollbar {
+        display: none;
+    }
+
+    .tab-item {
+        padding: 14px 24px;
+        background: transparent;
+        border: none;
+        color: var(--text-2);
+        font-weight: 600;
+        font-size: 16px;
+        cursor: pointer;
+        position: relative;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .tab-item:hover {
+        color: var(--pink-1);
+        background: rgba(255,122,162,0.05);
+    }
+
+    .tab-item.active {
+        color: var(--pink-1);
+        font-weight: 700;
+    }
+
+    .tab-item.active::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: var(--pink-1);
+        border-radius: 3px 3px 0 0;
+    }
+</style>
+
+<c:set var="currentPath" value="${pageContext.request.requestURI}" />
+
+<div class="badge">CodePress · 마이페이지</div>
+<h1>마이페이지</h1>
+
+<!-- 탭 메뉴 -->
+<div class="tab-menu">
+    <a href="/member/mypage" class="tab-item ${fn:contains(currentPath, '/member/mypage') ? 'active' : ''}">내 정보</a>
+    <a href="/favorites" class="tab-item ${fn:contains(currentPath, '/favorite') ? 'active' : ''}">즐겨찾기</a>
+    <a href="/users/myReviews" class="tab-item ${fn:contains(currentPath, '/users/myReviews') || fn:contains(currentPath, '/myReview') ? 'active' : ''}">내 리뷰</a>
+    <a href="/orders" class="tab-item ${fn:contains(currentPath, '/orders') || fn:contains(currentPath, '/order') ? 'active' : ''}">주문목록</a>
+</div>
