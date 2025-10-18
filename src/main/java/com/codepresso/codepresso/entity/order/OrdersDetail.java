@@ -36,4 +36,11 @@ public class OrdersDetail {
     @BatchSize(size = 100)
     @OneToMany(mappedBy = "ordersDetail", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrdersItemOptions> options;
+
+    @Column(name = "is_representative")
+    private boolean isRepresentative = false;
+
+    public void markAsRepresentative() {
+        this.isRepresentative = true;
+    }
 }
