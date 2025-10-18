@@ -13,11 +13,11 @@ import lombok.*;
 public class NutritionInfo {
 
     @Id
-    @Column(name = "product_id")
-    private Long productId; // PK = FK
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "nutrition_info_id")
+    private Long id;
 
-    @OneToOne
-    @MapsId // PK = FK
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     @JsonIgnore
     private Product product;

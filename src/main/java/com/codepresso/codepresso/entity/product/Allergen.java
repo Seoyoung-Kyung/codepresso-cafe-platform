@@ -28,7 +28,7 @@ public class Allergen {
     @Column(name = "allergen_code")
     private String allergenCode;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     @JsonIgnore
     private Product product;

@@ -33,15 +33,15 @@ public class Product {
 
     private Integer price;
 
-    // 1:N - ProductOption
+    // 1:N
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductOption> options = new ArrayList<>();
 
-    // 1:1 - NutritionInfo
+    // 1:1
     @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private NutritionInfo nutritionInfo;
 
-    // 1:N - AllergenProduct (중간 테이블)
+    // 1:N
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Allergen> allergens = new HashSet<>();
 

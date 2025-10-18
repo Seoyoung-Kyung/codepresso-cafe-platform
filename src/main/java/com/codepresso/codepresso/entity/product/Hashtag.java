@@ -22,7 +22,7 @@ public class Hashtag {
     @Column(name = "hashtag_name")
     private String hashtagName;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     @JsonIgnore
     private Product product;
