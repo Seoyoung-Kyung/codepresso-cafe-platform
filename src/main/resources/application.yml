@@ -35,6 +35,10 @@ spring:
     hibernate:
       ddl-auto: update # 빈 DB는 생성, 기존 스키마는 보존하며 변경 반영
     show-sql: true        # 실행되는 SQL 쿼리를 콘솔에 출력
+    properties:
+      hibernate:
+        format_sql: true  # SQL 쿼리를 보기 좋게 포맷팅
+        use_sql_comments: true  # 쿼리에 주석 추가 (어떤 메서드에서 호출되었는지 표시)
 
   # 이메일 발송 설정 (Naver SMTP)
   mail:

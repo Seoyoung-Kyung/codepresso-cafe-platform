@@ -4,6 +4,7 @@ import com.codepresso.codepresso.dto.order.OrderDetailResponse;
 import com.codepresso.codepresso.dto.order.OrderListResponse;
 import com.codepresso.codepresso.security.LoginUser;
 import com.codepresso.codepresso.service.order.OrderService;
+import com.codepresso.codepresso.service.order.OrderServiceImproveGetOrderList;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,9 +21,15 @@ import java.util.List;
 @RequestMapping("/orders")
 public class OrderViewPageController {
 
-    private final OrderService orderService;
+//    private final OrderService orderService;
+//
+//    public OrderViewPageController(OrderService orderService) {
+//        this.orderService = orderService;
+//    }
 
-    public OrderViewPageController(OrderService orderService) {
+    private final OrderServiceImproveGetOrderList orderService;
+
+    public OrderViewPageController(OrderServiceImproveGetOrderList orderService) {
         this.orderService = orderService;
     }
 

@@ -4,6 +4,7 @@ import com.codepresso.codepresso.dto.order.OrderDetailResponse;
 import com.codepresso.codepresso.dto.order.OrderListResponse;
 import com.codepresso.codepresso.security.LoginUser;
 import com.codepresso.codepresso.service.order.OrderService;
+import com.codepresso.codepresso.service.order.OrderServiceImproveGetOrderList;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,7 +19,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class OrderController {
 
-    private final OrderService orderService;
+    private final OrderServiceImproveGetOrderList orderService;
+//    private final OrderService orderService;
 
     /**
      * 사용자별 주문 내역 조회 ( 사용자별 + 기간별 )
@@ -30,7 +32,7 @@ public class OrderController {
             @AuthenticationPrincipal LoginUser loginUser,
             @RequestParam(value = "period", defaultValue = "1개월") String period,
             @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "size", defaultValue = "10") int size){
+            @RequestParam(value = "size", defaultValue = "20") int size){
 
         Long memberId = loginUser.getMemberId();
         OrderListResponse response = orderService.getOrderList(memberId, period, page, size);

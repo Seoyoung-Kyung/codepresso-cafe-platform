@@ -1,19 +1,112 @@
+#spring:
+#  datasource:
+#    url: jdbc:h2:mem:testdb
+#    driver-class-name: org.h2.Driver
+#    username: sa
+#    password:
+#
+#  jpa:
+#    database-platform: org.hibernate.dialect.H2Dialect
+#    hibernate:
+#      ddl-auto: create-drop
+#    show-sql: true
+#    properties:
+#      hibernate:
+#        format_sql: true
+#
+#  h2:
+#    console:
+#      enabled: true
+# Spring Boot 테스트 환경 설정 (운영 DB 동일하게 사용)
 spring:
-  datasource:
-    url: jdbc:h2:mem:testdb
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
 
+  docker:
+    compose:
+      enabled: true
+      file: ${COMPOSE_FILE:docker-compose.yml}
+      lifecycle-management: start-and-stop
+      profiles:
+        active: ${COMPOSE_PROFILES:}
+
+  # 애플리케이션 이름 설정
+  application:
+    name: codepresso-test
+
+  # JSP 뷰 설정
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+    hiddenmethod:
+      filter:
+        enabled: true
+
+  # 운영과 동일한 데이터베이스 연결 설정
+  datasource:
+    url: jdbc:mysql://localhost:33306/codepresso?useSSL=false&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&characterEncoding=UTF-8
+    username: codepresso
+    password: codepresso123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  # JPA/Hibernate 설정
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: none  # ⭐ 중요: 스키마 변경 안 함!
     show-sql: true
     properties:
       hibernate:
         format_sql: true
+        use_sql_comments: true
 
-  h2:
-    console:
+  # 이메일 발송 설정
+  mail:
+    host: smtp.naver.com
+    port: 587
+    username: codepresso5@naver.com
+    password: D4L4GB37HUJM
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          ssl:
+            trust: smtp.naver.com
+
+# 애플리케이션 커스텀 설정
+app:
+  email:
+    verification:
+      expiry-minutes: 5
+  file:
+    upload:
+      path: src/main/resources/static/uploads/profile-images/
+      max-size: 5MB
+
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
       enabled: true
+      force: true
+  port: 8080
+
+# 토스 페이먼츠 설정
+toss:
+  payments:
+    client-key: test_ck_Z61JOxRQVEEOn7KM2POwVW0X9bAq
+    secret-key: test_sk_oEjb0gm23PWRyYvE0kbo8pGwBJn5
+    base-url: https://api.tosspayments.com
+    success-url: http://localhost:8080/payments/success
+    fail-url: http://localhost:8080/payments/fail
+
+# 로깅 설정 (성능 테스트용)
+logging:
+  level:
+    root: INFO
+    com.codepresso: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"

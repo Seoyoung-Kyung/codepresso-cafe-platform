@@ -1,5 +1,7 @@
-POST http://localhost:8080/login
+### 회원별 주문 목록 조회 (페이징)
+GET http://localhost:8080/users/orders?memberId=3&period=전체
 Content-Type: application/json
 
-GET http://localhost:8080/users/orders?memberId=2&period=1개월
+### 로그인
+POST http://localhost:8080/login?accountId=user&password=asdf1234
 Content-Type: application/json

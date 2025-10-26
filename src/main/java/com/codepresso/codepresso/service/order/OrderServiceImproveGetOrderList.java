@@ -3,6 +3,7 @@ package com.codepresso.codepresso.service.order;
 import com.codepresso.codepresso.converter.order.OrderConverter;
 import com.codepresso.codepresso.dto.order.OrderDetailResponse;
 import com.codepresso.codepresso.dto.order.OrderListResponse;
+import com.codepresso.codepresso.dto.order.OrderSummaryProjection;
 import com.codepresso.codepresso.dto.review.OrdersDetailResponse;
 import com.codepresso.codepresso.entity.order.Orders;
 import com.codepresso.codepresso.entity.order.OrdersDetail;
@@ -41,36 +42,49 @@ public class OrderServiceImproveGetOrderList {
         // 전체 건수 (기간 무관)
         long totalCount = ordersRepository.countByMemberId(memberId);
 
-        // 기간 필터 적용된 목록 조회 (페이징)
-        Page<Orders> ordersPage;
-        if ("전체".equals(period)) {
-            ordersPage = ordersRepository.findByMemberIdWithPaging(memberId, pageable);
-        } else {
-            ordersPage = ordersRepository.findByMemberIdAndDateWithPaging(memberId, startDate, pageable);
-        }
-
-        // Page -> List 변환
-//        List<OrderListResponse.OrderSummary> orderSummaries = new ArrayList<>();
-//        for (Orders order : ordersPage.getContent()) {
-//            OrderListResponse.OrderSummary orderSummary = convertToOrderSummary(order);
-//            orderSummaries.add(orderSummary);
-//        }
         List<OrderListResponse.OrderSummary> orderSummaries = new ArrayList<>();
-        for (Orders order : ordersPage.getContent()) {
-            OrderListResponse.OrderSummary orderSummary = convertToOrderSummary(order);
-            orderSummaries.add(orderSummary);
+        long totalElements;
+        int totalPages;
+        boolean hasNext;
+        boolean hasPrevious;
+
+        if ("전체".equals(period)) {
+            Page<OrderSummaryProjection> projectionsPage = ordersRepository.findByMemberIdWithPaging2(memberId, pageable);
+
+            for (OrderSummaryProjection projection : projectionsPage.getContent()) {
+                OrderListResponse.OrderSummary orderSummary = convertProjectionToOrderSummary(projection);
+                orderSummaries.add(orderSummary);
+            }
+
+            totalElements = projectionsPage.getTotalElements();
+            totalPages = projectionsPage.getTotalPages();
+            hasNext = projectionsPage.hasNext();
+            hasPrevious = projectionsPage.hasPrevious();
+        } else {
+            // 기존 방식 (기간 필터가 있는 경우)
+            Page<OrderSummaryProjection> ordersPage = ordersRepository.findByMemberIdAndDateWithPaging2(memberId, startDate, pageable);
+
+            for (OrderSummaryProjection projection : ordersPage.getContent()) {
+                OrderListResponse.OrderSummary orderSummary = convertToOrderSummary(projection);
+                orderSummaries.add(orderSummary);
+            }
+
+            totalElements = ordersPage.getTotalElements();
+            totalPages = ordersPage.getTotalPages();
+            hasNext = ordersPage.hasNext();
+            hasPrevious = ordersPage.hasPrevious();
         }
 
         // 페이징 정보 포함하여 반환
         return OrderListResponse.builder()
                 .orders(orderSummaries)
                 .totalCount(totalCount)
-                .filteredCount((int) ordersPage.getTotalElements()) // 기간 필터 적용된 전체 수
+                .filteredCount((int) totalElements) // 기간 필터 적용된 전체 수
                 .currentPage(page)
-                .totalPages(ordersPage.getTotalPages())
+                .totalPages(totalPages)
                 .pageSize(size)
-                .hasNext(ordersPage.hasNext())
-                .hasPrevious(ordersPage.hasPrevious())
+                .hasNext(hasNext)
+                .hasPrevious(hasPrevious)
                 .build();
     }
 
@@ -85,24 +99,42 @@ public class OrderServiceImproveGetOrderList {
         return convertToOrderDetail(orders);
     }
 
-     private OrderListResponse.OrderSummary convertToOrderSummary(Orders orders) {
+    /**
+     * OrderSummaryProjection을 OrderListResponse.OrderSummary로 변환
+     * isRepresentative를 활용한 최적화된 쿼리 결과를 변환
+     */
+    private OrderListResponse.OrderSummary convertProjectionToOrderSummary(OrderSummaryProjection projection) {
+        // TODO: orderNumber 생성을 위해서는 Orders 엔티티가 필요하므로 임시로 간단한 형식 사용
+        // 실제로는 주문번호 생성 로직을 별도로 처리하거나 Projection에 포함시켜야 함
+        String orderNumber = projection.getOrderId().toString();
+
+        return OrderListResponse.OrderSummary.builder()
+                .orderId(projection.getOrderId())
+                .orderNumber(orderNumber)
+                .orderDate(projection.getOrderDate())
+                .productionStatus(projection.getProductionStatus())
+                .branchName(projection.getBranchName())
+                .isTakeout(projection.getIsTakeout())
+                .pickupTime(projection.getPickupTime())
+                .totalAmount(projection.getTotalAmount())
+                .representativeName(projection.getRepresentativeProductName())
+                .build();
+    }
+
+    private OrderListResponse.OrderSummary convertToOrderSummary(OrderSummaryProjection projection) {
          // 대표 상품명 계산
-         String representativeItem = calculateRepresentativeItem(orders.getOrdersDetails());
-
-         // 총 상품 금액 계산
-         int totalAmount = calculateTotalAmount(orders);
-
+         String orderNumber = projection.getOrderId().toString();
 
          return OrderListResponse.OrderSummary.builder()
-                 .orderId(orders.getId())
-                 .orderNumber(generateOrderNumber(orders))
-                 .orderDate(orders.getOrderDate())
-                 .productionStatus(orders.getProductionStatus())
-                 .branchName(orders.getBranch().getBranchName())
-                 .isTakeout(orders.getIsTakeout())
-                 .pickupTime(orders.getPickupTime())
-                 .totalAmount(totalAmount)
-                 .representativeName(representativeItem)
+                 .orderId(projection.getOrderId())
+                 .orderNumber(orderNumber)
+                 .orderDate(projection.getOrderDate())
+                 .productionStatus(projection.getProductionStatus())
+                 .branchName(projection.getBranchName())
+                 .isTakeout(projection.getIsTakeout())
+                 .pickupTime(projection.getPickupTime())
+                 .totalAmount(projection.getTotalAmount())
+                 .representativeName(projection.getRepresentativeProductName())
                  .build();
      }
 

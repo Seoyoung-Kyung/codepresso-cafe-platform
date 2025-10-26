@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 public interface OrdersRepository extends JpaRepository<Orders, Long> {
@@ -27,14 +28,14 @@ public interface OrdersRepository extends JpaRepository<Orders, Long> {
 
     // Improve
     @Query("SELECT " +
-            "o.id, o.orderDate, o.productionStatus, o.isTakeout, o.pickupTime, o.totalAmount " +
-            ", b.branchName, p.productName as representativeProductName, p.id as representativeProductId " +
+            "o.id as orderId, o.orderDate as orderDate, o.productionStatus as productionStatus " +
+            ", o.isTakeout as isTakeout, o.pickupTime as pickupTime, o.totalAmount as totalAmount " +
+            ", b.branchName as branchName, p.productName as representativeProductName, p.id as representativeProductId " +
             "FROM Orders o " +
             "LEFT JOIN o.branch b " +
-            "LEFT JOIN o.member m " +
             "LEFT JOIN o.ordersDetails od " +
             "LEFT JOIN od.product p " +
-            "WHERE m.id = :memberId and od.isRepresentative = true " +
+            "WHERE o.member.id = :memberId and od.isRepresentative = true " +
             "ORDER BY o.orderDate DESC")
     Page<OrderSummaryProjection> findByMemberIdWithPaging2(@Param("memberId") Long memberId, Pageable pageable);
 
@@ -49,6 +50,23 @@ public interface OrdersRepository extends JpaRepository<Orders, Long> {
             "AND o.orderDate >= :startDate " +
             "ORDER BY o.orderDate DESC")
     Page<Orders> findByMemberIdAndDateWithPaging(
+            @Param("memberId") Long memberId,
+            @Param("startDate") LocalDateTime startDate,
+            Pageable pageable);
+
+    // Improve
+    @Query("SELECT " +
+            "o.id as orderId, o.orderDate as orderDate, o.productionStatus as productionStatus " +
+            ", o.isTakeout as isTakeout, o.pickupTime as pickupTime, o.totalAmount as totalAmount " +
+            ", b.branchName as branchName, p.productName as representativeProductName, p.id as representativeProductId " +
+            "FROM Orders o " +
+            "LEFT JOIN o.branch b " +
+            "LEFT JOIN o.ordersDetails od " +
+            "LEFT JOIN od.product p " +
+            "WHERE o.member.id = :memberId and od.isRepresentative = true " +
+            "AND o.orderDate >= :startDate " +
+            "ORDER BY o.orderDate DESC")
+    Page<OrderSummaryProjection> findByMemberIdAndDateWithPaging2(
             @Param("memberId") Long memberId,
             @Param("startDate") LocalDateTime startDate,
             Pageable pageable);

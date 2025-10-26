@@ -62,7 +62,7 @@ public class MemberInitializer implements ApplicationRunner {
 
         log.info("[Init] MemberInitializer done");
 
-        for (int i = 1; i <= 500; i++) {
+        for (int i = 1; i <= 501; i++) {
             String accountId = "testuser" + i;
 
             // 이미 존재하면 스킵
