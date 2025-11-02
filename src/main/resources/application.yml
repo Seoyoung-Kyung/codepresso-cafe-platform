@@ -33,7 +33,7 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect   # MySQL 방언(자동 선택되지만 명시)
     hibernate:
-      ddl-auto: update # 빈 DB는 생성, 기존 스키마는 보존하며 변경 반영
+      ddl-auto: create-drop # 빈 DB는 생성, 기존 스키마는 보존하며 변경 반영
     show-sql: true        # 실행되는 SQL 쿼리를 콘솔에 출력
     properties:
       hibernate:

@@ -7,8 +7,12 @@ import com.codepresso.codepresso.dto.member.FavoriteResponse;
 import com.codepresso.codepresso.entity.member.Favorite;
 import com.codepresso.codepresso.entity.product.Product;
 import com.codepresso.codepresso.repository.member.FavoriteRepository;
+import com.codepresso.codepresso.repository.member.ProductConcurrencyRepository;
 import com.codepresso.codepresso.repository.product.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,10 +27,12 @@ import java.util.stream.Collectors;
  */
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class FavoriteService {
 
     private final FavoriteRepository favoriteRepository;
     private final ProductRepository productRepository;
+    private final ProductConcurrencyRepository productConcurrencyRepository;
 
     /**
      * 즐겨찾기 추가
@@ -81,6 +87,34 @@ public class FavoriteService {
                     .success(false)
                     .message("즐겨찾기 추가 중 오류가 발생했습니다: " + e.getMessage())
                     .build();
+        }
+    }
+
+    // 테스트용
+    @Transactional
+    public void addFavoriteWithOutLock(Long memberId, Long productId) {
+        try {
+            // 상품 존재 여부 확인
+            Product product = productConcurrencyRepository.findByWithOutLock(productId)
+                    .orElseThrow(() -> new NoSuchElementException("상품을 찾을 수 없습니다. ID: " + productId));
+
+
+            // 즐겨찾기 생성 및 저장
+            Favorite favorite = Favorite.builder()
+                    .memberId(memberId)
+                    .productId(productId)
+                    .orderby(1)
+                    .build();
+
+            log.debug("즐겨찾기 추가 성공 : memberId = {}, productId = {}", memberId, productId);
+
+            favoriteRepository.save(favorite);
+            favoriteRepository.flush();
+
+            product.increaseFavoriteCount();
+            productRepository.saveAndFlush(product);
+        } catch (DataIntegrityViolationException | JpaSystemException e) {
+            log.debug("즐겨찾기 추가 실패 : memberId = {}, productId = {}", memberId, productId);
         }
     }
 
@@ -171,5 +205,31 @@ public class FavoriteService {
                 .orderby(favorite.getOrderby())
                 .createdAt(LocalDateTime.now()) // 실제로는 엔티티에서 가져와야 함
                 .build();
+    }
+
+    @Transactional
+    public void addFavoriteTest(Long memberId, Long productId) {
+        if(!favoriteRepository.existsByMemberIdAndProductId(memberId, productId)) {
+            Favorite favorite = Favorite.builder()
+                    .memberId(memberId)
+                    .productId(productId)
+                    .orderby(1)
+                    .build();
+
+            favoriteRepository.saveAndFlush(favorite);
+
+            Product product = productConcurrencyRepository.findByWithOptimisticLock(productId)
+                    .orElseThrow(() -> new IllegalArgumentException("상품이 존재하지 않습니다."));
+
+            product.increaseFavoriteCount();
+            productRepository.saveAndFlush(product);
+        }
+    }
+
+    @jakarta.transaction.Transactional
+    public Long getFavoriteCount(long productId) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new IllegalArgumentException("상품이 존재하지 않습니다."));
+        return product.getFavoriteCount();
     }
 }

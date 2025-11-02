@@ -1,0 +1,118 @@
+
+> Task :compileJava
+/Users/admin/Documents/codepresso-cafe-platform/src/main/java/com/codepresso/codepresso/entity/product/OptionName.java:25: warning: @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+    private List<OptionStyle> optionStyles = new ArrayList<>();
+                              ^
+/Users/admin/Documents/codepresso-cafe-platform/src/main/java/com/codepresso/codepresso/entity/product/Category.java:33: warning: @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+    private List<Category> childCategories = new ArrayList<>();
+                           ^
+/Users/admin/Documents/codepresso-cafe-platform/src/main/java/com/codepresso/codepresso/entity/product/Category.java:37: warning: @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+    private List<Product> products = new ArrayList<>();
+                          ^
+/Users/admin/Documents/codepresso-cafe-platform/src/main/java/com/codepresso/codepresso/entity/order/OrdersDetail.java:41: warning: @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+    private boolean isRepresentative = false;
+                    ^
+/Users/admin/Documents/codepresso-cafe-platform/src/main/java/com/codepresso/codepresso/entity/payment/PaymentType.java:29: warning: @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+    private List<PaymentDetail> paymentDetails = new ArrayList<>();
+                                ^
+/Users/admin/Documents/codepresso-cafe-platform/src/main/java/com/codepresso/codepresso/entity/product/Product.java:60: warning: @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+    private List<ProductOption> options = new ArrayList<>();
+                                ^
+/Users/admin/Documents/codepresso-cafe-platform/src/main/java/com/codepresso/codepresso/entity/product/Product.java:68: warning: @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+    private Set<Allergen> allergens = new HashSet<>();
+                          ^
+/Users/admin/Documents/codepresso-cafe-platform/src/main/java/com/codepresso/codepresso/entity/product/Product.java:77: warning: @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+    private List<Favorite> favorites = new ArrayList<>();
+                           ^
+/Users/admin/Documents/codepresso-cafe-platform/src/main/java/com/codepresso/codepresso/entity/product/Product.java:81: warning: @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+    private Set<Hashtag> hashtags = new HashSet<>();
+                         ^
+/Users/admin/Documents/codepresso-cafe-platform/src/main/java/com/codepresso/codepresso/entity/product/Review.java:35: warning: @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+    private LocalDateTime createdAt = LocalDateTime.now();
+                          ^
+10 warnings
+
+> Task :processResources
+> Task :classes
+> Task :compileTestJava
+> Task :processTestResources
+> Task :testClasses
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+16:26:02.801 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+16:26:02.801 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
+    drop table if exists allergen cascade 
+16:26:02.802 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
+    drop table if exists board cascade 
+16:26:02.803 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
+    drop table if exists board_type cascade 
+16:26:02.803 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
+    drop table if exists branch cascade 
+16:26:02.803 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
+    drop table if exists cart cascade 
+16:26:02.803 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
+    drop table if exists cart_item cascade 
+16:26:02.803 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
+    drop table if exists cart_option cascade 
+16:26:02.803 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
+    drop table if exists category cascade 
+16:26:02.804 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
+    drop table if exists coupon_type cascade 
+16:26:02.804 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
+    drop table if exists favorite cascade 
+16:26:02.804 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
+    drop table if exists hashtag cascade 
+16:26:02.804 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
+    drop table if exists member cascade 
+16:26:02.804 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
+    drop table if exists member_coupon cascade 
+16:26:02.805 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
+    drop table if exists nutrition_info cascade 
+16:26:02.805 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
+    drop table if exists option_name cascade 
+16:26:02.805 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
+    drop table if exists option_style cascade 
+16:26:02.805 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
+    drop table if exists order_detail cascade 
+16:26:02.805 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
+    drop table if exists order_item_options cascade 
+16:26:02.805 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
+    drop table if exists orders cascade 
+16:26:02.805 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
+    drop table if exists payment cascade 
+16:26:02.805 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
+    drop table if exists payment_detail cascade 
+16:26:02.806 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
+    drop table if exists payment_type cascade 
+16:26:02.806 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
+    drop table if exists product cascade 
+16:26:02.806 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
+    drop table if exists product_option cascade 
+16:26:02.806 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
+    drop table if exists review cascade 
+16:26:02.806 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
+    drop table if exists stamp cascade 
+16:26:02.807 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+16:26:02.808 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+
+> Task :test
+
+FavoriteConcurrencyTest > 비관적 락 - 500명 동시 요청 FAILED
+    org.opentest4j.AssertionFailedError at FavoriteConcurrencyTest.java:142
+
+1 test completed, 1 failed
+
+> Task :test FAILED
+
+[Incubating] Problems report is available at: file:///Users/admin/Documents/codepresso-cafe-platform/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':test'.
+> There were failing tests. See the report at: file:///Users/admin/Documents/codepresso-cafe-platform/build/reports/tests/test/index.html
+
+* Try:
+> Run with --scan to get full insights.
+
+BUILD FAILED in 10s
+5 actionable tasks: 5 executed

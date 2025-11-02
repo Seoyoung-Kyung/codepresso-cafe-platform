@@ -33,6 +33,28 @@ public class Product {
 
     private Integer price;
 
+    @Column(name = "favorite_count", nullable = false, columnDefinition = "bigint default 0")
+    @Builder.Default
+    private Long favoriteCount = 0L;
+
+    //@Version
+    @Column(name = "version")
+    private Long version;
+
+    public void increaseFavoriteCount() {
+        if(this.favoriteCount == null) {
+            this.favoriteCount = 1L;
+        } else {
+            this.favoriteCount++;
+        }
+    }
+
+    public void decreaseFavoriteCount() {
+        if(favoriteCount > 0) {
+            this.favoriteCount--;
+        }
+    }
+
     // 1:N
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductOption> options = new ArrayList<>();
@@ -57,5 +79,4 @@ public class Product {
     // 1:N - Hashtag
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Hashtag> hashtags = new HashSet<>();
-
 }

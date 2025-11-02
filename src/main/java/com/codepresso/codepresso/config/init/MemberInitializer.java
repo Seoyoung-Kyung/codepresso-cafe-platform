@@ -62,10 +62,10 @@ public class MemberInitializer implements ApplicationRunner {
 
         log.info("[Init] MemberInitializer done");
 
-        for (int i = 1; i <= 501; i++) {
+        int createdCount = 0;
+        for (int i = 1; i <= 1000; i++) {
             String accountId = "testuser" + i;
 
-            // 이미 존재하면 스킵
             if (memberRepository.existsByAccountId(accountId)) {
                 continue;
             }
@@ -80,6 +80,9 @@ public class MemberInitializer implements ApplicationRunner {
                     .build();
 
             memberRepository.save(member);
+            createdCount++;
         }
+
+        log.info("[Init] Test users created: {}", createdCount);
     }
 }

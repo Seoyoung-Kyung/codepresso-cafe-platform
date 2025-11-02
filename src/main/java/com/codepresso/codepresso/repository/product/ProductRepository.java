@@ -50,4 +50,5 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<ProductListResponse> findByHashtagsIn(@Param("hashtags") List<String> hashtags,
                                    @Param("size") long size);
 
+
 }
