@@ -47,7 +47,6 @@ public class FavoriteConcurrencyTest {
         CountDownLatch latch = new CountDownLatch(THREAD_COUNT);
         AtomicInteger successCount = new AtomicInteger(0); // 멀티스레드 환경에서 안전하게 정수를 다룰 수 있게 해주는 클래스
         AtomicInteger failCount = new AtomicInteger(0);
-        AtomicInteger totalCount = new AtomicInteger(0);
 
         long startTime = System.currentTimeMillis();
         long productId = 1;
@@ -75,7 +74,6 @@ public class FavoriteConcurrencyTest {
 
         // then
         Long finalCount = favoriteService.getFavoriteCount(productId);
-        long actualFavorites = favoriteRepository.countByProductId(productId);
 
         log.info("========================");
         log.info("락 없이 즐겨찾기 동시성 테스트 결과");
@@ -127,20 +125,22 @@ public class FavoriteConcurrencyTest {
 
         // then
         Long finalCount = optimisticService.getFavoriteCount(productId);
-        long actualFavorites = favoriteRepository.countByProductId(productId);
+        long actualFavoriteCount = favoriteRepository.countByProductId(productId);
 
         log.info("========================");
         log.info("낙관적 락 테스트 결과");
         log.info("실행시간 : {}ms", duration);
         log.info("성공 요청 : {}", successCount);
         log.info("실패 요청 : {}", failCount);
+        log.info("재시도 횟수 : {}", totalRetries);
         log.info("실제 Favorite 레코드 수 : {}", finalCount);
-        log.info("데이터 일치 여부 : {}", finalCount.equals(actualFavorites));
-        log.info("========================");
+        log.info("데이터 정합성 : {} (예상 : {}, 실제 : {})",
+                finalCount == THREAD_COUNT ? "성공" : "실패",
+                THREAD_COUNT, finalCount);
 
-//        assertThat(finalCount).isEqualTo(THREAD_COUNT);
-//        assertThat(actualFavorites).isEqualTo(THREAD_COUNT);
-//        assertThat(finalCount).isEqualTo(actualFavorites);
+        assertThat(finalCount).isEqualTo(THREAD_COUNT);
+        assertThat(actualFavoriteCount).isEqualTo(THREAD_COUNT);
+        assertThat(finalCount).isEqualTo(actualFavoriteCount);
 
     }
 

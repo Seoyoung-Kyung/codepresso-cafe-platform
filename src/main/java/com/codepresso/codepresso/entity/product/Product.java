@@ -37,23 +37,9 @@ public class Product {
     @Builder.Default
     private Long favoriteCount = 0L;
 
-    //@Version
+    @Version // 낙관적 락 테스트
     @Column(name = "version")
     private Long version;
-
-    public void increaseFavoriteCount() {
-        if(this.favoriteCount == null) {
-            this.favoriteCount = 1L;
-        } else {
-            this.favoriteCount++;
-        }
-    }
-
-    public void decreaseFavoriteCount() {
-        if(favoriteCount > 0) {
-            this.favoriteCount--;
-        }
-    }
 
     // 1:N
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -79,4 +65,18 @@ public class Product {
     // 1:N - Hashtag
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Hashtag> hashtags = new HashSet<>();
+
+    public void increaseFavoriteCount() {
+        if(this.favoriteCount == null) {
+            this.favoriteCount = 1L;
+        } else {
+            this.favoriteCount++;
+        }
+    }
+
+    public void decreaseFavoriteCount() {
+        if(favoriteCount > 0) {
+            this.favoriteCount--;
+        }
+    }
 }

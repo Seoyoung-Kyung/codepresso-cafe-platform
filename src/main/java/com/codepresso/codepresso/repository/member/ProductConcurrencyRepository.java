@@ -31,7 +31,6 @@ public interface ProductConcurrencyRepository extends JpaRepository<Product, Lon
      * 낙관적 락으로 즐겨찾기 조회
      * 충돌 감지용 (실제로는 Favorite 엔티티에 @Version이 없어서 제한적)
      */
-
     @Lock(LockModeType.OPTIMISTIC)
     @Query("SELECT p FROM Product p WHERE p.id = :productId")
     Optional<Product> findByWithOptimisticLock(@Param("productId") Long productId);
