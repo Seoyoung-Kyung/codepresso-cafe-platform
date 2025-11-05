@@ -1,7 +1,6 @@
-package com.codepresso.codepresso.repository.member;
+package com.codepresso.codepresso.member.repository;
 
-import com.codepresso.codepresso.entity.member.Favorite;
-import com.codepresso.codepresso.entity.product.Product;
+import com.codepresso.codepresso.product.entity.Product;
 import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
