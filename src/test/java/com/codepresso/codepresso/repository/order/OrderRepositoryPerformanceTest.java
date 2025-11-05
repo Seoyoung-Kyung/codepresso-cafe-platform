@@ -1,7 +1,8 @@
 package com.codepresso.codepresso.repository.order;
 
-import com.codepresso.codepresso.dto.order.OrderSummaryProjection;
-import com.codepresso.codepresso.entity.order.Orders;
+import com.codepresso.codepresso.order.dto.OrderSummaryProjection;
+import com.codepresso.codepresso.order.entity.Orders;
+import com.codepresso.codepresso.order.repository.OrdersRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;

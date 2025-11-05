@@ -1,17 +1,17 @@
 package com.codepresso.codepresso.service.payment;
 
-import com.codepresso.codepresso.dto.payment.CheckoutRequest;
-import com.codepresso.codepresso.entity.branch.Branch;
-import com.codepresso.codepresso.entity.member.Member;
-import com.codepresso.codepresso.entity.product.Product;
-import com.codepresso.codepresso.entity.product.ProductOption;
-import com.codepresso.codepresso.repository.branch.BranchRepository;
-import com.codepresso.codepresso.repository.member.MemberRepository;
-import com.codepresso.codepresso.repository.order.OrdersRepository;
-import com.codepresso.codepresso.repository.product.ProductRepository;
-import com.codepresso.codepresso.service.cart.CartService;
-import com.codepresso.codepresso.service.product.ProductService;
-import org.hibernate.annotations.Check;
+import com.codepresso.codepresso.payment.dto.CheckoutRequest;
+import com.codepresso.codepresso.branch.entity.Branch;
+import com.codepresso.codepresso.member.entity.Member;
+import com.codepresso.codepresso.payment.service.PaymentService;
+import com.codepresso.codepresso.product.entity.Product;
+import com.codepresso.codepresso.product.entity.ProductOption;
+import com.codepresso.codepresso.branch.repository.BranchRepository;
+import com.codepresso.codepresso.member.repository.MemberRepository;
+import com.codepresso.codepresso.order.repository.OrdersRepository;
+import com.codepresso.codepresso.product.repository.ProductRepository;
+import com.codepresso.codepresso.cart.service.CartService;
+import com.codepresso.codepresso.product.service.ProductService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -19,8 +19,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 class PaymentServiceTest {

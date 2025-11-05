@@ -1,8 +1,9 @@
 package com.codepresso.codepresso.repository.cart;
 
-import com.codepresso.codepresso.entity.cart.Cart;
-import com.codepresso.codepresso.entity.member.Member;
-import com.codepresso.codepresso.repository.member.MemberRepository;
+import com.codepresso.codepresso.cart.repository.CartRepository;
+import com.codepresso.codepresso.cart.entity.Cart;
+import com.codepresso.codepresso.member.entity.Member;
+import com.codepresso.codepresso.member.repository.MemberRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;

@@ -1,118 +1,445 @@
+Initialized native services in: /Users/admin/.gradle/native
+Initialized jansi services in: /Users/admin/.gradle/native
+The client will now receive all logging from the daemon (pid: 6446). The daemon log file: /Users/admin/.gradle/daemon/8.14.3/daemon-6446.out.log
+Starting 2nd build in daemon [uptime: 39.758 secs, performance: 99%, GC rate: 0.00/s, heap usage: 2% of 512 MiB, non-heap usage: 20% of 384 MiB]
+Using 8 worker leases.
+Now considering [/Users/admin/Documents/codepresso-cafe-platform] as hierarchies to watch
+Watching the file system is configured to be enabled if available
+File system watching is active
+Starting Build
+Settings evaluated using settings file '/Users/admin/Documents/codepresso-cafe-platform/settings.gradle'.
+Projects loaded. Root project using build file '/Users/admin/Documents/codepresso-cafe-platform/build.gradle'.
+Included projects: [root project 'codepresso']
 
-> Task :compileJava
-/Users/admin/Documents/codepresso-cafe-platform/src/main/java/com/codepresso/codepresso/entity/product/OptionName.java:25: warning: @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
-    private List<OptionStyle> optionStyles = new ArrayList<>();
-                              ^
-/Users/admin/Documents/codepresso-cafe-platform/src/main/java/com/codepresso/codepresso/entity/product/Category.java:33: warning: @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
-    private List<Category> childCategories = new ArrayList<>();
-                           ^
-/Users/admin/Documents/codepresso-cafe-platform/src/main/java/com/codepresso/codepresso/entity/product/Category.java:37: warning: @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
-    private List<Product> products = new ArrayList<>();
-                          ^
-/Users/admin/Documents/codepresso-cafe-platform/src/main/java/com/codepresso/codepresso/entity/order/OrdersDetail.java:41: warning: @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
-    private boolean isRepresentative = false;
-                    ^
-/Users/admin/Documents/codepresso-cafe-platform/src/main/java/com/codepresso/codepresso/entity/payment/PaymentType.java:29: warning: @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
-    private List<PaymentDetail> paymentDetails = new ArrayList<>();
-                                ^
-/Users/admin/Documents/codepresso-cafe-platform/src/main/java/com/codepresso/codepresso/entity/product/Product.java:60: warning: @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
-    private List<ProductOption> options = new ArrayList<>();
-                                ^
-/Users/admin/Documents/codepresso-cafe-platform/src/main/java/com/codepresso/codepresso/entity/product/Product.java:68: warning: @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
-    private Set<Allergen> allergens = new HashSet<>();
-                          ^
-/Users/admin/Documents/codepresso-cafe-platform/src/main/java/com/codepresso/codepresso/entity/product/Product.java:77: warning: @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
-    private List<Favorite> favorites = new ArrayList<>();
-                           ^
-/Users/admin/Documents/codepresso-cafe-platform/src/main/java/com/codepresso/codepresso/entity/product/Product.java:81: warning: @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
-    private Set<Hashtag> hashtags = new HashSet<>();
-                         ^
-/Users/admin/Documents/codepresso-cafe-platform/src/main/java/com/codepresso/codepresso/entity/product/Review.java:35: warning: @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
-    private LocalDateTime createdAt = LocalDateTime.now();
-                          ^
-10 warnings
+> Configure project :
+Evaluating root project 'codepresso' using build file '/Users/admin/Documents/codepresso-cafe-platform/build.gradle'.
+Resolved plugin [id: 'java']
+Resolved plugin [id: 'org.springframework.boot', version: '3.5.5']
+Resolved plugin [id: 'io.spring.dependency-management', version: '1.1.7']
+Applying dependency management to configuration 'annotationProcessor' in project 'codepresso'
+Applying dependency management to configuration 'apiElements' in project 'codepresso'
+Applying dependency management to configuration 'archives' in project 'codepresso'
+Applying dependency management to configuration 'bootArchives' in project 'codepresso'
+Applying dependency management to configuration 'compileClasspath' in project 'codepresso'
+Applying dependency management to configuration 'compileOnly' in project 'codepresso'
+Applying dependency management to configuration 'default' in project 'codepresso'
+Applying dependency management to configuration 'developmentOnly' in project 'codepresso'
+Applying dependency management to configuration 'implementation' in project 'codepresso'
+Applying dependency management to configuration 'mainSourceElements' in project 'codepresso'
+Applying dependency management to configuration 'productionRuntimeClasspath' in project 'codepresso'
+Applying dependency management to configuration 'runtimeClasspath' in project 'codepresso'
+Applying dependency management to configuration 'runtimeElements' in project 'codepresso'
+Applying dependency management to configuration 'runtimeOnly' in project 'codepresso'
+Applying dependency management to configuration 'testAndDevelopmentOnly' in project 'codepresso'
+Applying dependency management to configuration 'testAnnotationProcessor' in project 'codepresso'
+Applying dependency management to configuration 'testCompileClasspath' in project 'codepresso'
+Applying dependency management to configuration 'testCompileOnly' in project 'codepresso'
+Applying dependency management to configuration 'testImplementation' in project 'codepresso'
+Applying dependency management to configuration 'testResultsElementsForTest' in project 'codepresso'
+Applying dependency management to configuration 'testRuntimeClasspath' in project 'codepresso'
+Applying dependency management to configuration 'testRuntimeOnly' in project 'codepresso'
+All projects evaluated.
+Task name matched 'test'
+Selected primary task 'test' from project :
+Starting process 'command '/usr/libexec/java_home''. Working directory: /Users/admin/.gradle/daemon/8.14.3 Command: /usr/libexec/java_home -V
+Successfully started process 'command '/usr/libexec/java_home''
+Resolving global dependency management for project 'codepresso'
+Excluding [com.google.protobuf:protobuf-java]
+Excluding []
+Excluding []
+Excluding []
+Excluding []
+Excluding []
+Tasks to be executed: [task ':compileJava', task ':processResources', task ':classes', task ':compileTestJava', task ':processTestResources', task ':testClasses', task ':test']
+Tasks that were excluded: []
+Resolve mutations for :compileJava (Thread[#277,Execution worker,5,main]) started.
+:compileJava (Thread[#277,Execution worker,5,main]) started.
 
-> Task :processResources
-> Task :classes
-> Task :compileTestJava
-> Task :processTestResources
-> Task :testClasses
-OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
-16:26:02.801 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-16:26:02.801 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
-    drop table if exists allergen cascade 
-16:26:02.802 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
-    drop table if exists board cascade 
-16:26:02.803 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
-    drop table if exists board_type cascade 
-16:26:02.803 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
-    drop table if exists branch cascade 
-16:26:02.803 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
-    drop table if exists cart cascade 
-16:26:02.803 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
-    drop table if exists cart_item cascade 
-16:26:02.803 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
-    drop table if exists cart_option cascade 
-16:26:02.803 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
-    drop table if exists category cascade 
-16:26:02.804 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
-    drop table if exists coupon_type cascade 
-16:26:02.804 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
-    drop table if exists favorite cascade 
-16:26:02.804 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
-    drop table if exists hashtag cascade 
-16:26:02.804 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
-    drop table if exists member cascade 
-16:26:02.804 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
-    drop table if exists member_coupon cascade 
-16:26:02.805 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
-    drop table if exists nutrition_info cascade 
-16:26:02.805 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
-    drop table if exists option_name cascade 
-16:26:02.805 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
-    drop table if exists option_style cascade 
-16:26:02.805 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
-    drop table if exists order_detail cascade 
-16:26:02.805 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
-    drop table if exists order_item_options cascade 
-16:26:02.805 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
-    drop table if exists orders cascade 
-16:26:02.805 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
-    drop table if exists payment cascade 
-16:26:02.805 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
-    drop table if exists payment_detail cascade 
-16:26:02.806 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
-    drop table if exists payment_type cascade 
-16:26:02.806 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
-    drop table if exists product cascade 
-16:26:02.806 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
-    drop table if exists product_option cascade 
-16:26:02.806 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
-    drop table if exists review cascade 
-16:26:02.806 [SpringApplicationShutdownHook] DEBUG org.hibernate.SQL - 
-    drop table if exists stamp cascade 
-16:26:02.807 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
-16:26:02.808 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+> Task :compileJava UP-TO-DATE
+Custom actions are attached to task ':compileJava'.
+Caching disabled for task ':compileJava' because:
+  Build cache is disabled
+Skipping task ':compileJava' as it is up-to-date.
+Resolve mutations for :processResources (Thread[#277,Execution worker,5,main]) started.
+:processResources (Thread[#277,Execution worker,5,main]) started.
+
+> Task :processResources UP-TO-DATE
+Caching disabled for task ':processResources' because:
+  Build cache is disabled
+  Not worth caching
+Skipping task ':processResources' as it is up-to-date.
+Resolve mutations for :classes (Thread[#277,Execution worker,5,main]) started.
+:classes (Thread[#277,Execution worker,5,main]) started.
+
+> Task :classes UP-TO-DATE
+Skipping task ':classes' as it has no actions.
+Resolve mutations for :compileTestJava (Thread[#282,Execution worker Thread 6,5,main]) started.
+:compileTestJava (Thread[#282,Execution worker Thread 6,5,main]) started.
+
+> Task :compileTestJava UP-TO-DATE
+Custom actions are attached to task ':compileTestJava'.
+Caching disabled for task ':compileTestJava' because:
+  Build cache is disabled
+Skipping task ':compileTestJava' as it is up-to-date.
+Resolve mutations for :processTestResources (Thread[#282,Execution worker Thread 6,5,main]) started.
+:processTestResources (Thread[#282,Execution worker Thread 6,5,main]) started.
+
+> Task :processTestResources UP-TO-DATE
+Caching disabled for task ':processTestResources' because:
+  Build cache is disabled
+  Not worth caching
+Skipping task ':processTestResources' as it is up-to-date.
+Resolve mutations for :testClasses (Thread[#282,Execution worker Thread 6,5,main]) started.
+:testClasses (Thread[#282,Execution worker Thread 6,5,main]) started.
+
+> Task :testClasses UP-TO-DATE
+Skipping task ':testClasses' as it has no actions.
+Resolve mutations for :test (Thread[#282,Execution worker Thread 6,5,main]) started.
+:test (Thread[#282,Execution worker Thread 6,5,main]) started.
+Gradle Test Executor 2 started executing tests.
 
 > Task :test
+Caching disabled for task ':test' because:
+  Build cache is disabled
+Task ':test' is not up-to-date because:
+  Task has failed previously.
+Starting process 'Gradle Test Executor 2'. Working directory: /Users/admin/Documents/codepresso-cafe-platform Command: /Users/admin/Library/Java/JavaVirtualMachines/ms-21.0.8/Contents/Home/bin/java -Dorg.gradle.internal.worker.tmpdir=/Users/admin/Documents/codepresso-cafe-platform/build/tmp/test/work @/Users/admin/.gradle/.tmp/gradle-worker-classpath15288579231129763360txt -Xmx512m -Dfile.encoding=UTF-8 -Duser.country=KR -Duser.language=ko -Duser.variant -ea worker.org.gradle.process.internal.worker.GradleWorkerMain 'Gradle Test Executor 2'
+Successfully started process 'Gradle Test Executor 2'
 
-FavoriteConcurrencyTest > 비관적 락 - 500명 동시 요청 FAILED
-    org.opentest4j.AssertionFailedError at FavoriteConcurrencyTest.java:142
+FavoriteConcurrencyTest STANDARD_OUT
+    16:01:33.279 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.codepresso.codepresso.service.member.FavoriteConcurrencyTest]: FavoriteConcurrencyTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+    16:01:33.396 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.codepresso.codepresso.CodepressoApplication for test class com.codepresso.codepresso.service.member.FavoriteConcurrencyTest
 
-1 test completed, 1 failed
+      .   ____          _            __ _ _
+     /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+    ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+     \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+      '  |____| .__|_| |_|_| |_\__, | / / / /
+     =========|_|==============|___/=/_/_/_/
 
-> Task :test FAILED
+     :: Spring Boot ::                (v3.5.5)
 
-[Incubating] Problems report is available at: file:///Users/admin/Documents/codepresso-cafe-platform/build/reports/problems/problems-report.html
-
-FAILURE: Build failed with an exception.
-
-* What went wrong:
-Execution failed for task ':test'.
-> There were failing tests. See the report at: file:///Users/admin/Documents/codepresso-cafe-platform/build/reports/tests/test/index.html
-
-* Try:
-> Run with --scan to get full insights.
-
-BUILD FAILED in 10s
-5 actionable tasks: 5 executed
+    16:01:33.834 [Test worker] INFO  c.c.c.s.m.FavoriteConcurrencyTest - Starting FavoriteConcurrencyTest using Java 21.0.8 with PID 6658 (started by admin in /Users/admin/Documents/codepresso-cafe-platform)
+    16:01:33.834 [Test worker] DEBUG c.c.c.s.m.FavoriteConcurrencyTest - Running with Spring Boot v3.5.5, Spring v6.2.10
+    16:01:33.835 [Test worker] INFO  c.c.c.s.m.FavoriteConcurrencyTest - The following 1 profile is active: "test"
+    16:01:34.712 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+    16:01:34.782 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 64 ms. Found 20 JPA repository interfaces.
+    16:01:35.211 [Test worker] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+    16:01:35.262 [Test worker] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.26.Final
+    16:01:35.289 [Test worker] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+    16:01:35.460 [Test worker] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+    16:01:35.479 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+    16:01:35.641 [Test worker] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+    16:01:35.642 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+    16:01:35.660 [Test worker] WARN  org.hibernate.orm.deprecation - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+    16:01:35.671 [Test worker] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+    	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+    	Database driver: undefined/unknown
+    	Database version: 2.3.232
+    	Autocommit mode: undefined/unknown
+    	Isolation level: undefined/unknown
+    	Minimum pool size: undefined/unknown
+    	Maximum pool size: undefined/unknown
+    16:01:37.254 [Test worker] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+    16:01:37.270 [Test worker] DEBUG org.hibernate.SQL - 
+        drop table if exists allergen cascade 
+    16:01:37.275 [Test worker] DEBUG org.hibernate.SQL - 
+        drop table if exists board cascade 
+    16:01:37.275 [Test worker] DEBUG org.hibernate.SQL - 
+        drop table if exists board_type cascade 
+    16:01:37.275 [Test worker] DEBUG org.hibernate.SQL - 
+        drop table if exists branch cascade 
+    16:01:37.275 [Test worker] DEBUG org.hibernate.SQL - 
+        drop table if exists cart cascade 
+    16:01:37.275 [Test worker] DEBUG org.hibernate.SQL - 
+        drop table if exists cart_item cascade 
+    16:01:37.275 [Test worker] DEBUG org.hibernate.SQL - 
+        drop table if exists cart_option cascade 
+    16:01:37.275 [Test worker] DEBUG org.hibernate.SQL - 
+        drop table if exists category cascade 
+    16:01:37.276 [Test worker] DEBUG org.hibernate.SQL - 
+        drop table if exists coupon_type cascade 
+    16:01:37.276 [Test worker] DEBUG org.hibernate.SQL - 
+        drop table if exists favorite cascade 
+    16:01:37.276 [Test worker] DEBUG org.hibernate.SQL - 
+        drop table if exists hashtag cascade 
+    16:01:37.276 [Test worker] DEBUG org.hibernate.SQL - 
+        drop table if exists member cascade 
+    16:01:37.276 [Test worker] DEBUG org.hibernate.SQL - 
+        drop table if exists member_coupon cascade 
+    16:01:37.277 [Test worker] DEBUG org.hibernate.SQL - 
+        drop table if exists nutrition_info cascade 
+    16:01:37.277 [Test worker] DEBUG org.hibernate.SQL - 
+        drop table if exists option_name cascade 
+    16:01:37.277 [Test worker] DEBUG org.hibernate.SQL - 
+        drop table if exists option_style cascade 
+    16:01:37.277 [Test worker] DEBUG org.hibernate.SQL - 
+        drop table if exists order_detail cascade 
+    16:01:37.277 [Test worker] DEBUG org.hibernate.SQL - 
+        drop table if exists order_item_options cascade 
+    16:01:37.277 [Test worker] DEBUG org.hibernate.SQL - 
+        drop table if exists orders cascade 
+    16:01:37.278 [Test worker] DEBUG org.hibernate.SQL - 
+        drop table if exists payment cascade 
+    16:01:37.278 [Test worker] DEBUG org.hibernate.SQL - 
+        drop table if exists payment_detail cascade 
+    16:01:37.278 [Test worker] DEBUG org.hibernate.SQL - 
+        drop table if exists payment_type cascade 
+    16:01:37.278 [Test worker] DEBUG org.hibernate.SQL - 
+        drop table if exists product cascade 
+    16:01:37.278 [Test worker] DEBUG org.hibernate.SQL - 
+        drop table if exists product_option cascade 
+    16:01:37.278 [Test worker] DEBUG org.hibernate.SQL - 
+        drop table if exists review cascade 
+    16:01:37.285 [Test worker] DEBUG org.hibernate.SQL - 
+        drop table if exists stamp cascade 
+    16:01:37.291 [Test worker] DEBUG org.hibernate.SQL - 
+        create table allergen (
+            allergen_id bigint generated by default as identity,
+            product_id bigint,
+            allergen_code varchar(255),
+            allergen_name varchar(255) not null,
+            primary key (allergen_id)
+        )
+    16:01:37.298 [Test worker] DEBUG org.hibernate.SQL - 
+        create table board (
+            board_id bigint generated by default as identity,
+            board_type_id bigint not null,
+            field timestamp(6),
+            member_id bigint not null,
+            parent_id bigint,
+            status_tag varchar(20),
+            title varchar(200),
+            content TEXT,
+            primary key (board_id)
+        )
+    16:01:37.299 [Test worker] DEBUG org.hibernate.SQL - 
+        create table board_type (
+            board_type_id bigint generated by default as identity,
+            board_type_name varchar(100),
+            board_type_description varchar(500),
+            primary key (board_type_id)
+        )
+    16:01:37.301 [Test worker] DEBUG org.hibernate.SQL - 
+        create table branch (
+            closing_time time(6),
+            latitude float(53),
+            longitude float(53),
+            open boolean,
+            opening_time time(6),
+            branch_id bigint generated by default as identity,
+            branch_number varchar(20),
+            branch_name varchar(100),
+            photo_url varchar(500),
+            address varchar(255),
+            primary key (branch_id)
+        )
+    16:01:37.302 [Test worker] DEBUG org.hibernate.SQL - 
+        create table cart (
+            cart_id bigint generated by default as identity,
+            member_id bigint not null unique,
+            primary key (cart_id)
+        )
+    16:01:37.304 [Test worker] DEBUG org.hibernate.SQL - 
+        create table cart_item (
+            price integer not null,
+            quantity integer not null,
+            cart_id bigint not null,
+            cart_item_id bigint generated by default as identity,
+            product_id bigint not null,
+            primary key (cart_item_id)
+        )
+    16:01:37.305 [Test worker] DEBUG org.hibernate.SQL - 
+        create table cart_option (
+            cart_item_id bigint not null,
+            cart_option_id bigint generated by default as identity,
+            product_option_id bigint not null,
+            primary key (cart_option_id)
+        )
+    16:01:37.306 [Test worker] DEBUG org.hibernate.SQL - 
+        create table category (
+            display_order tinyint,
+            level tinyint,
+            category_id bigint generated by default as identity,
+            parent_category_id bigint,
+            category_code varchar(255),
+            category_name varchar(255),
+            primary key (category_id)
+        )
+    16:01:37.307 [Test worker] DEBUG org.hibernate.SQL - 
+        create table coupon_type (
+            coupon_id bigint generated by default as identity,
+            valid_period timestamp(6),
+            coupon_type varchar(30),
+            available_menu varchar(255),
+            primary key (coupon_id)
+        )
+    16:01:37.308 [Test worker] DEBUG org.hibernate.SQL - 
+        create table favorite (
+            orderby integer,
+            member_id bigint not null,
+            product_id bigint not null,
+            primary key (member_id, product_id)
+        )
+    16:01:37.309 [Test worker] DEBUG org.hibernate.SQL - 
+        create table hashtag (
+            hashtag_id bigint generated by default as identity,
+            product_id bigint,
+            hashtag_name varchar(255),
+            primary key (hashtag_id)
+        )
+    16:01:37.310 [Test worker] DEBUG org.hibernate.SQL - 
+        create table member (
+            birth_date date,
+            last_login_at datetime,
+            member_id bigint generated by default as identity,
+            phone varchar(20),
+            account_id varchar(50) not null,
+            name varchar(50),
+            nickname varchar(50) not null,
+            password varchar(100),
+            email varchar(255),
+            profile_image varchar(255),
+            role enum ('ADMIN','USER') not null,
+            primary key (member_id),
+            constraint uq_member_account unique (account_id),
+            constraint uq_member_nickname unique (nickname),
+            constraint uq_member_email unique (email)
+        )
+    16:01:37.314 [Test worker] DEBUG org.hibernate.SQL - 
+        create table member_coupon (
+            coupon_id bigint not null,
+            expiry_date timestamp(6),
+            issued_date timestamp(6),
+            member_coupon_id bigint generated by default as identity,
+            member_id bigint not null,
+            status enum ('UNUSED','USED'),
+            primary key (member_coupon_id)
+        )
+    16:01:37.315 [Test worker] DEBUG org.hibernate.SQL - 
+        create table nutrition_info (
+            caffeine DECIMAL(5,1) DEFAULT 0.0,
+            calories float(53) not null,
+            carbohydrate float(53) not null,
+            cholesterol integer not null,
+            fat float(53) not null,
+            protein float(53) not null,
+            saturated_fat float(53) not null,
+            sodium float(53) not null,
+            sugar float(53) not null,
+            trans_fat float(53) not null,
+            nutrition_info_id bigint generated by default as identity,
+            product_id bigint unique,
+            primary key (nutrition_info_id)
+        )
+    16:01:37.323 [Test worker] DEBUG org.hibernate.SQL - 
+        create table option_name (
+            option_name_id bigint generated by default as identity,
+            option_name varchar(30),
+            primary key (option_name_id)
+        )
+    16:01:37.323 [Test worker] DEBUG org.hibernate.SQL - 
+        create table option_style (
+            extra_price integer,
+            option_name_id bigint not null,
+            option_style_id bigint generated by default as identity,
+            option_style varchar(100),
+            primary key (option_style_id)
+        )
+    16:01:37.324 [Test worker] DEBUG org.hibernate.SQL - 
+        create table order_detail (
+            is_representative boolean,
+            price integer,
+            quantity integer,
+            order_detail_id bigint generated by default as identity,
+            order_id bigint not null,
+            product_id bigint not null,
+            primary key (order_detail_id)
+        )
+    16:01:37.325 [Test worker] DEBUG org.hibernate.SQL - 
+        create table order_item_options (
+            option_id bigint not null,
+            order_detail_id bigint not null,
+            order_item_options_id bigint generated by default as identity,
+            primary key (order_item_options_id)
+        )
+    16:01:37.326 [Test worker] DEBUG org.hibernate.SQL - 
+        create table orders (
+            discount_amount integer,
+            final_amount integer,
+            pickup boolean,
+            takeout boolean,
+            total_amount integer,
+            branch_id bigint not null,
+            member_id bigint not null,
+            order_date timestamp(6),
+            order_id bigint generated by default as identity,
+            pickup_time timestamp(6),
+            used_coupon_id bigint,
+            production_status varchar(50),
+            request_note varchar(100),
+            primary key (order_id)
+        )
+    16:01:37.327 [Test worker] DEBUG org.hibernate.SQL - 
+        create table payment (
+            order_id bigint not null unique,
+            payment_id bigint generated by default as identity,
+            primary key (payment_id)
+        )
+    16:01:37.328 [Test worker] DEBUG org.hibernate.SQL - 
+        create table payment_detail (
+            payment_amt integer,
+            payment_date timestamp(6),
+            payment_detail_id bigint generated by default as identity,
+            payment_id bigint not null,
+            payment_type_id bigint not null,
+            pg_id varchar(50),
+            primary key (payment_detail_id)
+        )
+    16:01:37.329 [Test worker] DEBUG org.hibernate.SQL - 
+        create table payment_type (
+            payment_type_id bigint generated by default as identity,
+            payment_type_name varchar(100),
+            description varchar(500),
+            primary key (payment_type_id)
+        )
+    16:01:37.330 [Test worker] DEBUG org.hibernate.SQL - 
+        create table product (
+            price integer,
+            category_id bigint not null,
+            favorite_count bigint default 0 not null,
+            product_id bigint generated by default as identity,
+            version bigint,
+            product_content varchar(255),
+            product_name varchar(255),
+            product_photo varchar(255),
+            primary key (product_id)
+        )
+    16:01:37.332 [Test worker] DEBUG org.hibernate.SQL - 
+        create table product_option (
+            option_style_id bigint,
+            product_id bigint not null,
+            product_option_id bigint generated by default as identity,
+            primary key (product_option_id)
+        )
+    16:01:37.333 [Test worker] DEBUG org.hibernate.SQL - 
+        create table review (
+            rating numeric(38,2),
+            created_at timestamp(6) not null,
+            member_id bigint not null,
+            order_detail_id bigint not null unique,
+            review_id bigint generated by default as identity,
+            content varchar(500) not null,
+            photo_url varchar(500),
+            primary key (review_id)
+        )
+    16:01:37.334 [Test worker] DEBUG org.hibernate.SQL - 
+        create table stamp (
+            quantity integer,
+            earned_date timestamp(6),
+            member_id bigint not null,
+            stamp_id bigint generated by default as identity,
+            primary key (stamp_id)
+        )
+    16:01:37.336 [Test worker] DEBUG org.hibernate.SQL - 
+        alter table if exists a
