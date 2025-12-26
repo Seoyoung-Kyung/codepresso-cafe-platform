@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class PaymentController {
 
     private final PaymentService paymentService;
-    private final PaymentServiceImproveInsertOrder paymentService2;
+//    private final PaymentServiceImproveInsertOrder paymentService;
 
     /**
      * 장바구니 결제페이지 데이터 조회 API
@@ -63,10 +63,11 @@ public class PaymentController {
             @AuthenticationPrincipal LoginUser loginUser,
             @RequestBody @Valid TossPaymentSuccessRequest request) {
         try {
-            request.setMemberId(loginUser.getMemberId());
+            if (loginUser != null) {
+                request.setMemberId(loginUser.getMemberId());
+            }
 
-            // CheckoutResponse response = paymentService.processTossPaymentSuccess(request);
-            CheckoutResponse response = paymentService2.processTossPaymentSuccess(request);
+            CheckoutResponse response = paymentService.processTossPaymentSuccess(request);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             throw new IllegalArgumentException("토스페이먼츠 결제 성공 처리 중 오류가 발생했습니다: " + e.getMessage());

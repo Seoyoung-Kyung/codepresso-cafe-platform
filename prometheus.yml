@@ -1,0 +1,30 @@
+global:
+  scrape_interval: 15s # 15초마다 메트릭 수집
+  evaluation_interval: 15s # 15초마다 규칙 평가
+
+# Alertmanager 설정 (선택사항)
+# alerting:
+#   alertmanagers:
+#     - static_configs:
+#         - targets: []
+
+# 규칙 파일 로드 (선택사항)
+# rule_files:
+#   - "alert_rules.yml"
+
+# 메트릭 수집 대상 설정
+scrape_configs:
+  # Prometheus 자체 모니터링
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # Spring Boot 애플리케이션 모니터링
+  - job_name: 'codepresso-app'
+    metrics_path: '/actuator/prometheus'
+    scrape_interval: 5s # 쿼리 카운트는 5초마다 수집
+    static_configs:
+      - targets: ['host.docker.internal:8080'] # Docker에서 호스트 머신 접근
+        labels:
+          application: 'codepresso'
+          environment: 'development'

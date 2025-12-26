@@ -7,7 +7,7 @@ import com.codepresso.codepresso.payment.dto.CheckoutRequest;
 import com.codepresso.codepresso.payment.dto.CheckoutResponse;
 import com.codepresso.codepresso.payment.dto.TossPaymentSuccessRequest;
 import com.codepresso.codepresso.product.dto.ProductDetailResponse;
-import com.codepresso.codepresso.product.dto.ProductOptionDTO;
+import com.codepresso.codepresso.product.dto.ProductOptionDto;
 import com.codepresso.codepresso.branch.entity.Branch;
 import com.codepresso.codepresso.member.entity.Member;
 import com.codepresso.codepresso.order.entity.Orders;
@@ -73,7 +73,7 @@ public class PaymentService {
         validateQuantity(quantity);
 
         ProductDetailResponse productDetail = productService.findByProductId(productId);
-        List<ProductOptionDTO> selectedOptions = new ArrayList<>();
+        List<ProductOptionDto> selectedOptions = new ArrayList<>();
         int totalAmount = calculateTotalAmount(productDetail, optionIds, quantity, selectedOptions);
 
         CheckoutResponse.OrderItem orderItem = convertDirectItemToOrderItem(
@@ -134,7 +134,7 @@ public class PaymentService {
      */
     private CheckoutResponse.OrderItem convertDirectItemToOrderItem(
             ProductDetailResponse productDetail,
-            List<ProductOptionDTO> selectedOptions,
+            List<ProductOptionDto> selectedOptions,
             Integer quantity,
             Integer totalAmount,
             List<Long> optionIds) {
@@ -183,13 +183,13 @@ public class PaymentService {
     /**
      * ProductOptionDTO 옵션 이름 추출
      */
-    private List<String> extractOptionNamesFromProductOptions(List<ProductOptionDTO> selectedOptions) {
+    private List<String> extractOptionNamesFromProductOptions(List<ProductOptionDto> selectedOptions) {
         if (selectedOptions == null || selectedOptions.isEmpty()) {
             return Collections.emptyList();
         }
 
         return selectedOptions.stream()
-                .map(ProductOptionDTO::getOptionStyleName)
+                .map(ProductOptionDto::getOptionStyleName)
                 .collect(Collectors.toList());
     }
 
@@ -198,7 +198,7 @@ public class PaymentService {
      * 총 가격 계산 및 선택된 옵션 수집
      */
     private int calculateTotalAmount(ProductDetailResponse productDetail, List<Long> optionIds,
-                                     Integer quantity, List<ProductOptionDTO> selectedOptions) {
+                                     Integer quantity, List<ProductOptionDto> selectedOptions) {
 
         int basePrice = (productDetail.getPrice() != null) ? productDetail.getPrice() : 0;
         int optionPrice = 0;
@@ -207,7 +207,7 @@ public class PaymentService {
         if (optionIds != null && !optionIds.isEmpty()) {
             // 선택된 옵션들 찾기 및 가격 계산
             for (Long optionId : optionIds) {
-                ProductOptionDTO foundOption = productDetail.getProductOptions().stream()
+                ProductOptionDto foundOption = productDetail.getProductOptions().stream()
                         .filter(option -> option.getOptionId().equals(optionId))
                         .findFirst()
                         .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 옵션입니다: " + optionId));
@@ -240,7 +240,7 @@ public class PaymentService {
                 .collect(Collectors.toList());
 
         // 4. 주문 저장
-        List<OrdersDetail> ordersDetails = orderCreationService.createOrderDetails(checkoutItems,orders);
+        List<OrdersDetail> ordersDetails = orderCreationService.createOrderDetails(checkoutItems, orders);
         orders.setOrdersDetails(ordersDetails);
 
         Orders savedOrder = ordersRepository.save(orders);
@@ -273,9 +273,9 @@ public class PaymentService {
         }
 
         // stamp 적립
-        try{
+        try {
             stampService.earnStampsFromOrder(member.getId(), ordersDetails);
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

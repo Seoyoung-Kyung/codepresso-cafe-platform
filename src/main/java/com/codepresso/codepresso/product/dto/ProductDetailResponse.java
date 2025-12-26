@@ -24,10 +24,10 @@ public class ProductDetailResponse {
 
     private Set<String> hashtags;
 
-    private NutritionInfoDTO nutritionInfo;
+    private NutritionInfoDto nutritionInfo;
 
     private Set<String> allergens;
 
-    private List<ProductOptionDTO> productOptions;
+    private List<ProductOptionDto> productOptions;
 
 }

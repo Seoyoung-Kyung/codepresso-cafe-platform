@@ -3,6 +3,7 @@ package com.codepresso.codepresso.order.controller;
 import com.codepresso.codepresso.order.dto.OrderDetailResponse;
 import com.codepresso.codepresso.order.dto.OrderListResponse;
 import com.codepresso.codepresso.common.security.LoginUser;
+import com.codepresso.codepresso.order.service.OrderService;
 import com.codepresso.codepresso.order.service.OrderServiceImproveGetOrderList;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +19,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class OrderController {
 
-    private final OrderServiceImproveGetOrderList orderService;
-//    private final OrderService orderService;
+//    private final OrderServiceImproveGetOrderList orderService;
+    private final OrderService orderService;
 
     /**
      * 사용자별 주문 내역 조회 ( 사용자별 + 기간별 )

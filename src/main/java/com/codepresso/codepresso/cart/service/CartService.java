@@ -16,17 +16,20 @@ import com.codepresso.codepresso.product.repository.ProductOptionRepository;
 import com.codepresso.codepresso.product.repository.ProductRepository;
 import com.codepresso.codepresso.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class CartService {
 
     private final CartRepository cartRepository;
@@ -52,6 +55,8 @@ public class CartService {
                     newCart.setMember(member);
                     return cartRepository.save(newCart);
                 });
+
+        log.debug("카트" + (cart == null));
 
         // 상품 조회
         Product product = productRepository.findById(productId)
@@ -119,7 +124,7 @@ public class CartService {
         return saved;
     }
 
-    private boolean sameOptionSet(CartItem existingCartItem, Set<Long> requestedOptionIdSet){
+    private boolean sameOptionSet(CartItem existingCartItem, Set<Long> requestedOptionIdSet) {
         List<CartOption> existingCartOptions = existingCartItem.getOptions();
         if (existingCartOptions == null || existingCartOptions.isEmpty()) {
             return requestedOptionIdSet.isEmpty();
@@ -147,7 +152,7 @@ public class CartService {
     private int safeExtraPrice(ProductOption productOption) {
         // optionStyle 혹은 extraPrice가 null이어도 안전하게 0으로 처리
         if (productOption == null ||
-                productOption.getOptionStyle() == null ) {
+                productOption.getOptionStyle() == null) {
             return 0;
         }
         return productOption.getOptionStyle().getExtraPrice();
@@ -233,13 +238,13 @@ public class CartService {
     }
 
     // u - 수량 newQuantity로 덮어쓰기 (단가 보존)
-    public void changeItemQuantity(Long cartItemId, Long memberId, int newQuantity){
+    public void changeItemQuantity(Long cartItemId, Long memberId, int newQuantity) {
         if (newQuantity <= 0) {
             throw new IllegalArgumentException("수량은 1 이상이어야 합니다.");
         }
         CartItem item = cartItemRepository.findById(cartItemId)
                 .orElseThrow(() -> new IllegalArgumentException(
-                        "장바구니에 아이템이 없습니다. cartItemId = " + cartItemId ));
+                        "장바구니에 아이템이 없습니다. cartItemId = " + cartItemId));
 
         // 회원 검증
         if (!item.getCart().getMember().getId().equals(memberId)) {
@@ -266,7 +271,7 @@ public class CartService {
         cartItemRepository.deleteById(item.getId());
     }
 
-    // d - 전체 삭제
+
     @Transactional
     public void clearCart(Long memberId, Long cartId) {
         // cartId가 본인 소유인지 검증
@@ -280,12 +285,61 @@ public class CartService {
         // 아이템들 조회
         List<CartItem> items = cartItemRepository.findByCartId(cartId);
 
-        // 옵션 전부 선삭제
         for (CartItem ci : items) {
-            cartOptionRepository.deleteByCartItemId(ci.getId());
+            cartOptionRepository.deleteByCartItemId(ci.getId());  // DELETE 10번
         }
 
         // 아이템 전부 삭제
-        cartItemRepository.deleteAllInBatch(items);
+        cartItemRepository.deleteAllInBatch(items); // DELETE 1번
     }
+
+    // 벌크연산 사용
+    @Transactional
+    public void clearCartByBulk(Long memberId, Long cartId) {
+        Cart cart = cartRepository.findById(cartId)
+                .orElseThrow(() -> new IllegalArgumentException("장바구니가 없습니다. cartId = " + cartId));
+
+        if (!cart.getMember().getId().equals(memberId)) {
+            throw new IllegalArgumentException("본인 장바구니만 비울 수 있습니다.");
+        }
+
+        cartOptionRepository.deleteByCartId(cartId); // DELETE 1번
+
+        cartItemRepository.deleteByCartId(cartId); // DELETE 1번
+    }
+
+    @Transactional
+    public void clearCartByBulk2(Long memberId, Long cartId) {
+        Cart cart = cartRepository.findById(cartId)
+                .orElseThrow(() -> new IllegalArgumentException("장바구니가 없습니다. cartId = " + cartId));
+
+        if (!cart.getMember().getId().equals(memberId)) {
+            throw new IllegalArgumentException("본인 장바구니만 비울 수 있습니다.");
+        }
+
+        List<CartItem> items = cartItemRepository.findByCartId(cartId); // SELECT 1번
+
+        List<CartOption> itemOptions = cartOptionRepository.findByCartId(cartId); // SELECT 1번
+
+        cartOptionRepository.deleteAllInBatch(itemOptions); // DELETE 1번
+
+        cartItemRepository.deleteAllInBatch(items); // DELETE 1번
+    }
+
+
+    // cascade 이용
+    @Transactional
+    public void clearCartByCascade(Long memberId, Long cartId) {
+        Cart cart = cartRepository.findById(cartId)
+                .orElseThrow(() -> new IllegalArgumentException("장바구니가 없습니다. cartId = " + cartId));
+
+        if (!cart.getMember().getId().equals(memberId)) {
+            throw new IllegalArgumentException("본인 장바구니만 비울 수 있습니다.");
+        }
+
+        List<CartItem> items = cartItemRepository.findByCartId(cartId);
+
+        cartItemRepository.deleteAll(items);
+    }
+
 }

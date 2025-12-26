@@ -1,10 +1,12 @@
 package com.codepresso.codepresso.product.controller;
 
+import com.codepresso.codepresso.product.dto.ProductDetailResponse;
 import com.codepresso.codepresso.product.dto.ProductListResponse;
 import com.codepresso.codepresso.review.dto.ReviewListResponse;
 import com.codepresso.codepresso.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +26,12 @@ public class ProductController {
         List<ProductListResponse> products = productService.findProductsByCategory();
 //        List<ProductListResponse> products = productService.getAllProducts();
         return ResponseEntity.ok(products);
+    }
+
+    @GetMapping("/{productId}")
+    public ResponseEntity<ProductDetailResponse> getProductDetail(@PathVariable Long productId) {
+        ProductDetailResponse product = productService.findByProductId(productId);
+        return ResponseEntity.ok(product);
     }
 
     /**

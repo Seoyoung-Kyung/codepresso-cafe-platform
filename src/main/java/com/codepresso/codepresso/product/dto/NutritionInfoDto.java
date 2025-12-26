@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class NutritionInfoDTO {
+public class NutritionInfoDto {
     private double calories;
 
     private double protein;

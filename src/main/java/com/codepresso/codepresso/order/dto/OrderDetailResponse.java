@@ -2,6 +2,7 @@ package com.codepresso.codepresso.order.dto;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
 /**
  * 주문 상세 응답 DTO
  * */
-@Data
+@Getter
 @Builder
 public class OrderDetailResponse {
 
@@ -31,7 +32,7 @@ public class OrderDetailResponse {
     // 결제정보
     private PaymentInfo payment;
 
-    @Data
+    @Getter
     @Builder
     public static class BranchInfo {
         private Long branchId;
@@ -40,7 +41,7 @@ public class OrderDetailResponse {
         private String branchNumber;
     }
 
-    @Data
+    @Getter
     @Builder
     public static class OrderItem {
         private Long orderDetailId;
@@ -51,14 +52,14 @@ public class OrderDetailResponse {
         private List<OrderOption> options;
     }
 
-    @Data
+    @Getter
     @Builder
     public static class OrderOption {
         private String optionStyle;
         private Integer extraPrice;
     }
 
-    @Data
+    @Getter
     @Builder
     public static class PaymentInfo {
         private String paymentMethod;

@@ -48,7 +48,7 @@ public class CartController {
             @RequestParam Long productId,
             @RequestParam int quantity,
             @RequestParam(required = false) List<Long> optionIds
-    ){
+    ) {
         CartItem savedItem = cartService.addItemWithOptions(loginUser.getMemberId(), productId, quantity, optionIds);
 
         //cartItem -> DTO 변환
@@ -81,18 +81,18 @@ public class CartController {
         return ResponseEntity.ok("수량이 변경되었습니다.");
     }
 
-    //장바구니 상품 삭제
+    //장바구니 개별 상품 삭제
     @DeleteMapping("/{cartItemId}")
     public ResponseEntity<String> deleteItem(
             @PathVariable Long cartItemId,
-           @AuthenticationPrincipal LoginUser loginUser
-    ){
+            @AuthenticationPrincipal LoginUser loginUser
+    ) {
         cartService.deleteItem(cartItemId, loginUser.getMemberId());
         return ResponseEntity.ok("아이템이 삭제되었습니다.");
     }
 
 
-    //장바구니 비우기
+    //장바구니 전체 비우기
     @PostMapping("/clear")
     public ResponseEntity<String> clearCart(
             @AuthenticationPrincipal LoginUser loginUser,

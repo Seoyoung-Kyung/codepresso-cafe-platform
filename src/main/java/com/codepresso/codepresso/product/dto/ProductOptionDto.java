@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class ProductOptionDTO {
+public class ProductOptionDto {
     private Long optionStyleId;
 
     private Long optionId;

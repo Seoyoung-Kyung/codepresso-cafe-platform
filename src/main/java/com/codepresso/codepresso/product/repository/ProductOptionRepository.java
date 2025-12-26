@@ -16,4 +16,8 @@ public interface ProductOptionRepository extends JpaRepository<ProductOption, Lo
             "LEFT JOIN FETCH os.optionName " +
             "WHERE p.product.id = :productId")
     List<ProductOption> findOptionByProductId(@Param("productId") Long productId);
+
+    @Query(value = "SELECT COUNT(*) FROM product_option WHERE product_id = :productId",
+            nativeQuery = true)
+    int countOptionByProductId(@Param("productId") Long productId);
 }

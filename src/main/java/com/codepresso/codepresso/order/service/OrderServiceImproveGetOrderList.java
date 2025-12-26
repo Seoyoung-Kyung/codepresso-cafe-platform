@@ -205,7 +205,6 @@ public class OrderServiceImproveGetOrderList {
               }
           }
 
-         // ✅ 할인 전 원가 계산
          int basePrice = detail.getProduct().getPrice();  // 상품 기본 가격
          int unitPrice = basePrice + optionExtraPrice;    // 단가 = 기본가격 + 옵션가격
          int quantity = detail.getQuantity() != null ? detail.getQuantity() : 1;

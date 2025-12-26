@@ -1,6 +1,6 @@
 package com.codepresso.codepresso.product.converter;
 
-import com.codepresso.codepresso.product.dto.NutritionInfoDTO;
+import com.codepresso.codepresso.product.dto.NutritionInfoDto;
 import com.codepresso.codepresso.product.dto.ProductDetailResponse;
 import com.codepresso.codepresso.product.dto.ProductListResponse;
 import com.codepresso.codepresso.product.entity.*;
@@ -59,12 +59,12 @@ public class ProductConverter {
                 .collect(Collectors.toSet());
     }
 
-    private NutritionInfoDTO getNutritionInfo(NutritionInfo nutritionInfo) {
+    private NutritionInfoDto getNutritionInfo(NutritionInfo nutritionInfo) {
         if (nutritionInfo == null) {
             return null;
     }
 
-        return NutritionInfoDTO.builder()
+        return NutritionInfoDto.builder()
                 .calories(nutritionInfo.getCalories())
                 .protein(nutritionInfo.getProtein())
                 .fat(nutritionInfo.getFat())

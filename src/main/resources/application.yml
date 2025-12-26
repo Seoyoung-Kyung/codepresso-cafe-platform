@@ -24,7 +24,7 @@ spring:
 
   # 데이터베이스 연결 설정 (MySQL - docker-compose: mysql:8.4, 포트 33306)
   datasource:
-    url: jdbc:mysql://localhost:33306/codepresso?useSSL=false&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&characterEncoding=UTF-8
+    url: jdbc:p6spy:mysql://localhost:33306/codepresso?useSSL=false&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&characterEncoding=UTF-8
     username: codepresso
     password: codepresso123
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -34,11 +34,15 @@ spring:
     database-platform: org.hibernate.dialect.MySQLDialect   # MySQL 방언(자동 선택되지만 명시)
     hibernate:
       ddl-auto: update # 빈 DB는 생성, 기존 스키마는 보존하며 변경 반영
-    show-sql: true        # 실행되는 SQL 쿼리를 콘솔에 출력
+    show-sql: false        # 실행되는 SQL 쿼리를 콘솔에 출력
     properties:
       hibernate:
+        session_factory:
+          # QueryCountInspector 등록 (패키지 경로 확인!)
+          statement_inspector: com.codepresso.codepresso.monitoring.QueryCountInspector
         format_sql: true  # SQL 쿼리를 보기 좋게 포맷팅
         use_sql_comments: true  # 쿼리에 주석 추가 (어떤 메서드에서 호출되었는지 표시)
+
 
   # 이메일 발송 설정 (Naver SMTP)
   mail:
@@ -54,6 +58,8 @@ spring:
             enable: true
           ssl:
             trust: smtp.naver.com
+
+
 
 # MyBatis는 비활성화(의존성 제거). 필요 시 추후 재도입
 
@@ -83,3 +89,32 @@ toss:
     base-url: https://api.tosspayments.com
     success-url: http://localhost:8080/payments/success
     fail-url: http://localhost:8080/payments/fail
+
+logging:
+  level:
+    org.springframework.security: INFO
+    com.codepresso.codepresso: DEBUG
+    com.codepresso.codepresso.monitoring: INFO
+
+
+# Actuator 설정 추가
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, prometheus  # Prometheus 엔드포인트 노출
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+    distribution:
+      percentiles-histogram:
+        app.query.per_request: true  # 히스토그램 활성화
+
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true
+      multiline: true
+      logging: slf4j
+      log-format: "%(executionTime) ms | %(sql)"
