@@ -104,37 +104,110 @@ CodePresso는 카페 운영을 위한 종합 웹 플랫폼입니다.
 ## 프로젝트 구조
 
 ```
-codepresso/
+codepresso-cafe-platform/
 ├── src/
 │   ├── main/
 │   │   ├── java/com/codepresso/codepresso/
-│   │   │   ├── config/              # 설정 클래스 (Security, Swagger 등)
-│   │   │   ├── controller/          # 컨트롤러 레이어
-│   │   │   │   ├── auth/            # 인증 관련
-│   │   │   │   ├── board/           # 게시판
-│   │   │   │   ├── branch/          # 지점
-│   │   │   │   ├── cart/            # 장바구니
-│   │   │   │   ├── coupon/          # 쿠폰
-│   │   │   │   ├── member/          # 회원
-│   │   │   │   ├── order/           # 주문
-│   │   │   │   ├── payment/         # 결제
-│   │   │   │   ├── product/         # 상품
-│   │   │   │   └── review/          # 리뷰
-│   │   │   ├── service/             # 서비스 레이어 (비즈니스 로직)
-│   │   │   ├── repository/          # 레포지토리 레이어 (데이터 접근)
-│   │   │   ├── entity/              # JPA 엔티티
-│   │   │   ├── dto/                 # 데이터 전송 객체
-│   │   │   ├── converter/           # Entity ↔ DTO 변환
-│   │   │   ├── security/            # Spring Security 설정
-│   │   │   ├── exception/           # 예외 처리
+│   │   │   ├── auth/                # 인증 도메인
+│   │   │   │   ├── controller/      # 인증 컨트롤러
+│   │   │   │   ├── dto/             # 인증 DTO
+│   │   │   │   └── service/         # 인증 서비스
+│   │   │   ├── board/               # 게시판 도메인
+│   │   │   │   ├── controller/
+│   │   │   │   ├── converter/
+│   │   │   │   ├── dto/
+│   │   │   │   └── service/
+│   │   │   ├── branch/              # 지점 도메인
+│   │   │   │   ├── controller/
+│   │   │   │   ├── entity/
+│   │   │   │   ├── repository/
+│   │   │   │   └── service/
+│   │   │   ├── cart/                # 장바구니 도메인
+│   │   │   │   ├── controller/
+│   │   │   │   ├── dto/
+│   │   │   │   ├── entity/
+│   │   │   │   ├── repository/
+│   │   │   │   └── service/
+│   │   │   ├── common/              # 공통 모듈
+│   │   │   │   ├── config/          # 설정 (Security, Swagger, init 등)
+│   │   │   │   ├── controller/      # 공통 컨트롤러
+│   │   │   │   ├── exception/       # 예외 처리
+│   │   │   │   ├── response/        # 공통 응답
+│   │   │   │   └── security/        # Spring Security 설정
+│   │   │   ├── coupon/              # 쿠폰 도메인
+│   │   │   │   ├── controller/
+│   │   │   │   ├── dto/
+│   │   │   │   ├── entity/
+│   │   │   │   ├── repository/
+│   │   │   │   └── service/
+│   │   │   ├── member/              # 회원 도메인
+│   │   │   │   ├── controller/
+│   │   │   │   ├── dto/
+│   │   │   │   ├── entity/
+│   │   │   │   ├── repository/
+│   │   │   │   └── service/
+│   │   │   ├── monitoring/          # 모니터링
+│   │   │   ├── order/               # 주문 도메인
+│   │   │   │   ├── controller/
+│   │   │   │   ├── converter/
+│   │   │   │   ├── dto/
+│   │   │   │   ├── entity/
+│   │   │   │   ├── repository/
+│   │   │   │   └── service/
+│   │   │   ├── payment/             # 결제 도메인
+│   │   │   │   ├── controller/
+│   │   │   │   ├── dto/
+│   │   │   │   ├── entity/
+│   │   │   │   ├── repository/
+│   │   │   │   └── service/
+│   │   │   ├── product/             # 상품 도메인
+│   │   │   │   ├── controller/
+│   │   │   │   ├── converter/
+│   │   │   │   ├── dto/
+│   │   │   │   ├── entity/
+│   │   │   │   ├── repository/
+│   │   │   │   └── service/
+│   │   │   ├── review/              # 리뷰 도메인
+│   │   │   │   ├── controller/
+│   │   │   │   ├── converter/
+│   │   │   │   └── dto/
+│   │   │   ├── web/                 # 웹 관련
 │   │   │   └── CodepressoApplication.java
 │   │   ├── resources/
 │   │   │   ├── application.yml      # 애플리케이션 설정
-│   │   │   └── static/              # 정적 리소스 (CSS, JS, 이미지)
+│   │   │   ├── db/seed/             # 데이터베이스 시드 데이터
+│   │   │   └── static/              # 정적 리소스
+│   │   │       ├── banners/         # 배너 이미지
+│   │   │       ├── css/             # CSS 파일
+│   │   │       ├── js/              # JavaScript 파일
+│   │   │       └── uploads/         # 업로드 파일
+│   │   │           ├── profile-images/
+│   │   │           └── reviews/
 │   │   └── webapp/
 │   │       └── WEB-INF/
 │   │           └── views/           # JSP 뷰 파일
+│   │               ├── auth/
+│   │               ├── board/
+│   │               ├── branch/
+│   │               ├── cart/
+│   │               ├── common/
+│   │               ├── home/
+│   │               ├── member/
+│   │               ├── order/
+│   │               ├── payment/
+│   │               ├── product/
+│   │               ├── review/
+│   │               └── test/
 │   └── test/                        # 테스트 코드
+│       ├── http/                    # HTTP 테스트
+│       ├── java/com/codepresso/codepresso/
+│       │   ├── repository/          # 레포지토리 테스트
+│       │   │   ├── cart/
+│       │   │   └── order/
+│       │   └── service/             # 서비스 테스트
+│       │       ├── member/
+│       │       └── payment/
+│       └── resources/               # 테스트 리소스
 ├── build.gradle                     # Gradle 빌드 설정
 ├── docker-compose.yml               # Docker Compose 설정 (MySQL)
 └── README.md
