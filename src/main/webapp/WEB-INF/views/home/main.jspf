@@ -15,7 +15,6 @@
                 <div class="sprinkle"></div>
                 <div class="cup" aria-label="CodePresso Mascot">
                     <picture>
-                        <source srcset="/banners/mascot-small.webp" type="image/webp">
                         <img class="cup-img" src="/banners/mascot.png" alt="CodePresso Mascot" loading="lazy" />
                     </picture>
 <%--                    <div class="cup-label">CodePresso</div>--%>

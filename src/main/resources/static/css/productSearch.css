@@ -226,7 +226,7 @@ body.product-search-page {
     box-shadow: 0 4px 12px rgba(255, 107, 157, 0.3);
 }
 
-.mascot-icon img {
+mascot-icon img {
     width: 115%;
     height: auto;
     display: block;

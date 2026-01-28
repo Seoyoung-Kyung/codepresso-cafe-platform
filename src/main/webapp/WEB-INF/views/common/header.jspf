@@ -10,10 +10,7 @@
         <a class="brand" href="${homeHref}">
 <%--            <div class="logo" aria-hidden="true"></div>--%>
             <div class="brand-mascot" aria-label="CodePresso Mascot">
-                <picture>
-                    <source srcset="/banners/mascot-small.webp" type="image/webp">
-                    <img src="/banners/mascot.png" alt="Mascot" loading="lazy" />
-                </picture>
+                <img src="/banners/mascot.png" alt="Mascot" loading="lazy" />
             </div>
             <div>CodePress</div>
         </a>

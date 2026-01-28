@@ -296,8 +296,8 @@
         .sprinkle { position: absolute; inset: 0; background: repeating-linear-gradient(45deg, transparent 0 24px, rgba(255,122,162,.06) 24px 48px); mix-blend-mode: multiply; }
 
         /* Mascot container */
-        .cup { position: absolute; right: -10px; bottom: -10px; width: 320px; background: transparent; box-shadow: none; border-radius: 0; overflow: visible; display: block; }
-        .cup-img { width: 100%; height: auto; object-fit: contain; display: block; filter: drop-shadow(0 10px 18px rgba(0,0,0,.12)); }
+        .cup { position: absolute; inset: 0; background: transparent; box-shadow: none; border-radius: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+        .cup-img { width: 100%; height: 100%; object-fit: contain; display: block; filter: drop-shadow(0 10px 18px rgba(0,0,0,.12)); }
         .cup-label { position: absolute; left: 10px; bottom: 10px; background: linear-gradient(135deg, var(--pink-1), var(--pink-2)); color: var(--white); padding: 6px 12px; border-radius: 999px; font-weight: 800; font-size: 13px; letter-spacing: .3px; box-shadow: 0 6px 14px rgba(255,122,162,.35); }
 
         /* Footer */
@@ -307,7 +307,6 @@
             .hero-card { grid-template-columns: 1fr; padding: 28px; }
             .hero h1 { font-size: 32px; }
             .hero { padding: 80px 0 64px; }
-            .cup { width: 260px; right: -6px; bottom: -6px; }
         }
     </style>
     <script src="/js/branch-selection.js" defer></script>

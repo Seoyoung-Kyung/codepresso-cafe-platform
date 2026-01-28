@@ -21,7 +21,7 @@
                 <c:otherwise>
                     <picture>
                         <source srcset="/banners/mascot-small.webp" type="image/webp">
-                        <img src="/banners/mascot.png" alt="CodePress Mascot" loading="lazy" />
+                        <img src="/banners/banapresso_rabbit.png" alt="CodePress Mascot" loading="lazy" />
                     </picture>
                 </c:otherwise>
             </c:choose>
