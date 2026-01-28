@@ -20,6 +20,13 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "ORDER BY c.displayOrder")
     List<ProductListResponse> findAllProductsAsDto();
 
+    @Query("SELECT p " +
+            "FROM Product p " +
+            "LEFT JOIN p.category c " +
+            "ORDER BY c.displayOrder")
+    List<Product> findAll();
+
+
     @Query("SELECT new com.codepresso.codepresso.product.dto.ProductListResponse(" +
             "p.id, p.productName, p.productPhoto, p.price, c.categoryName, c.categoryCode) " +
             "FROM Product p LEFT JOIN p.category c " +
@@ -47,8 +54,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "WHERE h.hashtagName IN :hashtags " +
             "GROUP BY p2.id " +
             "HAVING COUNT(DISTINCT h.hashtagName) = :size)")
-    List<ProductListResponse> findByHashtagsIn(@Param("hashtags") List<String> hashtags,
-                                   @Param("size") long size);
-
+    List<ProductListResponse> findByHashtagsIn(
+            @Param("hashtags") List<String> hashtags,
+            @Param("size") long size
+    );
 
 }

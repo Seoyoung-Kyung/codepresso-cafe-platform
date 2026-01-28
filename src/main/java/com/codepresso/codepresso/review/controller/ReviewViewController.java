@@ -5,7 +5,7 @@ import com.codepresso.codepresso.review.dto.OrdersDetailResponse;
 import com.codepresso.codepresso.review.dto.ReviewResponse;
 import com.codepresso.codepresso.common.security.LoginUser;
 import com.codepresso.codepresso.order.service.OrderService;
-import com.codepresso.codepresso.review.ReviewService;
+import com.codepresso.codepresso.review.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.codepresso.codepresso.review.dto.ReviewCreateRequest;
 import com.codepresso.codepresso.review.dto.ReviewUpdateRequest;
-import com.codepresso.codepresso.review.ReviewFileUploadService;
+import com.codepresso.codepresso.review.service.ReviewFileUploadService;
 
 import java.util.List;
 

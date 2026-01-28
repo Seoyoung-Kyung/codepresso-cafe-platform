@@ -3,7 +3,7 @@ package com.codepresso.codepresso.review.controller;
 import com.codepresso.codepresso.review.dto.ReviewResponse;
 import com.codepresso.codepresso.review.dto.ReviewUpdateRequest;
 import com.codepresso.codepresso.common.security.LoginUser;
-import com.codepresso.codepresso.review.ReviewService;
+import com.codepresso.codepresso.review.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

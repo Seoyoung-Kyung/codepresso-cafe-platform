@@ -6,7 +6,6 @@ import com.codepresso.codepresso.review.dto.ReviewListResponse;
 import com.codepresso.codepresso.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,7 +22,7 @@ public class ProductController {
      */
     @GetMapping
     public ResponseEntity<List<ProductListResponse>> getAllProducts() {
-        List<ProductListResponse> products = productService.findProductsByCategory();
+        List<ProductListResponse> products = productService.findProductsWithCategory();
 //        List<ProductListResponse> products = productService.getAllProducts();
         return ResponseEntity.ok(products);
     }

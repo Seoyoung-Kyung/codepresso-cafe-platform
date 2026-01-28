@@ -38,8 +38,6 @@ spring:
     properties:
       hibernate:
         session_factory:
-          # QueryCountInspector 등록 (패키지 경로 확인!)
-          statement_inspector: com.codepresso.codepresso.monitoring.QueryCountInspector
         format_sql: true  # SQL 쿼리를 보기 좋게 포맷팅
         use_sql_comments: true  # 쿼리에 주석 추가 (어떤 메서드에서 호출되었는지 표시)
 
@@ -59,9 +57,6 @@ spring:
           ssl:
             trust: smtp.naver.com
 
-
-
-# MyBatis는 비활성화(의존성 제거). 필요 시 추후 재도입
 
 # 애플리케이션 커스텀 설정
 app:

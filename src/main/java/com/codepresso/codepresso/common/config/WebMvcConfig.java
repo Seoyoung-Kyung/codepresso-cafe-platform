@@ -1,8 +1,6 @@
 package com.codepresso.codepresso.common.config;
 
-import com.codepresso.codepresso.monitoring.QueryCountInterceptor;
 import com.codepresso.codepresso.web.LoggedInRedirectInterceptor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,8 +20,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Value("${app.file.upload.path}")
     private String uploadPath;
 
-    @Autowired
-    private QueryCountInterceptor queryCountInterceptor;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -39,10 +35,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
         // 로그인 상태에서 홈(/)이나 로그인 페이지(/auth/login)로 접근하면 매장 선택으로 보냄
         registry.addInterceptor(new LoggedInRedirectInterceptor())
                 .addPathPatterns("/", "/auth/login");
-
-        registry.addInterceptor(queryCountInterceptor)
-                .addPathPatterns("/**")  // 모든 경로 모니터링
-                .excludePathPatterns("/actuator/**");  // Actuator 제외
     }
 
     /**

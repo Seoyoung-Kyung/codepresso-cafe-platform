@@ -4,7 +4,7 @@ import com.codepresso.codepresso.member.dto.ProfileUpdateRequest;
 import com.codepresso.codepresso.member.dto.UserDetailResponse;
 import com.codepresso.codepresso.common.security.LoginUser;
 import com.codepresso.codepresso.member.service.MemberProfileService;
-import com.codepresso.codepresso.review.ReviewService;
+import com.codepresso.codepresso.review.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

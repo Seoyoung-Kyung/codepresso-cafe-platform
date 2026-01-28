@@ -25,7 +25,7 @@ public class ProductViewController {
      */
     @GetMapping
     public String productList(Model model) {
-        List<ProductListResponse> products = productService.findProductsByCategory();
+        List<ProductListResponse> products = productService.findProductsWithCategory();
         model.addAttribute("products", products);
         return "product/productList";
     }
