@@ -72,6 +72,8 @@ public class FavoriteService {
 
             favoriteRepository.save(favorite);
 
+            productConcurrencyRepository.incrementFavoriteCountAtomic(product.getId());
+
             return AuthResponse.builder()
                     .success(true)
                     .message("즐겨찾기에 추가되었습니다.")
@@ -87,34 +89,6 @@ public class FavoriteService {
                     .success(false)
                     .message("즐겨찾기 추가 중 오류가 발생했습니다: " + e.getMessage())
                     .build();
-        }
-    }
-
-    // 테스트용
-    @Transactional
-    public void addFavoriteWithOutLock(Long memberId, Long productId) {
-        try {
-            // 상품 존재 여부 확인
-            Product product = productConcurrencyRepository.findByWithOutLock(productId)
-                    .orElseThrow(() -> new NoSuchElementException("상품을 찾을 수 없습니다. ID: " + productId));
-
-
-            // 즐겨찾기 생성 및 저장
-            Favorite favorite = Favorite.builder()
-                    .memberId(memberId)
-                    .productId(productId)
-                    .orderby(1)
-                    .build();
-
-            log.debug("즐겨찾기 추가 성공 : memberId = {}, productId = {}", memberId, productId);
-
-            favoriteRepository.save(favorite);
-            favoriteRepository.flush();
-
-            product.increaseFavoriteCount();
-            productRepository.saveAndFlush(product);
-        } catch (DataIntegrityViolationException | JpaSystemException e) {
-            log.debug("즐겨찾기 추가 실패 : memberId = {}, productId = {}", memberId, productId);
         }
     }
 
@@ -207,6 +181,38 @@ public class FavoriteService {
                 .build();
     }
 
+    /**
+     * 테스트용 메서드(락 없이)
+     */
+    @Transactional
+    public void addFavoriteWithOutLock(Long memberId, Long productId) {
+        try {
+            // 상품 존재 여부 확인
+            Product product = productConcurrencyRepository.findByWithOutLock(productId)
+                    .orElseThrow(() -> new NoSuchElementException("상품을 찾을 수 없습니다. ID: " + productId));
+
+            // 즐겨찾기 생성 및 저장
+            Favorite favorite = Favorite.builder()
+                    .memberId(memberId)
+                    .productId(productId)
+                    .orderby(1)
+                    .build();
+
+            log.debug("즐겨찾기 추가 성공 : memberId = {}, productId = {}", memberId, productId);
+
+            favoriteRepository.save(favorite);
+            favoriteRepository.flush();
+
+            product.increaseFavoriteCount();
+            productRepository.saveAndFlush(product);
+        } catch (DataIntegrityViolationException | JpaSystemException e) {
+            log.debug("즐겨찾기 추가 실패 : memberId = {}, productId = {}", memberId, productId);
+        }
+    }
+
+    /**
+     * 테스트용 메서드(낙관적 락 적용)
+     */
     @Transactional
     public void addFavoriteTest(Long memberId, Long productId) {
         Product product = productConcurrencyRepository.findByWithOptimisticLock(productId)

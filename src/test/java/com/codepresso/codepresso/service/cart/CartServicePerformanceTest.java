@@ -1,4 +1,4 @@
-package com.codepresso.codepresso.service;
+package com.codepresso.codepresso.service.cart;
 
 import com.codepresso.codepresso.cart.entity.CartItem;
 import com.codepresso.codepresso.cart.repository.CartItemRepository;

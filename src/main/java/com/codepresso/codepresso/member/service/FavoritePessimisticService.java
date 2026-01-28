@@ -35,7 +35,7 @@ public class FavoritePessimisticService {
             favoriteRepository.saveAndFlush(favorite);
 
             product.increaseFavoriteCount();
-            productRepository.saveAndFlush(product); // ← 즉시 DB 반영!
+            productRepository.saveAndFlush(product); // ← 즉시 DB 반영
 
             log.debug("즐겨찾기 추가 성공 : memberId = {}, productId = {}", memberId, productId);
             log.debug("메서드 종료 직전: memberId = {}, productId = {}", memberId, productId);
