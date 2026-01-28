@@ -1,4 +1,4 @@
-package com.codepresso.codepresso.review;
+package com.codepresso.codepresso.review.service;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Value;

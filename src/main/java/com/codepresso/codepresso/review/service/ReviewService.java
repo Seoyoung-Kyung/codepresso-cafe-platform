@@ -1,5 +1,6 @@
-package com.codepresso.codepresso.review;
+package com.codepresso.codepresso.review.service;
 
+import com.codepresso.codepresso.review.repository.ReviewRepository;
 import com.codepresso.codepresso.review.converter.ReviewConverter;
 import com.codepresso.codepresso.member.entity.Member;
 import com.codepresso.codepresso.order.entity.OrdersDetail;

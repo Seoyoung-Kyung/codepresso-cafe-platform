@@ -1,4 +1,4 @@
-package com.codepresso.codepresso.review;
+package com.codepresso.codepresso.review.repository;
 
 import com.codepresso.codepresso.review.dto.MyReviewProjection;
 import com.codepresso.codepresso.order.entity.OrdersDetail;
