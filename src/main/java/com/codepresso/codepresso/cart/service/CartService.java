@@ -196,8 +196,8 @@ public class CartService {
     @Transactional(readOnly = true)
     public CartResponse getCartByMemberId(Long memberId) {
 
-        // 장바구니 조회 - 옵션 정보까지 모두 fetch join (N+1 해결)
-        Cart cart = cartRepository.findByMemberIdWithFullDetails(memberId)
+        // 장바구니 조회 (@BatchSize로 옵션 N+1 최적화됨)
+        Cart cart = cartRepository.findByMemberIdWithItems(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("장바구니가 없습니다. memberId : " + memberId));
 
         // cartItem -> DTO 변환
