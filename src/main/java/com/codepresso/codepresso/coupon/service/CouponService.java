@@ -40,8 +40,9 @@ public class CouponService {
      * 회원의 사용 가능한 쿠폰 목록 조회
      * */
     public List<CouponResponse> getMemberValidCoupons(Long memberId) {
+        // CouponType까지 fetch join하여 N+1 해결
         List<MemberCoupon> validCoupons = memberCouponRepository
-                .findByMemberIdAndStatusAndExpiryDateAfter(
+                .findValidCouponsWithType(
                 memberId, MemberCoupon.CouponStatus.UNUSED, LocalDateTime.now());
 
         return validCoupons.stream()

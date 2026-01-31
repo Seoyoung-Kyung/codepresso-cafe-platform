@@ -41,13 +41,17 @@ public interface OrdersRepository extends JpaRepository<Orders, Long> {
 
     /**
      * 회원별 + 기간별 주문 목록 조회 (최신순 + 페이징)
+     * N+1 해결: ordersDetails와 product까지 fetch join
      * */
-    @Query("SELECT DISTINCT o FROM Orders o " +
+    @Query(value = "SELECT DISTINCT o FROM Orders o " +
             "LEFT JOIN FETCH o.branch " +
             "LEFT JOIN FETCH o.member " +
+            "LEFT JOIN FETCH o.ordersDetails od " +
+            "LEFT JOIN FETCH od.product " +
             "WHERE o.member.id = :memberId " +
             "AND o.orderDate >= :startDate " +
-            "ORDER BY o.orderDate DESC")
+            "ORDER BY o.orderDate DESC",
+            countQuery = "SELECT COUNT(DISTINCT o) FROM Orders o WHERE o.member.id = :memberId AND o.orderDate >= :startDate")
     Page<Orders> findByMemberIdAndDateWithPaging(
             @Param("memberId") Long memberId,
             @Param("startDate") LocalDateTime startDate,
@@ -100,5 +104,21 @@ public interface OrdersRepository extends JpaRepository<Orders, Long> {
             "LEFT JOIN FETCH od.product " +
             "WHERE o.id = :orderId")
     Optional<Orders> findByIdWithDetails(@Param("orderId") Long orderId);
+
+    /**
+     * 주문 상세 조회 - 옵션 정보까지 모두 fetch join
+     * N+1 문제 해결: Orders -> OrdersDetails -> Options -> ProductOption -> OptionStyle -> OptionName
+     */
+    @Query("SELECT DISTINCT o FROM Orders o " +
+            "LEFT JOIN FETCH o.branch " +
+            "LEFT JOIN FETCH o.member " +
+            "LEFT JOIN FETCH o.ordersDetails od " +
+            "LEFT JOIN FETCH od.product " +
+            "LEFT JOIN FETCH od.options oio " +
+            "LEFT JOIN FETCH oio.option po " +
+            "LEFT JOIN FETCH po.optionStyle os " +
+            "LEFT JOIN FETCH os.optionName " +
+            "WHERE o.id = :orderId")
+    Optional<Orders> findByIdWithFullDetails(@Param("orderId") Long orderId);
 
 }

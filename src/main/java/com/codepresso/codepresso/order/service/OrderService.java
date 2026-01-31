@@ -73,8 +73,8 @@ public class OrderService {
      * 주문 상세 조회
      * */
     public OrderDetailResponse getOrderDetail(Long orderId){
-        // 1차 쿼리: Orders + Branch + Member + OrdersDetails + Product
-        Orders orders = ordersRepository.findByIdWithDetails(orderId)
+        // 단일 쿼리: Orders + Branch + Member + OrdersDetails + Product + Options 모두 fetch join
+        Orders orders = ordersRepository.findByIdWithFullDetails(orderId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 주문입니다."));
 
         return convertToOrderDetail(orders);
