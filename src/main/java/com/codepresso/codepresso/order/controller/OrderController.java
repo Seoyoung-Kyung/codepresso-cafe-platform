@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.*;
  * */
 
 @RequiredArgsConstructor
-@RequestMapping("/users/orders")
+@RequestMapping("/api/users/orders")
 @RestController
 public class OrderController {
 
-//    private final OrderServiceImproveGetOrderList orderService;
+    private final OrderServiceImproveGetOrderList orderImproveService;
     private final OrderService orderService;
 
     /**
@@ -35,7 +35,7 @@ public class OrderController {
             @RequestParam(value = "size", defaultValue = "20") int size){
 
         Long memberId = loginUser.getMemberId();
-        OrderListResponse response = orderService.getOrderList(memberId, period, page, size);
+        OrderListResponse response = orderImproveService.getOrderList(memberId, period, page, size);
         return ResponseEntity.ok(response);
     }
 

@@ -3,7 +3,7 @@ package com.codepresso.codepresso.order.service;
 import com.codepresso.codepresso.order.converter.OrderConverter;
 import com.codepresso.codepresso.order.dto.OrderDetailResponse;
 import com.codepresso.codepresso.order.dto.OrderListResponse;
-import com.codepresso.codepresso.order.dto.OrderSummaryProjection;
+import com.codepresso.codepresso.order.dto.OrderSummaryDto;
 import com.codepresso.codepresso.order.repository.OrdersDetailRepository;
 import com.codepresso.codepresso.order.repository.OrdersRepository;
 import com.codepresso.codepresso.review.dto.OrdersDetailResponse;
@@ -31,7 +31,7 @@ public class OrderServiceImproveGetOrderList {
 
     /**
      * 주문 목록 조회
-     * */
+     */
     public OrderListResponse getOrderList(Long memberId, String period, int page, int size) {
         // 기간 계산
         LocalDateTime startDate = calculateStartDate(period);
@@ -49,9 +49,9 @@ public class OrderServiceImproveGetOrderList {
         boolean hasPrevious;
 
         if ("전체".equals(period)) {
-            Page<OrderSummaryProjection> projectionsPage = ordersRepository.findByMemberIdWithPaging2(memberId, pageable);
+            Page<OrderSummaryDto> projectionsPage = ordersRepository.findByMemberIdWithPaging2(memberId, pageable);
 
-            for (OrderSummaryProjection projection : projectionsPage.getContent()) {
+            for (OrderSummaryDto projection : projectionsPage.getContent()) {
                 OrderListResponse.OrderSummary orderSummary = convertProjectionToOrderSummary(projection);
                 orderSummaries.add(orderSummary);
             }
@@ -62,10 +62,10 @@ public class OrderServiceImproveGetOrderList {
             hasPrevious = projectionsPage.hasPrevious();
         } else {
             // 기존 방식 (기간 필터가 있는 경우)
-            Page<OrderSummaryProjection> ordersPage = ordersRepository.findByMemberIdAndDateWithPaging2(memberId, startDate, pageable);
+            Page<OrderSummaryDto> ordersPage = ordersRepository.findByMemberIdAndDateWithPaging2(memberId, startDate, pageable);
 
-            for (OrderSummaryProjection projection : ordersPage.getContent()) {
-                OrderListResponse.OrderSummary orderSummary = convertToOrderSummary(projection);
+            for (OrderSummaryDto orderSummaryDto : ordersPage.getContent()) {
+                OrderListResponse.OrderSummary orderSummary = convertToOrderSummary(orderSummaryDto);
                 orderSummaries.add(orderSummary);
             }
 
@@ -90,8 +90,8 @@ public class OrderServiceImproveGetOrderList {
 
     /**
      * 주문 상세 조회
-     * */
-    public OrderDetailResponse getOrderDetail(Long orderId){
+     */
+    public OrderDetailResponse getOrderDetail(Long orderId) {
         // 1차 쿼리: Orders + Branch + Member + OrdersDetails + Product
         Orders orders = ordersRepository.findByIdWithDetails(orderId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 주문입니다."));
@@ -103,7 +103,7 @@ public class OrderServiceImproveGetOrderList {
      * OrderSummaryProjection을 OrderListResponse.OrderSummary로 변환
      * isRepresentative를 활용한 최적화된 쿼리 결과를 변환
      */
-    private OrderListResponse.OrderSummary convertProjectionToOrderSummary(OrderSummaryProjection projection) {
+    private OrderListResponse.OrderSummary convertProjectionToOrderSummary(OrderSummaryDto projection) {
         // TODO: orderNumber 생성을 위해서는 Orders 엔티티가 필요하므로 임시로 간단한 형식 사용
         // 실제로는 주문번호 생성 로직을 별도로 처리하거나 Projection에 포함시켜야 함
         String orderNumber = projection.getOrderId().toString();
@@ -121,109 +121,109 @@ public class OrderServiceImproveGetOrderList {
                 .build();
     }
 
-    private OrderListResponse.OrderSummary convertToOrderSummary(OrderSummaryProjection projection) {
-         // 대표 상품명 계산
-         String orderNumber = projection.getOrderId().toString();
+    private OrderListResponse.OrderSummary convertToOrderSummary(OrderSummaryDto projection) {
+        // 대표 상품명 계산
+        String orderNumber = projection.getOrderId().toString();
 
-         return OrderListResponse.OrderSummary.builder()
-                 .orderId(projection.getOrderId())
-                 .orderNumber(orderNumber)
-                 .orderDate(projection.getOrderDate())
-                 .productionStatus(projection.getProductionStatus())
-                 .branchName(projection.getBranchName())
-                 .isTakeout(projection.getIsTakeout())
-                 .pickupTime(projection.getPickupTime())
-                 .totalAmount(projection.getTotalAmount())
-                 .representativeName(projection.getRepresentativeProductName())
-                 .build();
-     }
+        return OrderListResponse.OrderSummary.builder()
+                .orderId(projection.getOrderId())
+                .orderNumber(orderNumber)
+                .orderDate(projection.getOrderDate())
+                .productionStatus(projection.getProductionStatus())
+                .branchName(projection.getBranchName())
+                .isTakeout(projection.getIsTakeout())
+                .pickupTime(projection.getPickupTime())
+                .totalAmount(projection.getTotalAmount())
+                .representativeName(projection.getRepresentativeProductName())
+                .build();
+    }
 
-     private OrderDetailResponse convertToOrderDetail(Orders orders) {
-         // 주문 상품 목록 변환
-          List<OrderDetailResponse.OrderItem> orderItems = new ArrayList<>();
-          for (OrdersDetail detail : orders.getOrdersDetails()) {
-          OrderDetailResponse.OrderItem orderItem = convertToOrderItem(detail);
-          orderItems.add(orderItem);
-          }
+    private OrderDetailResponse convertToOrderDetail(Orders orders) {
+        // 주문 상품 목록 변환
+        List<OrderDetailResponse.OrderItem> orderItems = new ArrayList<>();
+        for (OrdersDetail detail : orders.getOrdersDetails()) {
+            OrderDetailResponse.OrderItem orderItem = convertToOrderItem(detail);
+            orderItems.add(orderItem);
+        }
 
-         // 지점 정보
-         OrderDetailResponse.BranchInfo branch = OrderDetailResponse.BranchInfo.builder()
-                 .branchId(orders.getBranch().getId())
-                 .branchName(orders.getBranch().getBranchName())
-                 .address(orders.getBranch().getAddress())
-                 .branchNumber(orders.getBranch().getBranchNumber())
-                 .build();
+        // 지점 정보
+        OrderDetailResponse.BranchInfo branch = OrderDetailResponse.BranchInfo.builder()
+                .branchId(orders.getBranch().getId())
+                .branchName(orders.getBranch().getBranchName())
+                .address(orders.getBranch().getAddress())
+                .branchNumber(orders.getBranch().getBranchNumber())
+                .build();
 
-          // 결제 정보 생성
-         int totalAmount = orders.getTotalAmount() != null ? orders.getTotalAmount() : 0;
-         int discount = orders.getDiscountAmount() != null ? orders.getDiscountAmount() : 0;
-         int finalAmount = orders.getFinalAmount() != null ? orders.getFinalAmount() : 0;
+        // 결제 정보 생성
+        int totalAmount = orders.getTotalAmount() != null ? orders.getTotalAmount() : 0;
+        int discount = orders.getDiscountAmount() != null ? orders.getDiscountAmount() : 0;
+        int finalAmount = orders.getFinalAmount() != null ? orders.getFinalAmount() : 0;
 
-         OrderDetailResponse.PaymentInfo payment = OrderDetailResponse.PaymentInfo.builder()
-                 .paymentMethod("신용카드")
-                 .totalAmount(totalAmount)
-                 .discount(discount)
-                 .finalAmount(finalAmount)
-                 .paymentDate(orders.getOrderDate())
-                 .build();
+        OrderDetailResponse.PaymentInfo payment = OrderDetailResponse.PaymentInfo.builder()
+                .paymentMethod("신용카드")
+                .totalAmount(totalAmount)
+                .discount(discount)
+                .finalAmount(finalAmount)
+                .paymentDate(orders.getOrderDate())
+                .build();
 
-         return OrderDetailResponse.builder()
-                 .orderId(orders.getId())
-                 .orderNumber(generateOrderNumber(orders))
-                 .orderDate(orders.getOrderDate())
-                 .productionStatus(orders.getProductionStatus())
-                 .pickupTime(orders.getPickupTime())
-                 .isTakeout(orders.getIsTakeout())
-                 .requestNote(orders.getRequestNote())
-                 .branch(branch)
-                 .orderItems(orderItems)
-                 .payment(payment)
-                 .build();
-     }
+        return OrderDetailResponse.builder()
+                .orderId(orders.getId())
+                .orderNumber(generateOrderNumber(orders))
+                .orderDate(orders.getOrderDate())
+                .productionStatus(orders.getProductionStatus())
+                .pickupTime(orders.getPickupTime())
+                .isTakeout(orders.getIsTakeout())
+                .requestNote(orders.getRequestNote())
+                .branch(branch)
+                .orderItems(orderItems)
+                .payment(payment)
+                .build();
+    }
 
-     private OrderDetailResponse.OrderItem convertToOrderItem(OrdersDetail detail) {
-         // 옵션들 수집 (기본 옵션 제외)
-          List<OrderDetailResponse.OrderOption> options = new ArrayList<>();
-          int optionExtraPrice = 0;
+    private OrderDetailResponse.OrderItem convertToOrderItem(OrdersDetail detail) {
+        // 옵션들 수집 (기본 옵션 제외)
+        List<OrderDetailResponse.OrderOption> options = new ArrayList<>();
+        int optionExtraPrice = 0;
 
-          if (detail.getOptions() != null) {
-              for (OrdersItemOptions option : detail.getOptions()) {
-                  String optionStyle = option.getOption().getOptionStyle().getOptionStyle();
-                  Integer extraPrice = option.getOption().getOptionStyle().getExtraPrice();
+        if (detail.getOptions() != null) {
+            for (OrdersItemOptions option : detail.getOptions()) {
+                String optionStyle = option.getOption().getOptionStyle().getOptionStyle();
+                Integer extraPrice = option.getOption().getOptionStyle().getExtraPrice();
 
-                  // "기본" 옵션 제외
-                  if (!"기본".equals(optionStyle)) {
-                      options.add(OrderDetailResponse.OrderOption.builder()
-                              .optionStyle(optionStyle)
-                              .extraPrice(extraPrice)
-                              .build());
+                // "기본" 옵션 제외
+                if (!"기본".equals(optionStyle)) {
+                    options.add(OrderDetailResponse.OrderOption.builder()
+                            .optionStyle(optionStyle)
+                            .extraPrice(extraPrice)
+                            .build());
 
-                      if (extraPrice != null){
-                          optionExtraPrice += extraPrice;
-                      }
-                  }
-              }
-          }
+                    if (extraPrice != null) {
+                        optionExtraPrice += extraPrice;
+                    }
+                }
+            }
+        }
 
-         int basePrice = detail.getProduct().getPrice();  // 상품 기본 가격
-         int unitPrice = basePrice + optionExtraPrice;    // 단가 = 기본가격 + 옵션가격
-         int quantity = detail.getQuantity() != null ? detail.getQuantity() : 1;
-         int totalPriceBeforeDiscount = unitPrice * quantity;  // 할인 전 총액 = 단가 × 수량
+        int basePrice = detail.getProduct().getPrice();  // 상품 기본 가격
+        int unitPrice = basePrice + optionExtraPrice;    // 단가 = 기본가격 + 옵션가격
+        int quantity = detail.getQuantity() != null ? detail.getQuantity() : 1;
+        int totalPriceBeforeDiscount = unitPrice * quantity;  // 할인 전 총액 = 단가 × 수량
 
-         return OrderDetailResponse.OrderItem.builder()
-                 .orderDetailId(detail.getId())
-                 .productName(detail.getProduct().getProductName())
-                 .quantity(quantity)
-                 .price(basePrice)
-                 .totalPrice(totalPriceBeforeDiscount)
-                 .options(options)
-                 .build();
-     }
+        return OrderDetailResponse.OrderItem.builder()
+                .orderDetailId(detail.getId())
+                .productName(detail.getProduct().getProductName())
+                .quantity(quantity)
+                .price(basePrice)
+                .totalPrice(totalPriceBeforeDiscount)
+                .options(options)
+                .build();
+    }
 
-     private String calculateRepresentativeItem(List<OrdersDetail> orderDetails) {
-         if (orderDetails.isEmpty()) {
-             return "주문 상품 없음";
-         }
+    private String calculateRepresentativeItem(List<OrdersDetail> orderDetails) {
+        if (orderDetails.isEmpty()) {
+            return "주문 상품 없음";
+        }
 
         String firstProductName = orderDetails.get(0).getProduct().getProductName();
         int totalItems = orderDetails.size();
@@ -280,14 +280,13 @@ public class OrderServiceImproveGetOrderList {
 
     /**
      * 주문 제품들의 가격 합
-     * */
-    private int calculateTotalAmount(Orders orders){
+     */
+    private int calculateTotalAmount(Orders orders) {
         int totalAmount = 0;
         for (OrdersDetail detail : orders.getOrdersDetails()) {
             totalAmount += detail.getPrice();
         }
         return totalAmount;
     }
-
 
 }

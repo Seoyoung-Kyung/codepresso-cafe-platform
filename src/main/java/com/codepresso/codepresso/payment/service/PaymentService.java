@@ -43,7 +43,7 @@ public class PaymentService {
     private final ProductService productService;
     private final CouponService couponService;
     private final StampService stampService;
-    private final OrderCreationService orderCreationService;
+    private final OrderCreationServiceImproveCreateOrder orderCreationService;
 
     /**
      * 장바구니 결제페이지 데이터 준비
@@ -331,7 +331,7 @@ public class PaymentService {
     }
 
     private CheckoutResponse buildCheckoutResponse(Orders orders) {
-        Orders fetchedOrders = ordersRepository.findByIdWithFullDetails(orders.getId())
+        Orders fetchedOrders = ordersRepository.findByIdWithDetails(orders.getId())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 주문입니다."));
 
         // 주문 상세 정보 리스트 생성

@@ -37,14 +37,14 @@ public class OrderCreationServiceImproveCreateOrder {
                 .sum();
 
         // 할인 금액 가져오기
-        int totalDiscount =orders.getDiscountAmount() != null ? orders.getDiscountAmount() : 0;
+        int totalDiscount = orders.getDiscountAmount() != null ? orders.getDiscountAmount() : 0;
 
         // 할인율 계산
-        double discountRate = totalBeforeDiscount > 0 ? (double) totalDiscount/totalBeforeDiscount : 0;
+        double discountRate = totalBeforeDiscount > 0 ? (double) totalDiscount / totalBeforeDiscount : 0;
 
         int accumulateDiscount = 0;
 
-        for (int i = 0; i<orderItems.size(); i++) {
+        for (int i = 0; i < orderItems.size(); i++) {
             CheckoutRequest.OrderItem item = orderItems.get(i);
 
             Product product = productRepository.findById(item.getProductId())
@@ -53,10 +53,10 @@ public class OrderCreationServiceImproveCreateOrder {
             int itemOriginalPrice = item.getPrice() * item.getQuantity();
 
             int itemDiscount;
-            if(i==orderItems.size()-1) {
+            if (i == orderItems.size() - 1) {
                 itemDiscount = totalDiscount - accumulateDiscount;
-            }else {
-                itemDiscount = (int)Math.round(itemOriginalPrice * discountRate);
+            } else {
+                itemDiscount = (int) Math.round(itemOriginalPrice * discountRate);
                 accumulateDiscount = accumulateDiscount + itemDiscount;
             }
 
@@ -69,13 +69,10 @@ public class OrderCreationServiceImproveCreateOrder {
                     .product(product)
                     .price(discountedPrice)
                     .quantity(item.getQuantity())
+                    .isRepresentative(i == 0)  // 첫 번째 상품을 대표로 설정
                     .build();
 
-            if (i == 0) {
-                ordersDetail.markAsRepresentative();
-            }
-
-            if(item.getOptionIds() != null && !item.getOptionIds().isEmpty()) {
+            if (item.getOptionIds() != null && !item.getOptionIds().isEmpty()) {
                 List<OrdersItemOptions> options = createOrderItemOptions(item.getOptionIds(), ordersDetail);
                 ordersDetail.setOptions(options);
             }
