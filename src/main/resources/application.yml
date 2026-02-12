@@ -38,8 +38,9 @@ spring:
     properties:
       hibernate:
         session_factory:
+          statement_inspector: com.codepresso.codepresso.monitoring.QueryCountInspector
         format_sql: true  # SQL 쿼리를 보기 좋게 포맷팅
-        use_sql_comments: true  # 쿼리에 주석 추가 (어떤 메서드에서 호출되었는지 표시)
+        use_sql_comments: false  # 쿼리에 주석 추가 (어떤 메서드에서 호출되었는지 표시)
 
 
   # 이메일 발송 설정 (Naver SMTP)
@@ -97,15 +98,14 @@ management:
   endpoints:
     web:
       exposure:
-        include: health, info, prometheus  # Prometheus 엔드포인트 노출
-  metrics:
-    export:
-      prometheus:
-        enabled: true
-    distribution:
-      percentiles-histogram:
-        app.query.per_request: true  # 히스토그램 활성화
-
+        include: health, info, metrics, prometheus   # Prometheus 엔드포인트 노출
+  endpoint:
+    prometheus:
+      enabled: true  # 활성화 확인
+    metrics:
+      export:
+        prometheus:
+          enabled: true  # 활성화 확인
 decorator:
   datasource:
     p6spy:
