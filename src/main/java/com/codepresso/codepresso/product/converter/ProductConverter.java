@@ -18,7 +18,12 @@ public class ProductConverter {
     private static final String DEFAULT_CATEGORY = "COFFEE";
     private final ProductOptionConverter productOptConverter;
 
-    public ProductDetailResponse toDetailDto(Product product, long favCount, List<ProductOption> options) {
+    public ProductDetailResponse toDetailDto(
+            Product product,
+            long favCount,
+            List<ProductOption> options,
+            NutritionInfo nutritionInfo
+    ) {
 
         return ProductDetailResponse.builder()
                 .productId(product.getId())
@@ -29,7 +34,7 @@ public class ProductConverter {
                 .categoryName(getCategoryName(product))
                 .favCount(favCount)
                 .hashtags(convertHashtags(product.getHashtags()))
-                .nutritionInfo(getNutritionInfo(product.getNutritionInfo()))
+                .nutritionInfo(getNutritionInfo(nutritionInfo))
                 .allergens(convertAllergens(product.getAllergens()))
                 .productOptions(productOptConverter.toListDto(options))
                 .build();
@@ -52,7 +57,9 @@ public class ProductConverter {
     }
 
     private Set<String> convertHashtags(Set<Hashtag> hashtags) {
-        if (hashtags == null) { return Set.of(); }
+        if (hashtags == null) {
+            return Set.of();
+        }
 
         return hashtags.stream()
                 .map(Hashtag::getHashtagName)
@@ -62,7 +69,7 @@ public class ProductConverter {
     private NutritionInfoDto getNutritionInfo(NutritionInfo nutritionInfo) {
         if (nutritionInfo == null) {
             return null;
-    }
+        }
 
         return NutritionInfoDto.builder()
                 .calories(nutritionInfo.getCalories())
@@ -79,7 +86,9 @@ public class ProductConverter {
     }
 
     private Set<String> convertAllergens(Set<Allergen> allergens) {
-        if (allergens == null) { return Set.of(); }
+        if (allergens == null) {
+            return Set.of();
+        }
 
         return allergens.stream()
                 .map(Allergen::getAllergenName)

@@ -1,15 +1,13 @@
 package com.codepresso.codepresso.product.service;
 
 import com.codepresso.codepresso.product.converter.ProductConverter;
+import com.codepresso.codepresso.product.entity.*;
 import com.codepresso.codepresso.product.repository.ProductOptionRepository;
 import com.codepresso.codepresso.product.repository.ProductRepository;
 import com.codepresso.codepresso.review.converter.ReviewConverter;
 import com.codepresso.codepresso.product.dto.ProductDetailResponse;
 import com.codepresso.codepresso.product.dto.ProductListResponse;
 import com.codepresso.codepresso.review.dto.ReviewListResponse;
-import com.codepresso.codepresso.product.entity.Product;
-import com.codepresso.codepresso.product.entity.ProductOption;
-import com.codepresso.codepresso.product.entity.Review;
 import com.codepresso.codepresso.member.repository.FavoriteRepository;
 import com.codepresso.codepresso.review.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +26,7 @@ public class ProductService {
     private final ProductRepository productRepo;
     private final ProductOptionRepository productOptRepo;
     private final FavoriteRepository favoriteRepo;
+    private final NutritionInfoRepository nutritionInfoRepo;
     private final ReviewRepository reviewRepo;
     private final ReviewConverter reviewConverter;
     private final ProductConverter productConverter;
@@ -58,8 +57,9 @@ public class ProductService {
         Product product = productRepo.findProductById(productId);
         long favCount = favoriteRepo.countByProductId(productId);
         List<ProductOption> options = productOptRepo.findOptionByProductId(productId);
+        NutritionInfo nutritionInfo = nutritionInfoRepo.getNutritionInfoByProductId(productId);
 
-        return productConverter.toDetailDto(product, favCount, options);
+        return productConverter.toDetailDto(product, favCount, options, nutritionInfo);
     }
 
     @Transactional(readOnly = true)
@@ -67,8 +67,9 @@ public class ProductService {
         Product product = productRepo.findProductById(productId);
         long favCount = favoriteRepo.countByProductId(productId);
         List<ProductOption> options = productOptRepo.findOptionByProductId(productId);
+        NutritionInfo nutritionInfo = nutritionInfoRepo.getNutritionInfoByProductId(productId);
 
-        return productConverter.toDetailDto(product, favCount, options);
+        return productConverter.toDetailDto(product, favCount, options, nutritionInfo);
     }
 
     @Transactional(readOnly = true)
