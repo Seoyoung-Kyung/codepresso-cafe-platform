@@ -1,6 +1,7 @@
 package com.codepresso.codepresso.common.controller;
 
 import com.codepresso.codepresso.cart.dto.CartResponse;
+import com.codepresso.codepresso.cart.service.CartServiceImproveGetCartByMemberId;
 import com.codepresso.codepresso.member.dto.FavoriteListResponse;
 import com.codepresso.codepresso.branch.entity.Branch;
 import com.codepresso.codepresso.common.security.LoginUser;
@@ -10,6 +11,7 @@ import com.codepresso.codepresso.member.service.FavoriteService;
 import com.codepresso.codepresso.member.service.MemberProfileService;
 import com.codepresso.codepresso.product.service.ProductService;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,26 +25,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
  * JSP 뷰를 반환하는 컨트롤러
  */
 @Controller
+@RequiredArgsConstructor
 public class ViewController {
 
     @Getter
     private final MemberProfileService memberProfileService;
     private final FavoriteService favoriteService;
     private final CartService cartService;
-    private final ProductService productService;
+    private final CartServiceImproveGetCartByMemberId cartServiceImproveGetCartByMemberId;
     private final BranchService branchService;
-
-    public ViewController(MemberProfileService memberProfileService,
-                          FavoriteService favoriteService,
-                          CartService cartService,
-                          ProductService productService,
-                          BranchService branchService) {
-        this.memberProfileService = memberProfileService;
-        this.favoriteService = favoriteService;
-        this.cartService = cartService;
-        this.productService = productService;
-        this.branchService = branchService;
-    }
 
     @ModelAttribute
     public void populateBranchModalDefaults(Model model) {
@@ -113,7 +104,7 @@ public class ViewController {
         CartResponse cart = null;
         if (loginUser != null) {
             try {
-                cart = cartService.getCartByMemberId(loginUser.getMemberId());
+                cart = cartServiceImproveGetCartByMemberId.getCartByMemberId(loginUser.getMemberId());
             } catch (IllegalArgumentException ignored) {
                 // 장바구니가 없으면 빈 화면을 보여준다.
             }

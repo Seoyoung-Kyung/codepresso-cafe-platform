@@ -35,7 +35,7 @@ public class OrderController {
             @RequestParam(value = "size", defaultValue = "20") int size){
 
         Long memberId = loginUser.getMemberId();
-        OrderListResponse response = orderImproveService.getOrderList(memberId, period, page, size);
+        OrderListResponse response = orderService.getOrderList(memberId, period, page, size);
         return ResponseEntity.ok(response);
     }
 

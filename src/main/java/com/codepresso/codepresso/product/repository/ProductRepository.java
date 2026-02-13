@@ -34,7 +34,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<ProductListResponse> findByProductRandom(Pageable pageable);
 
     @EntityGraph(attributePaths = {
-            "nutritionInfo",
             "category",
             "hashtags"
     })

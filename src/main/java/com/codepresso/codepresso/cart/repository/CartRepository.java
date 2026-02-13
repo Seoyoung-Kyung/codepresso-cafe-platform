@@ -11,6 +11,13 @@ public interface CartRepository extends JpaRepository<Cart,Long > {
 
     Optional<Cart> findByMemberId(Long memberId);
 
+    @Query("""
+        SELECT c.id
+        FROM Cart c
+        WHERE c.member.id = :memberId
+    """)
+    Optional<Long> findCartIdByMemberId(Long memberId);
+
     /**
      * 장바구니 조회
      * */
@@ -19,4 +26,5 @@ public interface CartRepository extends JpaRepository<Cart,Long > {
             "LEFT JOIN FETCH ci.product " +
             "WHERE c.member.id = :memberId")
     Optional<Cart> findByMemberIdWithItems(@Param("memberId") Long memberId);
+
 }

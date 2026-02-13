@@ -5,6 +5,7 @@ import com.codepresso.codepresso.cart.dto.CartItemUpdateRequest;
 import com.codepresso.codepresso.cart.dto.CartOptionResponse;
 import com.codepresso.codepresso.cart.dto.CartResponse;
 import com.codepresso.codepresso.cart.entity.CartItem;
+import com.codepresso.codepresso.cart.service.CartServiceImproveGetCartByMemberId;
 import com.codepresso.codepresso.common.security.LoginUser;
 import com.codepresso.codepresso.cart.service.CartService;
 import jakarta.validation.Valid;
@@ -21,24 +22,32 @@ import java.util.List;
 public class CartController {
 
     private final CartService cartService;
+    private final CartServiceImproveGetCartByMemberId cartServiceImproveGetCartByMemberId;
 
     //장바구니 조회
     @GetMapping
     public ResponseEntity<CartResponse> getCart(@AuthenticationPrincipal LoginUser loginUser) {
-        return ResponseEntity.ok(cartService.getCartByMemberId(loginUser.getMemberId()));
+        return ResponseEntity.ok(cartServiceImproveGetCartByMemberId.getCartByMemberId(loginUser.getMemberId()));
     }
 
     //장바구니 아이템 개수 조회
+//    @GetMapping("/count")
+//    public ResponseEntity<Integer> getCartItemCount(@AuthenticationPrincipal LoginUser loginUser) {
+//        try {
+//            CartResponse cart = cartService.getCartByMemberId(loginUser.getMemberId());
+//            int totalCount = (int) cart.getItems().stream().count();
+//            return ResponseEntity.ok(totalCount);
+//        } catch (IllegalArgumentException e) {
+//            // 장바구니가 없으면 0 반환
+//            return ResponseEntity.ok(0);
+//        }
+//    }
+
     @GetMapping("/count")
     public ResponseEntity<Integer> getCartItemCount(@AuthenticationPrincipal LoginUser loginUser) {
-        try {
-            CartResponse cart = cartService.getCartByMemberId(loginUser.getMemberId());
-            int totalCount = (int) cart.getItems().stream().count();
-            return ResponseEntity.ok(totalCount);
-        } catch (IllegalArgumentException e) {
-            // 장바구니가 없으면 0 반환
-            return ResponseEntity.ok(0);
-        }
+        int totalCount = cartServiceImproveGetCartByMemberId.getCartItemsCount(loginUser.getMemberId());
+
+        return ResponseEntity.ok(totalCount);
     }
 
     //장바구니 상품 추가

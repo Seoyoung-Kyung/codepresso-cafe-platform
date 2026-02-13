@@ -326,7 +326,6 @@ public class CartService {
         cartItemRepository.deleteAllInBatch(items); // DELETE 1번
     }
 
-
     // cascade 이용
     @Transactional
     public void clearCartByCascade(Long memberId, Long cartId) {

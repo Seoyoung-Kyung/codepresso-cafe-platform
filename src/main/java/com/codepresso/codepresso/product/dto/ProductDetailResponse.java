@@ -1,4 +1,5 @@
 package com.codepresso.codepresso.product.dto;
+import com.codepresso.codepresso.product.entity.NutritionInfo;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -24,7 +25,7 @@ public class ProductDetailResponse {
 
     private Set<String> hashtags;
 
-    private NutritionInfoDto nutritionInfo;
+    private NutritionInfo nutritionInfo;
 
     private Set<String> allergens;
 

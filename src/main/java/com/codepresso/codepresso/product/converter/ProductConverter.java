@@ -34,7 +34,7 @@ public class ProductConverter {
                 .categoryName(getCategoryName(product))
                 .favCount(favCount)
                 .hashtags(convertHashtags(product.getHashtags()))
-                .nutritionInfo(getNutritionInfo(nutritionInfo))
+                .nutritionInfo(nutritionInfo)
                 .allergens(convertAllergens(product.getAllergens()))
                 .productOptions(productOptConverter.toListDto(options))
                 .build();
@@ -64,25 +64,6 @@ public class ProductConverter {
         return hashtags.stream()
                 .map(Hashtag::getHashtagName)
                 .collect(Collectors.toSet());
-    }
-
-    private NutritionInfoDto getNutritionInfo(NutritionInfo nutritionInfo) {
-        if (nutritionInfo == null) {
-            return null;
-        }
-
-        return NutritionInfoDto.builder()
-                .calories(nutritionInfo.getCalories())
-                .protein(nutritionInfo.getProtein())
-                .fat(nutritionInfo.getFat())
-                .carbohydrate(nutritionInfo.getCarbohydrate())
-                .saturatedFat(nutritionInfo.getSaturatedFat())
-                .caffeine(nutritionInfo.getCaffeine())
-                .transFat(nutritionInfo.getTransFat())
-                .sodium(nutritionInfo.getSodium())
-                .sugar(nutritionInfo.getSugar())
-                .cholesterol(nutritionInfo.getCholesterol())
-                .build();
     }
 
     private Set<String> convertAllergens(Set<Allergen> allergens) {

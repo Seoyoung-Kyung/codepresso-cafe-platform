@@ -57,7 +57,7 @@ public class ProductService {
         Product product = productRepo.findProductById(productId);
         long favCount = favoriteRepo.countByProductId(productId);
         List<ProductOption> options = productOptRepo.findOptionByProductId(productId);
-        NutritionInfo nutritionInfo = nutritionInfoRepo.getNutritionInfoByProductId(productId);
+        NutritionInfo nutritionInfo = nutritionInfoRepo.findNutritionInfoByProductId(productId);
 
         return productConverter.toDetailDto(product, favCount, options, nutritionInfo);
     }
@@ -67,7 +67,7 @@ public class ProductService {
         Product product = productRepo.findProductById(productId);
         long favCount = favoriteRepo.countByProductId(productId);
         List<ProductOption> options = productOptRepo.findOptionByProductId(productId);
-        NutritionInfo nutritionInfo = nutritionInfoRepo.getNutritionInfoByProductId(productId);
+        NutritionInfo nutritionInfo = nutritionInfoRepo.findNutritionInfoByProductId(productId);
 
         return productConverter.toDetailDto(product, favCount, options, nutritionInfo);
     }
