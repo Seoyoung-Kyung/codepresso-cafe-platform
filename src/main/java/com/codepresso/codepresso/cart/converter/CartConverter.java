@@ -27,7 +27,7 @@ public class CartConverter {
     }
 
     private CartItemResponse toCartItemResponse(CartItem item) {
-        List<CartOptionResponse> optionResponses = item.getOptions().stream()
+        List<CartOptionResponse> optionResponses = item.getCartOptions().stream()
                 .filter(this::hasValidOption)
                 .map(this::toCartOptionResponse)
                 .toList();
@@ -47,8 +47,8 @@ public class CartConverter {
         ProductOption po = cartOption.getProductOption();
         return po != null
                 && po.getOptionStyle() != null
-                && po.getOptionStyle().getOptionStyle() != null
-                && !po.getOptionStyle().getOptionStyle().trim().equals("기본");
+                && po.getOptionStyle().getValue() != null
+                && !po.getOptionStyle().getValue().trim().equals("기본");
     }
 
     private CartOptionResponse toCartOptionResponse(CartOption cartOption) {
@@ -56,13 +56,13 @@ public class CartConverter {
         return CartOptionResponse.builder()
                 .optionId(po.getId())
                 .extraPrice(safeExtraPrice(po))
-                .optionStyle(po.getOptionStyle().getOptionStyle())
+                .optionStyle(po.getOptionStyle().getValue())
                 .build();
     }
 
     private int calcTotalPrice(CartItem item) {
         Integer unitPrice = item.getPrice();
-        int price = (unitPrice != null) ? unitPrice : calcUnitPrice(item.getProduct(), item.getOptions());
+        int price = (unitPrice != null) ? unitPrice : calcUnitPrice(item.getProduct(), item.getCartOptions());
         int qty = (item.getQuantity() != null) ? item.getQuantity() : 0;
         return price * qty;
     }

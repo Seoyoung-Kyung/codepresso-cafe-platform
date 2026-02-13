@@ -23,7 +23,7 @@ public class OptionStyle {
     private OptionName optionName;
 
     @Column(name = "option_style", length = 100)
-    private String optionStyle;
+    private String value;
 
     @Column(name = "extra_price")
     private int extraPrice;

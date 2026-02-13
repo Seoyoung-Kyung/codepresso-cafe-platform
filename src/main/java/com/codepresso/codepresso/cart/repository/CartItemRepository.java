@@ -28,12 +28,14 @@ public interface CartItemRepository extends JpaRepository<CartItem, Long> {
     @Query("DELETE FROM CartItem ci WHERE ci.cart.id = :cartId")
     void deleteByCartId(@Param("cartId") Long cartId);
 
-    @Query("SELECT DISTINCT ci FROM CartItem ci " +
-            "LEFT JOIN FETCH ci.product p "+
-            "LEFT JOIN FETCH ci.options co " +
-            "LEFT JOIN FETCH co.productOption po " +
-            "LEFT JOIN FETCH po.optionStyle " +
-            "WHERE ci.cart.id = :cartId")
+    @Query("""
+            SELECT DISTINCT ci FROM CartItem ci
+            LEFT JOIN FETCH ci.product p
+            LEFT JOIN FETCH ci.cartOptions co
+            LEFT JOIN FETCH co.productOption po
+            LEFT JOIN FETCH po.optionStyle
+            WHERE ci.cart.id = :cartId
+            """)
     List<CartItem> findCartItemsWithOptions(@Param("cartId") Long cartId);
 
     int countCartItemByCart_Member_Id(Long memberId);

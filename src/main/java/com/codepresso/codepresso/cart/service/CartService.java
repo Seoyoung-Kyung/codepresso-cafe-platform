@@ -94,7 +94,7 @@ public class CartService {
                 // 같은 옵션 묶음 → 수량만 증가
                 existingItem.setQuantity(existingItem.getQuantity() + quantity);
                 // 단가 정합성 보장(혹시 옵션 단가 정책이 바뀌었을 수 있으니 재동기화)
-                int unitPrice = calcUnitPriceFromCartOptions(product, existingItem.getOptions());
+                int unitPrice = calcUnitPriceFromCartOptions(product, existingItem.getCartOptions());
                 existingItem.setPrice(unitPrice);
                 return existingItem;
             }
@@ -118,14 +118,14 @@ public class CartService {
             cartOption.setCartItem(saved);
             cartOption.setProductOption(productOption);
             cartOptionRepository.save(cartOption);
-            saved.getOptions().add(cartOption);
+            saved.getCartOptions().add(cartOption);
         }
 
         return saved;
     }
 
     private boolean sameOptionSet(CartItem existingCartItem, Set<Long> requestedOptionIdSet) {
-        List<CartOption> existingCartOptions = existingCartItem.getOptions();
+        List<CartOption> existingCartOptions = existingCartItem.getCartOptions();
         if (existingCartOptions == null || existingCartOptions.isEmpty()) {
             return requestedOptionIdSet.isEmpty();
         }
@@ -186,7 +186,7 @@ public class CartService {
     // 총액 계산(단가 × 수량)
     private int calcTotalPrice(CartItem item) {
         Integer unitPrice = item.getPrice();
-        int price = (unitPrice == null) ? calcUnitPriceFromCartOptions(item.getProduct(), item.getOptions()) : unitPrice;
+        int price = (unitPrice == null) ? calcUnitPriceFromCartOptions(item.getProduct(), item.getCartOptions()) : unitPrice;
         Integer quantity = item.getQuantity();
         int qty = (quantity == null) ? 0 : quantity;
         return price * qty;
@@ -196,23 +196,23 @@ public class CartService {
     @Transactional(readOnly = true)
     public CartResponse getCartByMemberId(Long memberId) {
 
-        // 장바구니 조회 (@BatchSize로 옵션 N+1 최적화됨)
         Cart cart = cartRepository.findByMemberIdWithItems(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("장바구니가 없습니다. memberId : " + memberId));
 
-        // cartItem -> DTO 변환
+
         List<CartItemResponse> itemResponses = cart.getItems().stream()
                 .map(item -> {
-                    // CartItemOption -> DTO 변환
-                    List<CartOptionResponse> optionResponses = item.getOptions().stream()
-                            .filter(co -> co.getProductOption() != null
+
+                    List<CartOptionResponse> optionResponses = item.getCartOptions().stream()
+                            .filter(co ->
+                                    co.getProductOption() != null
                                     && co.getProductOption().getOptionStyle() != null
-                                    && co.getProductOption().getOptionStyle().getOptionStyle() != null
-                                    && !co.getProductOption().getOptionStyle().getOptionStyle().trim().equals("기본"))
+                                    && co.getProductOption().getOptionStyle().getValue() != null
+                                    && !co.getProductOption().getOptionStyle().getValue().trim().equals("기본"))
                             .map(cartOption -> CartOptionResponse.builder()
                                     .optionId(cartOption.getProductOption().getId())
                                     .extraPrice(safeExtraPrice(cartOption.getProductOption()))
-                                    .optionStyle(cartOption.getProductOption().getOptionStyle().getOptionStyle())
+                                    .optionStyle(cartOption.getProductOption().getOptionStyle().getValue())
                                     .build())
                             .toList();
 

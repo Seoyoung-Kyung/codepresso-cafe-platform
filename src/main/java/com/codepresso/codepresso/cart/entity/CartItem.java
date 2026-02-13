@@ -39,6 +39,6 @@ public class CartItem {
     @BatchSize(size = 100)
     @Builder.Default
     @OneToMany(mappedBy = "cartItem", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CartOption> options = new ArrayList<>();
+    private List<CartOption> cartOptions = new ArrayList<>();
 
 }

@@ -46,7 +46,11 @@ public class Product {
     private List<ProductOption> options = new ArrayList<>();
 
     // 1:1
-//    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+//    @OneToOne(
+//            mappedBy = "product",
+//            cascade = CascadeType.ALL,
+//            orphanRemoval = true
+//    )
 //    private NutritionInfo nutritionInfo;
 
     // 1:N
