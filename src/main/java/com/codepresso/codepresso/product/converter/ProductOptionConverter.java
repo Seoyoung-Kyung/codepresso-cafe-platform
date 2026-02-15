@@ -19,7 +19,7 @@ public class ProductOptionConverter {
                 .optionStyleId(optionStyle.getId())
                 .optionId(productOption.getId())
                 .optionName(optionName.getOptionName())
-                .optionStyleName(optionStyle.getOptionStyle())
+                .optionStyleName(optionStyle.getValue())
                 .extraPrice(optionStyle.getExtraPrice())
                 .build();
     }

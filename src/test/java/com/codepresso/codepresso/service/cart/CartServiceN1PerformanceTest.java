@@ -210,7 +210,6 @@ public class CartServiceN1PerformanceTest {
 
             MeasureResult result = measure(() -> cartService.getCartByMemberId(testMemberId));
             times[i] = result.responseTimeMs();
-            holdTimes[i] = result.connectionHoldTimeMs();
             queries[i] = result.queryCount();
             if (i == 0) {
                 firstQueryDetail = result.queryDetail();

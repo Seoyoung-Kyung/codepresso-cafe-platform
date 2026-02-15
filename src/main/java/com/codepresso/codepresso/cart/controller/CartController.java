@@ -67,11 +67,11 @@ public class CartController {
                 .productName(savedItem.getProduct().getProductName())
                 .quantity(savedItem.getQuantity())
                 .price(savedItem.getPrice())
-                .options(savedItem.getOptions().stream().map(opt ->
+                .options(savedItem.getCartOptions().stream().map(opt ->
                         new CartOptionResponse(
                                 opt.getProductOption().getId(),
                                 opt.getProductOption().getOptionStyle().getExtraPrice(),
-                                opt.getProductOption().getOptionStyle().getOptionStyle()
+                                opt.getProductOption().getOptionStyle().getValue()
                         )
                 ).toList())
                 .build();

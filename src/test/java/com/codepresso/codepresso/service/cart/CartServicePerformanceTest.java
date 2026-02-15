@@ -240,7 +240,7 @@ public class CartServicePerformanceTest {
 
         int totalOptions = 0;
         for (int i = 0; i < items.size(); i++) {
-            int optionCount = items.get(i).getOptions().size();
+            int optionCount = items.get(i).getCartOptions().size();
             totalOptions += optionCount;
             log.info("{}. {} - 옵션 {}개",
                     i + 1,

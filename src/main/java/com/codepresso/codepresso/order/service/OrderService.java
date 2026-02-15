@@ -151,7 +151,7 @@ public class OrderService {
 
         if (detail.getOptions() != null) {
             for (OrdersItemOptions option : detail.getOptions()) {
-                String optionStyle = option.getOption().getOptionStyle().getOptionStyle();
+                String optionStyle = option.getOption().getOptionStyle().getValue();
                 Integer extraPrice = option.getOption().getOptionStyle().getExtraPrice();
 
                 // "기본" 옵션 제외
