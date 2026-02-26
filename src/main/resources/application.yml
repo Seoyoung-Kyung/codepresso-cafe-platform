@@ -98,7 +98,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: health, info, metrics, prometheus   # Prometheus 엔드포인트 노출
+        include: health, info, metrics, prometheus, caches   # Prometheus + 캐시 관리 엔드포인트 노출
   endpoint:
     prometheus:
       enabled: true  # 활성화 확인

@@ -39,6 +39,7 @@ public class CouponService {
     /**
      * 회원의 사용 가능한 쿠폰 목록 조회
      * */
+    @Transactional(readOnly = true)
     public List<CouponResponse> getMemberValidCoupons(Long memberId) {
         List<MemberCoupon> validCoupons = memberCouponRepository
                 .findByMemberIdAndStatusAndExpiryDateAfter(

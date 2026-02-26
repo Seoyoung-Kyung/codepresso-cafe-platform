@@ -8,16 +8,39 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    @Query("SELECT new com.codepresso.codepresso.product.dto.ProductListResponse(" +
-            "p.id, p.productName, p.productPhoto, p.price, c.categoryName, c.categoryCode) " +
-            "FROM Product p " +
-            "LEFT JOIN p.category c " +
-            "ORDER BY c.displayOrder")
+    interface ProductSummary {
+        Long getProductId();
+        String getProductName();
+        String getProductPhoto();
+        Integer getPrice();
+        Long getCategoryId();
+    }
+
+    @Query("""
+            SELECT p.id           AS productId,
+                   p.productName  AS productName,
+                   p.productPhoto AS productPhoto,
+                   p.price        AS price,
+                   p.category.id  AS categoryId
+            FROM Product p
+            ORDER BY p.category.displayOrder
+            """)
+    List<ProductSummary> findAllProducts();
+
+    @Query("""
+            SELECT new com.codepresso.codepresso.product.dto.ProductListResponse(
+                p.id, p.productName, p.productPhoto, p.price, c.categoryName, c.categoryCode
+            )
+            FROM Product p
+            LEFT JOIN p.category c
+            ORDER BY c.displayOrder
+            """)
     List<ProductListResponse> findAllProductsAsDto();
 
     @Query("SELECT p " +

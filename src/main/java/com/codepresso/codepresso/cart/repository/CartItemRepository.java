@@ -19,8 +19,8 @@ public interface CartItemRepository extends JpaRepository<CartItem, Long> {
     Optional<CartItem> findById(Long cartItemId);
 
     //특정 장바구니 + 상품의 아이템들 전체 조회(옵션까지 한번에 로딩)
-    @EntityGraph(attributePaths = {"options", "options.productOption",
-            "options.productOption.optionStyle",
+    @EntityGraph(attributePaths = {"cartOptions", "cartOptions.productOption",
+            "cartOptions.productOption.optionStyle",
             "product"})
     List<CartItem> findByCart_IdAndProduct_Id (Long cartId, Long productId);
 

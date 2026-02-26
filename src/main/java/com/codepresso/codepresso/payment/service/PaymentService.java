@@ -20,9 +20,12 @@ import com.codepresso.codepresso.cart.service.CartService;
 import com.codepresso.codepresso.coupon.service.CouponService;
 import com.codepresso.codepresso.coupon.service.StampService;
 import com.codepresso.codepresso.product.service.ProductService;
+import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import io.micrometer.core.instrument.Timer;
+
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -44,6 +47,8 @@ public class PaymentService {
     private final CouponService couponService;
     private final StampService stampService;
     private final OrderCreationServiceImproveCreateOrder orderCreationService;
+    private final MeterRegistry meterRegistry;
+
 
     /**
      * 장바구니 결제페이지 데이터 준비
@@ -224,6 +229,9 @@ public class PaymentService {
      */
     @Transactional
     public CheckoutResponse processTossPaymentSuccess(TossPaymentSuccessRequest request) {
+
+        Timer.Sample sample = Timer.start(meterRegistry);
+
         // 1. 회원 및 지점 정보 조회
         Member member = memberRepository.findById(request.getMemberId())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
@@ -250,9 +258,9 @@ public class PaymentService {
             try {
                 CartResponse cartData = cartService.getCartByMemberId(member.getId());
                 cartService.clearCart(member.getId(), cartData.getCartId());
-                System.out.println("✅ 토스 결제 후 장바구니 비우기 성공");
+                System.out.println("토스 결제 후 장바구니 비우기 성공");
             } catch (Exception e) {
-                System.err.println("❌ 토스 결제 후 장바구니 비우기 실패: " + e.getMessage());
+                System.err.println("토스 결제 후 장바구니 비우기 실패: " + e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -267,7 +275,7 @@ public class PaymentService {
                     couponService.useCoupon(couponId);
                 }
             } catch (Exception e) {
-                System.err.println("❌ 쿠폰 사용 처리 실패: " + e.getMessage());
+                System.err.println("쿠폰 사용 처리 실패: " + e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -279,8 +287,16 @@ public class PaymentService {
             e.printStackTrace();
         }
 
-        // 5. 응답 데이터 생성
-        return buildCheckoutResponse(savedOrder);
+        CheckoutResponse response = buildCheckoutResponse(savedOrder);
+
+        sample.stop(Timer.builder("payment.sync.process.duration")
+                .description("동기 결제 처리 응답 시간")
+                .publishPercentiles(0.5, 0.95, 0.99)
+                .tag("type", "toss")
+                .register(meterRegistry));
+
+        return response;
+
     }
 
     private Orders createTossOrder(TossPaymentSuccessRequest request, Member member, Branch branch) {

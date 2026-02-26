@@ -47,6 +47,8 @@ spring:
     username: codepresso
     password: codepresso123
     driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 50   # 기본값(10)은 100 동시 요청 시 DB 커넥션 병목 → 풀 사이즈 확대로 스레드 블로킹 차이 명확히 측정
 
   # JPA/Hibernate 설정
   jpa:

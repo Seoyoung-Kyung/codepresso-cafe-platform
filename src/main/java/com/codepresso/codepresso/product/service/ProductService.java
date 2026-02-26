@@ -1,6 +1,7 @@
 package com.codepresso.codepresso.product.service;
 
 import com.codepresso.codepresso.product.converter.ProductConverter;
+import com.codepresso.codepresso.product.dto.CategoryResponse;
 import com.codepresso.codepresso.product.entity.*;
 import com.codepresso.codepresso.product.repository.ProductOptionRepository;
 import com.codepresso.codepresso.product.repository.ProductRepository;
@@ -18,6 +19,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -30,10 +34,27 @@ public class ProductService {
     private final ReviewRepository reviewRepo;
     private final ReviewConverter reviewConverter;
     private final ProductConverter productConverter;
+    private final CategoryService categoryService;
 
     @Transactional
     public List<ProductListResponse> findProductsWithCategory() {
-        return productRepo.findAllProductsAsDto();
+        Map<Long, CategoryResponse> categoryMap = categoryService.findAllCategories()
+                .stream()
+                .collect(Collectors.toMap(CategoryResponse::id, Function.identity()));
+
+        return productRepo.findAllProducts().stream()
+                .map(p -> {
+                    CategoryResponse cat = categoryMap.get(p.getCategoryId());
+                    return ProductListResponse.builder()
+                            .productId(p.getProductId())
+                            .productName(p.getProductName())
+                            .productPhoto(p.getProductPhoto())
+                            .price(p.getPrice())
+                            .categoryName(cat != null ? cat.categoryName() : null)
+                            .categoryCode(cat != null ? cat.categoryCode() : null)
+                            .build();
+                })
+                .toList();
     }
 
     @Transactional(readOnly = true)
